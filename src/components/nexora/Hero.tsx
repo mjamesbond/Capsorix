@@ -44,7 +44,7 @@ const Hero = () => {
             </span>
             <Sparkles className="w-3.5 h-3.5 text-primary-glow" />
             <span className="text-[11px] font-medium tracking-[0.25em] text-foreground/80 uppercase">
-              Elite Software Atelier
+              Now booking Q3 — 3 partner slots remaining
             </span>
           </div>
 
@@ -59,12 +59,14 @@ const Hero = () => {
           </h1>
 
           <p
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-14 leading-relaxed animate-fade-in-up"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up"
             style={{ animationDelay: "0.25s" }}
           >
-            From the whisper of an idea to a global launch — NEXORA engineers
-            mobile apps, web platforms, and bespoke systems for visionaries
-            who refuse the ordinary.
+            Custom mobile apps, web platforms, and bespoke systems —
+            engineered end-to-end for businesses that refuse the ordinary.
+            <span className="block mt-2 text-foreground/80 font-medium">
+              Senior reply within 24–48 hours. Always.
+            </span>
           </p>
 
           <div
@@ -75,19 +77,26 @@ const Hero = () => {
               href="#contact"
               className="btn-shimmer group relative inline-flex items-center gap-3 rounded-full bg-gold-animated px-9 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.04] gold-ring"
             >
-              <span className="relative z-10">Start Your Project</span>
+              <span className="relative z-10">Request Private Consultation</span>
               <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
             </a>
             <a
               href="#services"
               className="group inline-flex items-center gap-2 rounded-full glass px-9 py-4 text-base font-medium text-foreground/90 hover:text-primary-glow transition-all duration-500 gold-border-glow gold-ring"
             >
-              Explore Services
+              See What We Build
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
                 →
               </span>
             </a>
           </div>
+
+          <p
+            className="mt-6 text-xs tracking-[0.2em] uppercase text-muted-foreground/80 animate-fade-in-up"
+            style={{ animationDelay: "0.6s" }}
+          >
+            Free 30-min strategy call · No obligation · NDA on request
+          </p>
         </div>
 
         {/* Scroll cue */}
