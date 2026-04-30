@@ -1,6 +1,7 @@
 import { Lightbulb, Compass, Palette, Code2, Rocket } from "lucide-react";
 import Reveal from "./Reveal";
 import { useParallax } from "@/hooks/use-reveal";
+import CodeRain from "./CodeRain";
 
 const steps = [
   { icon: Lightbulb, title: "Idea", desc: "We listen, challenge, and refine your vision into a sharp brief." },
@@ -15,6 +16,7 @@ const Process = () => {
   return (
     <section id="process" className="relative py-40 overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30" />
+      <CodeRain density={5} parallaxSpeed={0.15} className="opacity-70" />
       <div
         ref={orbRef}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full bg-primary/5 blur-[120px] will-parallax"
