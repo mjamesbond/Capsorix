@@ -90,7 +90,7 @@ const Navbar = () => {
               href={sectionHref("contact")}
               className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
             >
-              <span className="relative z-10">{t.nav.cta}</span>
+              <span className="relative z-10 lang-morph">{t.nav.cta}</span>
             </a>
           </div>
         </nav>

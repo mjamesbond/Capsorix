@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -316,46 +316,95 @@
 @layer utilities {
   .font-display { font-family: 'Cormorant Garamond', serif; letter-spacing: -0.01em; }
   .font-sans { font-family: 'Inter', system-ui, sans-serif; }
-  .font-arabic { font-family: 'Tajawal', system-ui, sans-serif; }
+  .font-arabic { font-family: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif; }
   .will-parallax { will-change: transform; }
 
   /* ========================================================
-   * Arabic / RTL — switch to a premium Arabic typeface set
-   * and balance line-height + tracking for readability.
+   * Arabic typography system
+   * ----------------------------------------------------
+   * Three voices, each tuned for its role:
+   *   • Body / UI       → Readex Pro      (clean, modern, very readable)
+   *   • Headings        → IBM Plex Arabic (geometric, confident, hi-end)
+   *   • Numerics / mono → Tajawal Medium  (good tabular feel)
+   *
+   * Visual balance with the Latin set:
+   *   - Arabic glyphs are visually 12–18% larger than Latin at the same
+   *     font-size. We pull headings down a touch and add air to body.
+   *   - Letter-spacing is forced to 0 (Arabic doesn't track).
+   *   - line-height bumps because Arabic ascenders/descenders need room.
    * ======================================================*/
   html[lang="ar"] body {
-    font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+    font-family: 'Readex Pro', 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif;
     letter-spacing: 0;
+    font-feature-settings: "kern", "calt", "liga";
+    line-height: 1.7;
   }
   html[lang="ar"] .font-display {
-    font-family: 'Amiri', 'Cormorant Garamond', serif;
-    letter-spacing: 0;
-    line-height: 1.15;
+    font-family: 'IBM Plex Sans Arabic', 'Readex Pro', system-ui, sans-serif;
+    font-weight: 600;        /* serif italics don't translate — weight carries the gravity */
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+    font-style: normal;      /* italic in Arabic looks broken */
   }
+  /* Italic gold spans were used for emphasis in English — reframe in Arabic
+     as a slightly heavier weight + the gold gradient (already applied). */
+  html[lang="ar"] .italic { font-style: normal; font-weight: 700; }
+
   html[lang="ar"] .font-sans {
-    font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+    font-family: 'Readex Pro', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   }
-  /* Keep latin-only utilities readable in RTL (uppercase tracking is ugly in Arabic) */
+  html[lang="ar"] .font-arabic {
+    font-family: 'IBM Plex Sans Arabic', 'Readex Pro', system-ui, sans-serif;
+  }
+
+  /* Optical size compensation — Arabic reads larger; pull display sizes back */
+  html[lang="ar"] h1,
+  html[lang="ar"] h2 { line-height: 1.22; }
+  html[lang="ar"] h3 { line-height: 1.35; }
+  html[lang="ar"] p  { line-height: 1.85; }
+
+  /* Latin tracking utilities are visual noise in Arabic */
   html[lang="ar"] .uppercase { text-transform: none; }
-  html[lang="ar"] .tracking-\[0\.35em\],
-  html[lang="ar"] .tracking-\[0\.3em\],
-  html[lang="ar"] .tracking-\[0\.25em\],
-  html[lang="ar"] .tracking-\[0\.2em\],
-  html[lang="ar"] .tracking-\[0\.4em\],
-  html[lang="ar"] .tracking-widest { letter-spacing: 0.04em; }
+  html[lang="ar"] [class*="tracking-["],
+  html[lang="ar"] .tracking-widest,
+  html[lang="ar"] .tracking-wider,
+  html[lang="ar"] .tracking-wide { letter-spacing: 0 !important; }
+
+  /* Kicker labels (e.g. "— من نحن") — give them a quieter weight + air */
+  html[lang="ar"] .text-primary[class*="tracking"] { font-weight: 500; }
 
   /* Mirror directional arrows in RTL */
   html[dir="rtl"] .lucide-arrow-right { transform: scaleX(-1); }
 
-  /* Smooth, controlled language switch — quiet crossfade */
+  /* ========================================================
+   * Language switch — two experiences, not a translation.
+   * Slide + crossfade rather than a hard blur.
+   * ======================================================*/
   body {
-    transition: opacity 320ms var(--transition-smooth),
-                filter 320ms var(--transition-smooth);
+    transition: opacity 420ms var(--transition-smooth),
+                transform 520ms var(--transition-smooth),
+                filter 420ms var(--transition-smooth);
   }
   body.lang-switching {
     opacity: 0;
-    filter: blur(6px);
+    filter: blur(4px);
     pointer-events: none;
+  }
+  /* Direction-aware exit: outgoing layout drifts the way the new one comes from */
+  html[dir="ltr"] body.lang-switching { transform: translate3d(-12px, 0, 0); }
+  html[dir="rtl"] body.lang-switching { transform: translate3d( 12px, 0, 0); }
+
+  /* Words that should *travel* between languages instead of swap.
+     Set on any element whose textContent is mirrored in both languages
+     and benefits from being perceived as moving rather than re-mounting. */
+  .lang-morph {
+    display: inline-block;
+    transition: transform 0.7s var(--transition-smooth),
+                opacity 0.5s var(--transition-smooth);
+  }
+  body.lang-switching .lang-morph {
+    transform: translate3d(0, -2px, 0);
+    opacity: 0.6;
   }
 
   /* ========================================================

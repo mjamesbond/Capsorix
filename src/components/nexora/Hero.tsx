@@ -82,14 +82,14 @@ const Hero = () => {
               href="#contact"
               className="btn-shimmer group relative inline-flex items-center gap-3 rounded-full bg-gold-animated px-9 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.04] gold-ring"
             >
-              <span className="relative z-10">{t.hero.ctaPrimary}</span>
+              <span className="relative z-10 lang-morph">{t.hero.ctaPrimary}</span>
               <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
             </a>
             <a
               href="#services"
               className="group inline-flex items-center gap-2 rounded-full glass px-9 py-4 text-base font-medium text-foreground/90 hover:text-primary-glow transition-all duration-500 gold-border-glow gold-ring"
             >
-              {t.hero.ctaSecondary}
+              <span className="lang-morph">{t.hero.ctaSecondary}</span>
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
                 →
               </span>
