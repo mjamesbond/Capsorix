@@ -123,7 +123,7 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
   const { lang } = useI18n();
   const ref = useParallax<HTMLDivElement>(parallaxSpeed);
   const [mounted, setMounted] = useState(false);
-  const pool = lang === "ar" ? SNIPPETS_AR : SNIPPETS_EN;
+  const pool = lang === "ar" ? SNIPPETS_AR : lang === "fr" ? SNIPPETS_FR : SNIPPETS_EN;
   // Rebuild columns when language flips so the background actually swaps voices.
   const columns = useMemo(() => buildColumns(density, pool), [density, pool]);
 
