@@ -1,4 +1,4 @@
-import { Smartphone, Globe, LayoutDashboard, Rocket } from "lucide-react";
+import { Smartphone, Globe, LayoutDashboard, Rocket, ArrowRight } from "lucide-react";
 import Reveal from "./Reveal";
 
 const services = [
@@ -41,7 +41,8 @@ const Services = () => {
             <span className="text-gradient-gold italic"> obsession.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-            A focused suite of disciplines, executed at the highest standard. No filler. No shortcuts.
+            Custom solutions tailored to your business — never templated.
+            A focused suite of disciplines executed at the highest standard.
           </p>
         </Reveal>
 
@@ -82,6 +83,16 @@ const Services = () => {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-16 text-center" delay={200}>
+          <a
+            href="#contact"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-primary-glow hover:text-primary transition-colors"
+          >
+            Not sure which fits? Talk to a senior partner
+            <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+          </a>
+        </Reveal>
       </div>
     </section>
   );

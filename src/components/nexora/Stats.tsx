@@ -1,10 +1,10 @@
 import Reveal from "./Reveal";
 
 const stats = [
-  { value: "120+", label: "Projects Delivered" },
+  { value: "120+", label: "Projects Shipped" },
   { value: "60+", label: "Global Clients" },
-  { value: "98%", label: "Client Satisfaction" },
-  { value: "12", label: "Industry Awards" },
+  { value: "98%", label: "Would Recommend" },
+  { value: "24h", label: "Avg. Response Time" },
 ];
 
 const Stats = () => {
