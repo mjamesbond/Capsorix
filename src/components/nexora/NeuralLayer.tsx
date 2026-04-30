@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { getEasedScroll, subscribeScroll } from "@/lib/scroll-engine";
 
 /**
  * NeuralLayer — ambient "intelligent system" backdrop.
@@ -74,8 +75,12 @@ const NeuralLayer = ({
     let bytes: Byte[] = [];
     let pulses: Pulse[] = [];
     const mouse = { x: -9999, y: -9999, active: false };
-    // Scroll parallax — eased target so the layer drifts after the user scrolls
-    const scroll = { y: window.scrollY, target: window.scrollY, offset: 0 };
+    // Scroll drift now sourced from the shared scroll engine so the
+    // neural layer breathes at exactly the same tempo as parallax + reveals.
+    let easedScroll = getEasedScroll();
+    const unsubscribeScroll = subscribeScroll(({ eased }) => {
+      easedScroll = eased;
+    });
 
     /** Pick a hue: mostly gold, rarely a cool neon accent. */
     const pickHue = () => {
@@ -124,15 +129,11 @@ const NeuralLayer = ({
       mouse.x = -9999;
       mouse.y = -9999;
     };
-    const onScroll = () => {
-      scroll.target = window.scrollY;
-    };
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave);
-    window.addEventListener("scroll", onScroll, { passive: true });
 
     const LINK_DIST = 150;
     const CURSOR_RADIUS = 180;
@@ -147,9 +148,8 @@ const NeuralLayer = ({
 
       ctx.clearRect(0, 0, width, height);
 
-      // Eased scroll parallax — barely perceptible drift
-      scroll.y += (scroll.target - scroll.y) * 0.04;
-      const drift = scroll.y * 0.015; // cumulative slow drift
+      // Use the globally-eased scroll value — same tempo as parallax
+      const drift = easedScroll * 0.015;
       ctx.save();
       ctx.translate(0, -drift % height);
 
@@ -320,7 +320,7 @@ const NeuralLayer = ({
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
-      window.removeEventListener("scroll", onScroll);
+      unsubscribeScroll();
     };
   }, [density, intensity]);
 
