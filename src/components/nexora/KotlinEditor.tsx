@@ -20,7 +20,7 @@ const C = {
 };
 
 const LINES: Token[][] = [
-  [{ t: "// MARK — Built to scale, engineered to last.", c: C.cmt }],
+  [{ t: "// built to scale — engineered to last", c: C.cmt }],
   [
     { t: "val ", c: C.kw },
     { t: "app", c: C.var },
@@ -43,6 +43,11 @@ const LINES: Token[][] = [
     { t: " = ", c: C.pun },
     { t: "true", c: C.num },
   ],
+  [
+    { t: "    detail", c: C.prop },
+    { t: " = ", c: C.pun },
+    { t: '"obsessive"', c: C.str },
+  ],
   [{ t: "}", c: C.pun }],
   [
     { t: "if ", c: C.kw },
@@ -50,25 +55,25 @@ const LINES: Token[][] = [
     { t: "app", c: C.var },
     { t: ".", c: C.pun },
     { t: "isStable", c: C.fn },
-    { t: "()) {", c: C.pun },
-  ],
-  [
-    { t: "    ", c: C.pun },
+    { t: "()) ", c: C.pun },
     { t: "launch", c: C.fn },
-    { t: "()", c: C.pun },
+    { t: "(", c: C.pun },
+    { t: "client", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "business", c: C.prop },
+    { t: ")", c: C.pun },
   ],
-  [{ t: "}", c: C.pun }],
-  [{ t: "// Strength is structural. Reliability is earned.", c: C.cmt }],
+  [{ t: "// strength is structural — reliability is earned", c: C.cmt }],
   [
     { t: "suspend fun ", c: C.kw },
-    { t: "deploy", c: C.fn },
+    { t: "deliver", c: C.fn },
     { t: "(): ", c: C.pun },
     { t: "Result", c: C.type },
     { t: " = ", c: C.pun },
-    { t: "PlayStore", c: C.type },
-    { t: ".", c: C.pun },
-    { t: "publish", c: C.fn },
-    { t: "(app)", c: C.pun },
+    { t: "ship", c: C.fn },
+    { t: "(app, with = ", c: C.pun },
+    { t: "confidence", c: C.var },
+    { t: ")", c: C.pun },
   ],
 ];
 

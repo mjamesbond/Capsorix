@@ -27,7 +27,7 @@ const C = {
 };
 
 const FRONTEND: Token[][] = [
-  [{ t: "// Frontend — beauty, engineered.", c: C.cmt }],
+  [{ t: "// frontend — beauty, engineered", c: C.cmt }],
   [
     { t: "const ", c: C.kw, m: "Immutable binding — predictable state." },
     { t: "experience", c: C.var, m: "The brand moment your visitor remembers." },
@@ -45,25 +45,28 @@ const FRONTEND: Token[][] = [
     { t: '"smooth"', c: C.str, m: "60fps, 16ms frames, frame-perfect." },
     { t: ",", c: C.pun },
   ],
+  [
+    { t: "  detail: ", c: C.prop, m: "The thing competitors skip." },
+    { t: '"obsessive"', c: C.str, m: "Pixel by pixel, until it disappears." },
+    { t: ",", c: C.pun },
+  ],
   [{ t: "});", c: C.pun }],
   [
     { t: "experience", c: C.var },
     { t: ".", c: C.pun },
-    { t: "render", c: C.fn, m: "Mounts the experience into the DOM." },
+    { t: "remember", c: C.fn, m: "Engineered to stay in memory long after leaving." },
     { t: "(", c: C.pun },
-    { t: "document", c: C.var, m: "The canvas of the web." },
-    { t: ".", c: C.pun },
-    { t: "body", c: C.var },
+    { t: "visitor", c: C.var, m: "Not a user. A future client." },
     { t: ");", c: C.pun },
   ],
 ];
 
 const BACKEND: Token[][] = [
-  [{ t: "// Backend — logic that ships.", c: C.cmt }],
+  [{ t: "// backend — logic that ships", c: C.cmt }],
   [
     { t: "app", c: C.var, m: "Express server — the studio's runtime." },
     { t: ".", c: C.pun },
-    { t: "post", c: C.fn, m: "Listens for client vision." },
+    { t: "post", c: C.fn, m: "Receives client vision, returns product." },
     { t: "(", c: C.pun },
     { t: "'/build'", c: C.str, m: "Endpoint that turns intent into product." },
     { t: ", (", c: C.pun },
@@ -81,6 +84,20 @@ const BACKEND: Token[][] = [
     { t: ");", c: C.pun },
   ],
   [
+    { t: "  if ", c: C.kw, m: "A condition we earn, not assume." },
+    { t: "(", c: C.pun },
+    { t: "client", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "trustsUs", c: C.fn, m: "Trust is the real authentication layer." },
+    { t: ") ", c: C.pun },
+    { t: "scale", c: C.fn, m: "Grow the client's business, not just the system." },
+    { t: "(", c: C.pun },
+    { t: "client", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "business", c: C.prop, m: "Revenue, reach, reputation." },
+    { t: ");", c: C.pun },
+  ],
+  [
     { t: "  res", c: C.var },
     { t: ".", c: C.pun },
     { t: "send", c: C.fn, m: "Confirmation, not just a response." },
@@ -92,9 +109,13 @@ const BACKEND: Token[][] = [
   [
     { t: "app", c: C.var },
     { t: ".", c: C.pun },
-    { t: "listen", c: C.fn, m: "Always on. Always ready." },
+    { t: "respond", c: C.fn, m: "Senior reply within 24–48 hours. Always." },
+    { t: ".", c: C.pun },
+    { t: "within", c: C.fn },
     { t: "(", c: C.pun },
-    { t: "443", c: C.num, m: "HTTPS — secure by default." },
+    { t: "24", c: C.num },
+    { t: ", ", c: C.pun },
+    { t: "48", c: C.num, m: "Hours. Not days." },
     { t: ");", c: C.pun },
   ],
 ];
