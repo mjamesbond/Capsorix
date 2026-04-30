@@ -21,16 +21,17 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <NeuralLayer />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/ios" element={<IOS />} />
-          <Route path="/android" element={<Android />} />
-          <Route path="/web" element={<Web />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/ios" element={<IOS />} />
+            <Route path="/android" element={<Android />} />
+            <Route path="/web" element={<Web />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </I18nProvider>
   </QueryClientProvider>
 );
 
