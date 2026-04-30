@@ -3,11 +3,12 @@ import { useEffect, useRef } from "react";
 /**
  * NeuralLayer — ambient "intelligent system" backdrop.
  *
- * Slow-moving nodes connect/disconnect via faint gold lines as if a network
- * were quietly thinking. Tiny "byte" particles drift between nodes. The whole
- * system reacts gently to cursor proximity (very soft magnetic pull + glow).
+ * A quiet neural network: slow-moving nodes connect via thin glowing lines,
+ * occasional pulses travel along the edges, tiny byte particles drift through.
+ * Most nodes glow soft gold; a rare few emit a cooler neon accent (cyan/violet).
  *
- * Tuned to be *barely* noticeable — controlled luxury, never flashy.
+ * Reacts subtly to cursor proximity (soft magnetism) and scroll (slow parallax
+ * drift). Tuned to be *barely* noticeable — controlled, alive, never flashy.
  * Pure canvas, pointer-events: none, fixed full-viewport.
  */
 
@@ -18,6 +19,9 @@ interface Node {
   vy: number;
   r: number;
   pulse: number;
+  /** Color hue (gold by default; rare nodes get a cool accent). */
+  hue: number;
+  sat: number;
 }
 
 interface Byte {
@@ -27,6 +31,17 @@ interface Byte {
   vy: number;
   life: number;
   ttl: number;
+}
+
+interface Pulse {
+  /** Source + target node indices. */
+  a: number;
+  b: number;
+  /** Progress 0 → 1 along edge. */
+  t: number;
+  /** Speed per frame at 60fps. */
+  speed: number;
+  hue: number;
 }
 
 interface NeuralLayerProps {
@@ -57,7 +72,18 @@ const NeuralLayer = ({
     let height = 0;
     let nodes: Node[] = [];
     let bytes: Byte[] = [];
+    let pulses: Pulse[] = [];
     const mouse = { x: -9999, y: -9999, active: false };
+    // Scroll parallax — eased target so the layer drifts after the user scrolls
+    const scroll = { y: window.scrollY, target: window.scrollY, offset: 0 };
+
+    /** Pick a hue: mostly gold, rarely a cool neon accent. */
+    const pickHue = () => {
+      const r = Math.random();
+      if (r < 0.06) return { hue: 195, sat: 80 }; // soft cyan
+      if (r < 0.09) return { hue: 270, sat: 70 }; // soft violet
+      return { hue: 45, sat: 85 }; // gold
+    };
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -68,15 +94,23 @@ const NeuralLayer = ({
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const area = width * height;
-      const count = Math.max(18, Math.min(70, Math.round((area / 22000) * density)));
-      nodes = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.08,
-        vy: (Math.random() - 0.5) * 0.08,
-        r: 0.8 + Math.random() * 1.4,
-        pulse: Math.random() * Math.PI * 2,
-      }));
+      // Slightly sparser baseline — avoids overcrowding
+      const count = Math.max(16, Math.min(60, Math.round((area / 26000) * density)));
+      nodes = Array.from({ length: count }, () => {
+        const { hue, sat } = pickHue();
+        return {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.06,
+          vy: (Math.random() - 0.5) * 0.06,
+          r: 0.8 + Math.random() * 1.3,
+          pulse: Math.random() * Math.PI * 2,
+          hue,
+          sat,
+        };
+      });
+      pulses = [];
+      bytes = [];
     };
 
     const onMove = (e: MouseEvent) => {
@@ -90,14 +124,19 @@ const NeuralLayer = ({
       mouse.x = -9999;
       mouse.y = -9999;
     };
+    const onScroll = () => {
+      scroll.target = window.scrollY;
+    };
 
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave);
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     const LINK_DIST = 150;
     const CURSOR_RADIUS = 180;
+    const MAX_PULSES = 18;
 
     let raf = 0;
     let last = performance.now();
@@ -108,11 +147,31 @@ const NeuralLayer = ({
 
       ctx.clearRect(0, 0, width, height);
 
+      // Eased scroll parallax — barely perceptible drift
+      scroll.y += (scroll.target - scroll.y) * 0.04;
+      const drift = scroll.y * 0.015; // cumulative slow drift
+      ctx.save();
+      ctx.translate(0, -drift % height);
+
+      // Soft deep-blue base wash — gives the layer its quiet, "thinking" mood
+      const wash = ctx.createRadialGradient(
+        width * 0.5,
+        height * 0.4 + drift,
+        0,
+        width * 0.5,
+        height * 0.4 + drift,
+        Math.max(width, height) * 0.7,
+      );
+      wash.addColorStop(0, "hsla(220, 60%, 18%, 0.18)");
+      wash.addColorStop(1, "hsla(222, 60%, 6%, 0)");
+      ctx.fillStyle = wash;
+      ctx.fillRect(0, 0, width, height);
+
       // Update + draw nodes
       for (const n of nodes) {
         n.x += n.vx * dt;
         n.y += n.vy * dt;
-        n.pulse += 0.008 * dt;
+        n.pulse += 0.006 * dt;
 
         // Wrap around edges softly
         if (n.x < -20) n.x = width + 20;
@@ -127,7 +186,7 @@ const NeuralLayer = ({
           const d2 = dx * dx + dy * dy;
           if (d2 < CURSOR_RADIUS * CURSOR_RADIUS) {
             const d = Math.sqrt(d2) || 1;
-            const f = (1 - d / CURSOR_RADIUS) * 0.04;
+            const f = (1 - d / CURSOR_RADIUS) * 0.025;
             n.x += (dx / d) * f * dt;
             n.y += (dy / d) * f * dt;
           }
@@ -138,15 +197,15 @@ const NeuralLayer = ({
 
         // Soft halo
         const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 6);
-        grad.addColorStop(0, `hsla(45, 90%, 70%, ${0.18 * glow})`);
-        grad.addColorStop(1, "hsla(45, 90%, 70%, 0)");
+        grad.addColorStop(0, `hsla(${n.hue}, ${n.sat}%, 70%, ${0.16 * glow})`);
+        grad.addColorStop(1, `hsla(${n.hue}, ${n.sat}%, 70%, 0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r * 6, 0, Math.PI * 2);
         ctx.fill();
 
         // Core dot
-        ctx.fillStyle = `hsla(45, 85%, 75%, ${0.55 * intensity})`;
+        ctx.fillStyle = `hsla(${n.hue}, ${n.sat}%, 78%, ${0.5 * intensity})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fill();
@@ -169,10 +228,12 @@ const NeuralLayer = ({
               const mx = (a.x + b.x) / 2 - mouse.x;
               const my = (a.y + b.y) / 2 - mouse.y;
               const md = Math.sqrt(mx * mx + my * my);
-              if (md < CURSOR_RADIUS) cursorBoost = (1 - md / CURSOR_RADIUS) * 0.18;
+              if (md < CURSOR_RADIUS) cursorBoost = (1 - md / CURSOR_RADIUS) * 0.14;
             }
-            const alpha = (t * 0.12 + cursorBoost) * intensity;
-            ctx.strokeStyle = `hsla(45, 70%, 65%, ${alpha})`;
+            const alpha = (t * 0.10 + cursorBoost) * intensity;
+            // Blend hue between the two endpoints (mostly gold)
+            const hueMix = (a.hue + b.hue) / 2;
+            ctx.strokeStyle = `hsla(${hueMix}, 60%, 65%, ${alpha})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -180,14 +241,29 @@ const NeuralLayer = ({
             ctx.stroke();
 
             // Occasionally emit a "byte" particle along the line
-            if (!reduce && Math.random() < 0.0009 * t && bytes.length < 40) {
+            if (!reduce && Math.random() < 0.0007 * t && bytes.length < 35) {
               bytes.push({
                 x: a.x,
                 y: a.y,
-                vx: (b.x - a.x) / 240,
-                vy: (b.y - a.y) / 240,
+                vx: (b.x - a.x) / 320,
+                vy: (b.y - a.y) / 320,
                 life: 0,
-                ttl: 240,
+                ttl: 320,
+              });
+            }
+
+            // Rarely birth a traveling pulse along the edge
+            if (
+              !reduce &&
+              pulses.length < MAX_PULSES &&
+              Math.random() < 0.00018 * t
+            ) {
+              pulses.push({
+                a: i,
+                b: j,
+                t: 0,
+                speed: 0.0035 + Math.random() * 0.004,
+                hue: Math.random() < 0.15 ? (Math.random() < 0.5 ? 195 : 270) : 45,
               });
             }
           }
@@ -200,10 +276,39 @@ const NeuralLayer = ({
         p.x += p.vx * dt;
         p.y += p.vy * dt;
         p.life += dt;
-        const a = (1 - p.life / p.ttl) * 0.5 * intensity;
-        ctx.fillStyle = `hsla(48, 95%, 80%, ${a})`;
+        const a = (1 - p.life / p.ttl) * 0.45 * intensity;
+        ctx.fillStyle = `hsla(48, 90%, 82%, ${a})`;
         ctx.fillRect(p.x - 0.6, p.y - 0.6, 1.2, 1.2);
       }
+
+      // Update + draw traveling pulses (soft glowing dots gliding along edges)
+      pulses = pulses.filter((p) => p.t < 1 && nodes[p.a] && nodes[p.b]);
+      for (const p of pulses) {
+        p.t += p.speed * dt;
+        const a = nodes[p.a];
+        const b = nodes[p.b];
+        if (!a || !b) continue;
+        const x = a.x + (b.x - a.x) * p.t;
+        const y = a.y + (b.y - a.y) * p.t;
+        // Fade in and out with the journey
+        const fade = Math.sin(p.t * Math.PI);
+        const alpha = fade * 0.7 * intensity;
+        // Outer glow
+        const g = ctx.createRadialGradient(x, y, 0, x, y, 8);
+        g.addColorStop(0, `hsla(${p.hue}, 90%, 75%, ${alpha * 0.55})`);
+        g.addColorStop(1, `hsla(${p.hue}, 90%, 75%, 0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fill();
+        // Core
+        ctx.fillStyle = `hsla(${p.hue}, 95%, 88%, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
 
       raf = requestAnimationFrame(tick);
     };
@@ -215,6 +320,7 @@ const NeuralLayer = ({
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("scroll", onScroll);
     };
   }, [density, intensity]);
 
@@ -223,6 +329,8 @@ const NeuralLayer = ({
       aria-hidden
       className={`pointer-events-none fixed inset-0 -z-10 ${className}`}
     >
+      {/* Deep blue base tint behind the network */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,hsl(220_60%_10%/0.5),transparent_70%)]" />
       <canvas ref={canvasRef} className="w-full h-full block" />
       {/* Vignette to keep edges quiet */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,hsl(var(--background)/0.7)_100%)]" />
