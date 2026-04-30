@@ -38,6 +38,53 @@ export interface Dict {
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
+  subpages: {
+    common: {
+      capabilitiesKicker: string;
+      consultCta: string;
+      replyNote: string;
+    };
+    ios: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleSwift: string; titleB: string;
+      lead: string;
+      navigatorLabel: string;
+      inspectorLabel: string;
+      consoleLabel: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+    android: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleKotlin: string; titleB: string;
+      lead: string;
+      projectLabel: string;
+      moduleInfoLabel: string;
+      gradleLabel: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+    web: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleBeauty: string; titleC: string; titleLogic: string;
+      lead: string;
+      hint: string;
+      flowLive: string;
+      capabilitiesKicker: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilitiesLead: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+  };
 }
 
 export const dict: Record<Lang, Dict> = {
