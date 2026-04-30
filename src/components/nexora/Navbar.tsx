@@ -1,27 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { subscribeScroll } from "@/lib/scroll-engine";
-
-const sectionLinks = [
-  { href: "services", label: "Services" },
-  { href: "process", label: "Process" },
-  { href: "industries", label: "Industries" },
-  { href: "contact", label: "Contact" },
-];
-
-const pageLinks = [
-  { to: "/ios", label: "iOS" },
-  { to: "/android", label: "Android" },
-  { to: "/web", label: "Web" },
-];
+import { useI18n } from "@/i18n/I18nProvider";
+import LanguageToggle from "./LanguageToggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const { t } = useI18n();
   const onHome = pathname === "/";
   const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+
+  const sectionLinks = [
+    { href: "services", label: t.nav.services },
+    { href: "process", label: t.nav.process },
+    { href: "industries", label: t.nav.industries },
+    { href: "contact", label: t.nav.contact },
+  ];
+
+  const pageLinks = [
+    { to: "/ios", label: t.nav.ios },
+    { to: "/android", label: t.nav.android },
+    { to: "/web", label: t.nav.web },
+  ];
+
   useEffect(() => {
-    // Single shared scroll engine — same eased tempo as the rest of the site.
     return subscribeScroll(({ eased }) => {
       const next = eased > 20;
       setScrolled((prev) => (prev === next ? prev : next));
@@ -40,7 +43,7 @@ const Navbar = () => {
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}
         >
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group" dir="ltr">
             <div className="relative w-9 h-9 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
               <span className="font-display font-bold text-primary-foreground text-lg">N</span>
               <div className="absolute inset-0 rounded-lg bg-gradient-gold blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
@@ -81,12 +84,15 @@ const Navbar = () => {
             })}
           </ul>
 
-          <a
-            href={sectionHref("contact")}
-            className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
-          >
-            <span className="relative z-10">Start Your Project</span>
-          </a>
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <a
+              href={sectionHref("contact")}
+              className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
+            >
+              <span className="relative z-10">{t.nav.cta}</span>
+            </a>
+          </div>
         </nav>
       </div>
     </header>
