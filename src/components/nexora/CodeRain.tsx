@@ -69,13 +69,13 @@ interface Column {
   lines: string[];
 }
 
-const buildColumns = (count: number): Column[] => {
+const buildColumns = (count: number, pool: string[]): Column[] => {
   const cols: Column[] = [];
   for (let i = 0; i < count; i++) {
     const lines: string[] = [];
     const len = 6 + Math.floor(Math.random() * 5);
     for (let j = 0; j < len; j++) {
-      lines.push(SNIPPETS[Math.floor(Math.random() * SNIPPETS.length)]);
+      lines.push(pool[Math.floor(Math.random() * pool.length)]);
     }
     cols.push({
       left: `${(i / count) * 100 + Math.random() * 4}%`,
@@ -95,9 +95,12 @@ interface CodeRainProps {
 }
 
 const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRainProps) => {
+  const { lang } = useI18n();
   const ref = useParallax<HTMLDivElement>(parallaxSpeed);
   const [mounted, setMounted] = useState(false);
-  const columns = useMemo(() => buildColumns(density), [density]);
+  const pool = lang === "ar" ? SNIPPETS_AR : SNIPPETS_EN;
+  // Rebuild columns when language flips so the background actually swaps voices.
+  const columns = useMemo(() => buildColumns(density, pool), [density, pool]);
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
