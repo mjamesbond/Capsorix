@@ -72,7 +72,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: gradient-shift 8s ease-in-out infinite;
+    animation: gradient-shift 16s ease-in-out infinite;
   }
   .glass {
     background: hsl(222 45% 8% / 0.5);
