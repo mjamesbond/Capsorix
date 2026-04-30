@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-const links = [
-  { href: "#services", label: "Services" },
-  { href: "#process", label: "Process" },
-  { href: "#industries", label: "Industries" },
-  { href: "#contact", label: "Contact" },
+const sectionLinks = [
+  { href: "services", label: "Services" },
+  { href: "process", label: "Process" },
+  { href: "industries", label: "Industries" },
+  { href: "contact", label: "Contact" },
+];
+
+const pageLinks = [
+  { to: "/ios", label: "iOS" },
+  { to: "/android", label: "Android" },
+  { to: "/web", label: "Web" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const onHome = pathname === "/";
+  const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -28,7 +38,7 @@ const Navbar = () => {
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}
         >
-          <a href="#" className="flex items-center gap-2 group">
+          <Link to="/" className="flex items-center gap-2 group">
             <div className="relative w-9 h-9 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
               <span className="font-display font-bold text-primary-foreground text-lg">N</span>
               <div className="absolute inset-0 rounded-lg bg-gradient-gold blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
@@ -36,23 +46,41 @@ const Navbar = () => {
             <span className="font-display text-2xl font-semibold tracking-widest text-gradient-gold">
               NEXORA
             </span>
-          </a>
+          </Link>
 
-          <ul className="hidden md:flex items-center gap-10">
-            {links.map((l) => (
+          <ul className="hidden md:flex items-center gap-8">
+            {sectionLinks.map((l) => (
               <li key={l.href}>
                 <a
-                  href={l.href}
+                  href={sectionHref(l.href)}
                   className="text-sm font-medium text-muted-foreground hover:text-primary-glow transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-gradient-gold after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {l.label}
                 </a>
               </li>
             ))}
+            <li className="h-4 w-px bg-border/50" aria-hidden />
+            {pageLinks.map((l) => {
+              const active = pathname === l.to;
+              return (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    className={`text-sm font-medium transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:bg-gradient-gold after:transition-all after:duration-300 ${
+                      active
+                        ? "text-primary-glow after:w-full"
+                        : "text-muted-foreground hover:text-primary-glow after:w-0 hover:after:w-full"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <a
-            href="#contact"
+            href={sectionHref("contact")}
             className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
           >
             <span className="relative z-10">Start Your Project</span>
