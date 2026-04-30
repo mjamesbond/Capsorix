@@ -37,7 +37,15 @@ export interface Dict {
     placeholders: { full_name: string; email: string; phone: string; description: string; select: string };
     projectTypes: string[]; budgets: string[]; timelines: string[];
     submit: string; submitting: string; reviewed: string; confidential: string;
-    success: { kicker: string; titleA: string; titleB: string; body: string; bodyStrong: string; bodyTail: string; chip1: string; chip2: string; chip3: string; again: string };
+    success: {
+      kicker: string; titleA: string; titleB: string;
+      body: string; bodyStrong: string; bodyTail: string;
+      chip1: string; chip2: string; chip3: string; again: string;
+      greeting: (name: string) => string;
+      steps: { title: string; desc: string }[];
+      refLabel: string; mailLabel: string; mailCta: string;
+      stepsKicker: string;
+    };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
     validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
   };
@@ -233,6 +241,16 @@ export const dict: Record<Lang, Dict> = {
         chip2: "Reviewed by a partner",
         chip3: "Kept confidential",
         again: "Send another project →",
+        greeting: (name) => `Thank you, ${name}.`,
+        stepsKicker: "What happens next",
+        steps: [
+          { title: "Brief secured", desc: "Your request is encrypted and queued for review." },
+          { title: "Senior review", desc: "A partner reads it personally — no triage, no bots." },
+          { title: "Personal reply", desc: "You hear back from us within 24–48 hours." },
+        ],
+        refLabel: "Reference",
+        mailLabel: "Need to add something?",
+        mailCta: "Write to studio@capsorix.dev",
       },
       toastErrTitle: "Please review the form",
       toastSendErr: "We couldn’t send your request",
@@ -488,6 +506,16 @@ export const dict: Record<Lang, Dict> = {
         chip2: "يُراجَع بواسطة شريك",
         chip3: "يُحفَظ بسرّية تامّة",
         again: "إرسال مشروع آخر ←",
+        greeting: (name) => `شكرًا لك يا ${name}.`,
+        stepsKicker: "ماذا يحدث الآن",
+        steps: [
+          { title: "تمّ استلام طلبك", desc: "وصل بريفك إلينا مشفّرًا وانضمّ إلى قائمة المراجعة." },
+          { title: "مراجعة من شريك أوّل", desc: "يقرأه شريك بنفسه — لا فلاتر ولا روبوتات." },
+          { title: "ردّ شخصي", desc: "نعود إليك خلال 24 إلى 48 ساعة." },
+        ],
+        refLabel: "رقم الطلب",
+        mailLabel: "تودّ إضافة شيء؟",
+        mailCta: "راسلنا على studio@capsorix.dev",
       },
       toastErrTitle: "راجع البيانات من فضلك",
       toastSendErr: "تعذّر إرسال طلبك",
@@ -743,6 +771,16 @@ export const dict: Record<Lang, Dict> = {
         chip2: "Examiné par un partenaire",
         chip3: "Tenu confidentiel",
         again: "Envoyer un autre projet →",
+        greeting: (name) => `Merci, ${name}.`,
+        stepsKicker: "La suite",
+        steps: [
+          { title: "Brief sécurisé", desc: "Votre demande est chiffrée et placée dans la file de revue." },
+          { title: "Revue par un partenaire", desc: "Un partenaire la lit personnellement — sans tri automatique." },
+          { title: "Réponse personnelle", desc: "Nous revenons vers vous sous 24 à 48 heures." },
+        ],
+        refLabel: "Référence",
+        mailLabel: "Un détail à ajouter ?",
+        mailCta: "Écrivez à studio@capsorix.dev",
       },
       toastErrTitle: "Merci de vérifier le formulaire",
       toastSendErr: "Impossible d’envoyer votre demande",
@@ -998,6 +1036,16 @@ export const dict: Record<Lang, Dict> = {
         chip2: "Geprüft von einem Partner",
         chip3: "Vertraulich behandelt",
         again: "Weiteres Projekt einreichen →",
+        greeting: (name) => `Vielen Dank, ${name}.`,
+        stepsKicker: "So geht es weiter",
+        steps: [
+          { title: "Brief gesichert", desc: "Ihre Anfrage ist verschlüsselt und in der Prüfung." },
+          { title: "Prüfung durch einen Partner", desc: "Ein Partner liest sie persönlich — keine Vorsortierung." },
+          { title: "Persönliche Antwort", desc: "Sie hören innerhalb von 24 bis 48 Stunden von uns." },
+        ],
+        refLabel: "Referenz",
+        mailLabel: "Möchten Sie etwas ergänzen?",
+        mailCta: "Schreiben Sie an studio@capsorix.dev",
       },
       toastErrTitle: "Bitte prüfen Sie das Formular",
       toastSendErr: "Ihre Anfrage konnte nicht gesendet werden",

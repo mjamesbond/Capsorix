@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import {
-  ArrowRight, Mail, MapPin, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send,
+  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,6 +52,10 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  // Captured at the moment of submission so the confirmation screen can
+  // greet the client by name and display a stable reference even after
+  // the form state is reset.
+  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date } | null>(null);
 
   // Build a localized schema each render — cheap and keeps messages in sync.
   const schema = useMemo(() => z.object({
@@ -110,12 +114,24 @@ const Contact = () => {
       return;
     }
 
+    // Build a short, human-readable reference (e.g. CPX-7F3K-2A91) so the
+    // confirmation screen feels like a real receipt rather than a toast.
+    const ref =
+      "CPX-" +
+      Math.random().toString(36).slice(2, 6).toUpperCase() +
+      "-" +
+      Math.random().toString(36).slice(2, 6).toUpperCase();
+    const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
+    setSubmittedMeta({ name: firstName, ref, at: new Date() });
     setSubmitted(true);
     setForm(EMPTY);
     setErrors({});
   };
 
-  const resetForm = () => setSubmitted(false);
+  const resetForm = () => {
+    setSubmitted(false);
+    setSubmittedMeta(null);
+  };
 
   return (
     <section id="contact" className="relative section scroll-mt-24" data-lang={lang}>
@@ -163,36 +179,130 @@ const Contact = () => {
           <Reveal className="lg:col-span-7" delay={150}>
             <div className="relative">
               {submitted ? (
-                <div className="glass-strong rounded-3xl p-10 md:p-14 gold-border-glow gold-ring shadow-elegant relative overflow-hidden text-center animate-scale-in">
-                  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] rounded-full bg-primary/8 blur-[140px] pointer-events-none" />
-                  <div className="relative">
-                    <div className="mx-auto mb-8 w-20 h-20 rounded-full bg-gradient-gold-soft border border-primary/40 flex items-center justify-center gold-ring">
-                      <CheckCircle2 className="w-9 h-9 text-primary-glow" strokeWidth={1.5} />
-                    </div>
-                    <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-4">{t.contact.success.kicker}</p>
-                    <h3 className="font-display text-4xl md:text-5xl font-medium leading-tight mb-5">
-                      {t.contact.success.titleA}
-                      <span className="text-gradient-gold italic">{t.contact.success.titleB}</span>
-                    </h3>
-                    <p className="text-muted-foreground max-w-md mx-auto leading-relaxed mb-10">
-                      {t.contact.success.body}
-                      <span className="text-foreground font-medium">{t.contact.success.bodyStrong}</span>
-                      {t.contact.success.bodyTail}
-                    </p>
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="glass-strong rounded-3xl p-8 md:p-12 gold-border-glow gold-ring shadow-elegant relative overflow-hidden animate-scale-in"
+                >
+                  {/* Ambient gold wash — subtle, single source */}
+                  <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[32rem] h-[32rem] rounded-full bg-primary/8 blur-[160px] pointer-events-none" />
+                  <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent pointer-events-none" />
 
-                    <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-muted-foreground mb-10">
+                  <div className="relative">
+                    {/* Medallion: concentric gold rings + check */}
+                    <div className="mx-auto mb-8 relative w-24 h-24">
+                      <span className="absolute inset-0 rounded-full border border-primary/20 animate-[ping_2.4s_cubic-bezier(0,0,0.2,1)_infinite]" />
+                      <span className="absolute inset-2 rounded-full border border-primary/30" />
+                      <span className="absolute inset-0 rounded-full bg-gradient-gold-soft border border-primary/50 gold-ring flex items-center justify-center">
+                        <CheckCircle2 className="w-10 h-10 text-primary-glow" strokeWidth={1.5} />
+                      </span>
+                    </div>
+
+                    <div className="text-center">
+                      <p className="text-[11px] font-medium tracking-[0.35em] uppercase text-primary mb-4">
+                        {t.contact.success.kicker}
+                      </p>
+                      <h3 className="font-display text-4xl md:text-5xl font-medium leading-[1.05] mb-4">
+                        {t.contact.success.titleA}
+                        <span className="text-gradient-gold italic">{t.contact.success.titleB}</span>
+                      </h3>
+                      {submittedMeta && (
+                        <p className="text-sm text-foreground/85 mb-3">
+                          {t.contact.success.greeting(submittedMeta.name)}
+                        </p>
+                      )}
+                      <p className="text-[15px] text-muted-foreground max-w-md mx-auto leading-relaxed">
+                        {t.contact.success.body}
+                        <span className="text-foreground font-medium">{t.contact.success.bodyStrong}</span>
+                        {t.contact.success.bodyTail}
+                      </p>
+                    </div>
+
+                    {/* Reference receipt */}
+                    {submittedMeta && (
+                      <div className="mt-8 mx-auto max-w-md flex items-center justify-between gap-4 rounded-xl border border-border/50 bg-input/40 px-4 py-3">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
+                            {t.contact.success.refLabel}
+                          </span>
+                          <span className="font-mono text-sm text-foreground tracking-wider" dir="ltr">
+                            {submittedMeta.ref}
+                          </span>
+                        </div>
+                        <span className="text-[11px] text-muted-foreground" dir="ltr">
+                          {submittedMeta.at.toLocaleString(lang === "ar" ? "ar-EG" : lang, {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Vertical timeline of next steps */}
+                    <div className="mt-10 mx-auto max-w-md">
+                      <p className="text-[11px] font-medium tracking-[0.3em] uppercase text-primary/90 mb-5 text-center">
+                        {t.contact.success.stepsKicker}
+                      </p>
+                      <ol className="relative space-y-5">
+                        {/* Connecting rail */}
+                        <span
+                          aria-hidden
+                          className={`absolute top-2 bottom-2 w-px bg-gradient-to-b from-primary/40 via-primary/15 to-transparent ${
+                            lang === "ar" ? "right-[11px]" : "left-[11px]"
+                          }`}
+                        />
+                        {t.contact.success.steps.map((s, i) => (
+                          <li key={s.title} className="relative flex items-start gap-4">
+                            <span
+                              className={`relative z-10 mt-0.5 w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[10px] font-medium ${
+                                i === 0
+                                  ? "bg-gradient-gold-soft border border-primary/60 text-primary-glow gold-ring"
+                                  : "bg-input/70 border border-border/60 text-muted-foreground"
+                              }`}
+                            >
+                              {i + 1}
+                            </span>
+                            <div className="flex-1 pt-0.5">
+                              <p className="text-sm font-medium text-foreground">{s.title}</p>
+                              <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{s.desc}</p>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* Trust chips */}
+                    <div className="mt-10 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] text-muted-foreground">
                       <span className="inline-flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-primary-glow" /> {t.contact.success.chip1}</span>
                       <span className="inline-flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5 text-primary-glow" /> {t.contact.success.chip2}</span>
                       <span className="inline-flex items-center gap-2"><Lock className="w-3.5 h-3.5 text-primary-glow" /> {t.contact.success.chip3}</span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={resetForm}
-                      className="text-sm font-medium text-muted-foreground hover:text-primary-glow transition-colors"
-                    >
-                      {t.contact.success.again}
-                    </button>
+                    {/* Dual actions */}
+                    <div className="mt-10 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+                      <a
+                        href="mailto:studio@capsorix.dev"
+                        className="group inline-flex items-center gap-2 text-muted-foreground hover:text-primary-glow transition-colors"
+                      >
+                        <Mail className="w-4 h-4" />
+                        <span>
+                          <span className="block text-[11px] tracking-[0.2em] uppercase text-muted-foreground/70">
+                            {t.contact.success.mailLabel}
+                          </span>
+                          <span className="text-foreground/90 group-hover:text-primary-glow transition-colors" dir="ltr">
+                            {t.contact.success.mailCta}
+                          </span>
+                        </span>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={resetForm}
+                        className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/60 transition-all duration-300 gold-ring"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-primary-glow" />
+                        {t.contact.success.again}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : (
