@@ -159,10 +159,22 @@ interface CodePanelProps {
 }
 
 const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
+  const { lang } = useI18n();
+  const LINES = lang === "ar" ? LINES_AR : LINES_EN;
+  const fileName = lang === "ar" ? "نكسورا · المحرّك.نكس" : "nexora · engine.ts";
+  const liveLabel = lang === "ar" ? "حيّ" : "live";
+
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [committed, setCommitted] = useState<number[]>([]);
   const tickRef = useRef<number | null>(null);
+
+  // Reset the typewriter when the language flips so we restart cleanly.
+  useEffect(() => {
+    setLineIdx(0);
+    setCharCount(0);
+    setCommitted([]);
+  }, [lang]);
 
   useEffect(() => {
     const current = LINES[lineIdx];
@@ -171,11 +183,9 @@ const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
     if (charCount < max) {
       tickRef.current = window.setTimeout(() => setCharCount((c) => c + 1), speed);
     } else {
-      // pause, then advance
       tickRef.current = window.setTimeout(() => {
         setCommitted((arr) => {
           const next = [...arr, lineIdx];
-          // keep buffer trimmed
           return next.length > 6 ? next.slice(next.length - 6) : next;
         });
         setCharCount(0);
@@ -186,41 +196,45 @@ const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
     return () => {
       if (tickRef.current) window.clearTimeout(tickRef.current);
     };
-  }, [charCount, lineIdx, speed]);
+  }, [charCount, lineIdx, speed, LINES]);
 
   return (
-    <div
-      className={`relative overflow-hidden rounded-2xl glass-strong gold-border-glow ${className}`}
-    >
-      {/* Editor chrome */}
-      <div className="flex items-center gap-2 px-5 py-3 border-b border-border/40">
+    <div className={`relative overflow-hidden rounded-2xl glass-strong gold-border-glow ${className}`}>
+      {/* Editor chrome — stays LTR even in Arabic; it's a code window */}
+      <div className="flex items-center gap-2 px-5 py-3 border-b border-border/40" dir="ltr">
         <span className="w-2.5 h-2.5 rounded-full bg-[hsl(0_60%_55%)]/70" />
         <span className="w-2.5 h-2.5 rounded-full bg-[hsl(45_85%_60%)]/70" />
         <span className="w-2.5 h-2.5 rounded-full bg-[hsl(140_50%_55%)]/70" />
-        <span className="ml-3 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-          nexora · engine.ts
+        <span className={`ml-3 text-[10px] tracking-[0.25em] text-muted-foreground ${lang === "ar" ? "font-arabic" : "uppercase"}`}>
+          {fileName}
         </span>
-        <span className="ml-auto flex items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase text-primary-glow/80">
+        <span className={`ml-auto flex items-center gap-1.5 text-[10px] tracking-[0.2em] text-primary-glow/80 ${lang === "ar" ? "font-arabic" : "uppercase"}`}>
           <span className="relative flex h-1.5 w-1.5">
-            
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-glow" />
           </span>
-          live
+          {liveLabel}
         </span>
       </div>
 
-      {/* Code body */}
-      <div className="relative px-6 py-5 font-mono text-[13px] leading-[1.85] min-h-[260px]">
-        {/* line numbers gutter */}
-        <div className="absolute left-2 top-5 bottom-5 flex flex-col text-[11px] text-muted-foreground/40 select-none pointer-events-none">
+      {/* Code body — direction follows language; Arabic uses Plex Arabic */}
+      <div
+        key={lang}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        className={`relative px-6 py-5 text-[13px] leading-[1.95] min-h-[260px] ${
+          lang === "ar" ? "font-arabic" : "font-mono"
+        }`}
+      >
+        <div className={`absolute top-5 bottom-5 flex flex-col text-[11px] text-muted-foreground/40 select-none pointer-events-none ${
+          lang === "ar" ? "right-2" : "left-2"
+        }`}>
           {Array.from({ length: committed.length + 1 }).map((_, i) => (
-            <span key={i} className="leading-[1.85] tabular-nums">
+            <span key={i} className="leading-[1.95] tabular-nums">
               {String(i + 1).padStart(2, "0")}
             </span>
           ))}
         </div>
 
-        <div className="pl-8">
+        <div className={lang === "ar" ? "pr-8" : "pl-8"}>
           {committed.map((idx, k) => (
             <div key={`c-${k}-${idx}`} className="opacity-60">
               {renderLine(LINES[idx], totalChars(LINES[idx]))}
@@ -230,15 +244,11 @@ const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
             {renderLine(LINES[lineIdx], charCount)}
             <span
               className="inline-block align-middle ml-0.5 w-[7px] h-[15px] -mb-[2px] bg-primary-glow rounded-[1px] animate-pulse"
-              style={{
-                boxShadow:
-                  "0 0 12px hsl(45 90% 70% / 0.9), 0 0 28px hsl(45 90% 70% / 0.5)",
-              }}
+              style={{ boxShadow: "0 0 12px hsl(45 90% 70% / 0.9), 0 0 28px hsl(45 90% 70% / 0.5)" }}
             />
           </div>
         </div>
 
-        {/* Soft top/bottom fades */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-card/80 to-transparent" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-card/80 to-transparent" />
       </div>
