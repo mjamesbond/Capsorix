@@ -13,7 +13,7 @@ const Ctx = createContext<I18nCtx | null>(null);
 const STORAGE_KEY = "capsorix-lang";
 const LEGACY_STORAGE_KEY = "nexora-lang";
 
-const isLang = (v: unknown): v is Lang => v === "ar" || v === "en" || v === "fr";
+const isLang = (v: unknown): v is Lang => v === "ar" || v === "en" || v === "fr" || v === "de";
 
 const getInitial = (): Lang => {
   if (typeof window === "undefined") return "en";
@@ -29,6 +29,7 @@ const getInitial = (): Lang => {
   const nav = window.navigator.language?.toLowerCase() ?? "";
   if (nav.startsWith("ar")) return "ar";
   if (nav.startsWith("fr")) return "fr";
+  if (nav.startsWith("de")) return "de";
   return "en";
 };
 
