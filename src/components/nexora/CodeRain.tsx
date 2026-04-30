@@ -46,6 +46,25 @@ const SNIPPETS_AR = [
   "// لا نَعِد بالكثير — نُسلّم ما يبقى",
 ];
 
+// French snippets — same rhythm, native voice.
+const SNIPPETS_FR = [
+  "retourner précision + stratégie + exécution;",
+  "si (client.nousFaitConfiance) étendre(client.métier);",
+  "créer({ qualité: 'haute', détail: 'obsessionnel' });",
+  "attendre répondre.sous(24, 48);",
+  "bâtir(produit, { confiance: vrai });",
+  "tant que (vision.vivante) affiner();",
+  "garde produit.estPrêt sinon { itérer() }",
+  "// le travail parle avant nous",
+  "déployer(produit, vers: .production, avec: .soin);",
+  "livrer({ impact: 'long-terme' });",
+  "fonction bâtirProduit(visionClient) {",
+  "résultat = maîtrise * patience;",
+  "// chaque détail se cumule",
+  "confiance = années * clientsServis;",
+  "système.optimiser('attention-au-détail');",
+];
+
 const colorFor = (line: string) => {
   const t = line.trim();
   if (t.startsWith("//")) return "text-[hsl(220_15%_38%)] italic";
