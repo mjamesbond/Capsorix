@@ -137,6 +137,65 @@ const LINES_AR: Token[][] = [
   ],
 ];
 
+// French pseudo-code — same intent, native phrasing.
+const LINES_FR: Token[][] = [
+  [{ t: "// le moteur — chaque décision se cumule", c: C.cmt }],
+  [
+    { t: "fonction ", c: C.kw },
+    { t: "bâtirProduit", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "visionClient", c: C.var },
+    { t: ") {", c: C.pun },
+  ],
+  [
+    { t: "  retourner ", c: C.kw },
+    { t: "précision", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "stratégie", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "exécution", c: C.var },
+    { t: ";", c: C.pun },
+  ],
+  [{ t: "}", c: C.pun }],
+  [
+    { t: "const ", c: C.kw },
+    { t: "résultat", c: C.var },
+    { t: " = ", c: C.pun },
+    { t: "créer", c: C.fn },
+    { t: "({", c: C.pun },
+  ],
+  [{ t: "  qualité: ", c: C.var }, { t: "'haute'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  détail: ", c: C.var }, { t: "'obsessionnel'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  impact: ", c: C.var }, { t: "'long-terme'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "});", c: C.pun }],
+  [{ t: "// la confiance est la vraie monnaie", c: C.cmt }],
+  [
+    { t: "si ", c: C.kw },
+    { t: "(", c: C.pun },
+    { t: "client", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "nousFaitConfiance", c: C.fn },
+    { t: ") { ", c: C.pun },
+    { t: "étendre", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "client", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "métier", c: C.var },
+    { t: "); }", c: C.pun },
+  ],
+  [
+    { t: "attendre ", c: C.kw },
+    { t: "répondre", c: C.fn },
+    { t: ".", c: C.pun },
+    { t: "sous", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "24", c: C.num },
+    { t: ", ", c: C.pun },
+    { t: "48", c: C.num },
+    { t: ");", c: C.pun },
+  ],
+];
+
 const totalChars = (line: Token[]) => line.reduce((n, tok) => n + tok.t.length, 0);
 
 const renderLine = (line: Token[], typed: number) => {
