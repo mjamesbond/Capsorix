@@ -67,10 +67,12 @@
 
 @layer components {
   .text-gradient-gold {
-    background: var(--gradient-text-gold);
+    background: linear-gradient(110deg, hsl(45 90% 75%) 0%, hsl(42 70% 55%) 35%, hsl(48 95% 80%) 55%, hsl(38 60% 45%) 100%);
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
   }
   .glass {
     background: hsl(222 45% 8% / 0.5);
@@ -100,15 +102,112 @@
     transition: opacity 0.4s var(--transition-smooth);
   }
   .gold-border-glow:hover::before { opacity: 1; }
+
+  /* Animated gold border ring (rotating conic) */
+  .gold-ring {
+    position: relative;
+    isolation: isolate;
+  }
+  .gold-ring::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      hsl(42 70% 50% / 0.0) 0deg,
+      hsl(45 90% 70% / 0.9) 60deg,
+      hsl(42 70% 50% / 0.0) 140deg,
+      hsl(45 90% 70% / 0.0) 220deg,
+      hsl(48 95% 80% / 0.7) 300deg,
+      hsl(42 70% 50% / 0.0) 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    animation: rotate-angle 6s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s var(--transition-smooth);
+    pointer-events: none;
+  }
+  .gold-ring:hover::before { opacity: 1; }
+
+  /* Shimmer sweep over gold buttons */
+  .btn-shimmer {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 35%,
+      hsl(0 0% 100% / 0.45) 50%,
+      transparent 65%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.9s var(--transition-smooth);
+    pointer-events: none;
+  }
+  .btn-shimmer:hover::after { transform: translateX(100%); }
+
+  /* Animated gold gradient background */
+  .bg-gold-animated {
+    background: linear-gradient(110deg, hsl(42 70% 45%), hsl(45 90% 70%), hsl(40 60% 50%), hsl(48 95% 78%), hsl(42 70% 45%));
+    background-size: 300% 100%;
+    animation: gradient-shift 6s ease-in-out infinite;
+  }
+
   .grid-bg {
     background-image:
       linear-gradient(hsl(42 50% 60% / 0.06) 1px, transparent 1px),
       linear-gradient(90deg, hsl(42 50% 60% / 0.06) 1px, transparent 1px);
     background-size: 60px 60px;
   }
+
+  /* Section divider — cinematic gold hairline */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(42 65% 58% / 0.5) 50%, transparent 100%);
+  }
+
+  /* Reveal-on-scroll base */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s var(--transition-smooth), transform 1.1s var(--transition-smooth);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-blur {
+    filter: blur(8px);
+    transition: opacity 1s var(--transition-smooth), transform 1.1s var(--transition-smooth), filter 1s var(--transition-smooth);
+  }
+  .reveal-blur.is-visible {
+    filter: blur(0);
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-angle {
+  to { --angle: 360deg; }
 }
 
 @layer utilities {
   .font-display { font-family: 'Cormorant Garamond', serif; letter-spacing: -0.01em; }
   .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+  .will-parallax { will-change: transform; }
 }
