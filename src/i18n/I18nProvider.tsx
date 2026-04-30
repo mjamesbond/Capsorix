@@ -51,11 +51,13 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       en: "Capsorix — We Build Digital Empires",
       fr: "Capsorix — Nous bâtissons des empires numériques",
       ar: "كابسوريكس — نبني إمبراطوريات رقميّة",
+      de: "Capsorix — Wir bauen digitale Imperien",
     };
     const descriptions: Record<Lang, string> = {
       en: "Capsorix crafts elite mobile apps, web platforms, and custom systems. Full-cycle product development from idea to launch.",
       fr: "Capsorix conçoit des applications mobiles, plateformes web et systèmes sur mesure d’élite. Développement produit de bout en bout, de l’idée au lancement.",
       ar: "تصنع كابسوريكس تطبيقات موبايل ومنصّات ويب وأنظمة مخصّصة من الطراز الرفيع. تطوير منتجات متكامل من الفكرة إلى الإطلاق.",
+      de: "Capsorix entwickelt erstklassige Mobile-Apps, Web-Plattformen und maßgeschneiderte Systeme. Produktentwicklung von der Idee bis zum Launch — aus einer Hand.",
     };
     document.title = titles[lang];
     const meta = document.querySelector('meta[name="description"]');
