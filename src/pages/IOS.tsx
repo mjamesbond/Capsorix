@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
 import {
-  Apple,
-  ArrowLeft,
   ArrowRight,
   CheckCircle2,
   Cpu,
@@ -13,10 +10,12 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
+  Apple,
 } from "lucide-react";
 import SwiftEditor from "@/components/nexora/SwiftEditor";
 import CodeRain from "@/components/nexora/CodeRain";
 import Reveal from "@/components/nexora/Reveal";
+import SubpageShell from "@/components/nexora/SubpageShell";
 import { useParallax } from "@/hooks/use-reveal";
 
 const navigator = [
@@ -76,33 +75,13 @@ const IOS = () => {
   const heroParallax = useParallax<HTMLDivElement>(0.1);
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Top nav */}
-      <header className="fixed top-0 inset-x-0 z-50 border-b border-border/30 bg-background/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between h-16">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary-glow transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span className="tracking-[0.2em] uppercase text-[11px]">Nexora</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-muted-foreground">
-            <Apple className="w-3.5 h-3.5 text-primary-glow" />
-            iOS Atelier
-          </div>
-          <a
-            href="/#contact"
-            className="btn-shimmer inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2 text-xs font-semibold text-primary-foreground shadow-gold gold-ring"
-          >
-            Start a Project
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </header>
-
+    <SubpageShell>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-40 pb-20 overflow-hidden">
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-muted-foreground/70">
+          <Apple className="w-3 h-3 text-primary-glow" />
+          iOS · Discipline No. 01
+        </div>
         <CodeRain density={6} parallaxSpeed={0.08} />
         <div ref={heroParallax} className="absolute -top-40 left-1/2 -translate-x-1/2 w-[60rem] h-[60rem] rounded-full bg-primary/10 blur-[160px] will-parallax" />
 
@@ -283,7 +262,7 @@ const IOS = () => {
           </Reveal>
         </div>
       </section>
-    </div>
+    </SubpageShell>
   );
 };
 
