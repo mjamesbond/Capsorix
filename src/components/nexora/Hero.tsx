@@ -116,6 +116,8 @@ const Hero = () => {
         {/* Scroll cue */}
         <div className="absolute left-1/2 -translate-x-1/2 bottom-8 hidden md:flex flex-col items-center gap-3 opacity-70">
           <span className="text-[10px] tracking-[0.4em] uppercase text-muted-foreground">{t.hero.scroll}</span>
+          <div className="relative w-px h-14 overflow-hidden bg-border/40">
+            <div className="absolute inset-x-0 h-6 bg-gradient-to-b from-primary-glow to-transparent animate-[float_2.5s_ease-in-out_infinite]" />
           </div>
         </div>
       </div>
