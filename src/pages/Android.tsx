@@ -242,7 +242,7 @@ const Android = () => {
       </section>
 
       {/* Capabilities */}
-      <section className="relative py-32">
+      <section className="relative section">
         <div className="container">
           <Reveal className="max-w-3xl mb-20">
             <p className="text-xs tracking-[0.35em] uppercase text-primary mb-5">— Capabilities</p>
@@ -273,7 +273,7 @@ const Android = () => {
       </section>
 
       {/* CTA */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative section overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(42_70%_45%/0.12),transparent_70%)]" />
         <div className="container relative">
           <Reveal className="max-w-3xl mx-auto text-center rounded-3xl glass-strong gold-border-glow gold-ring p-14">
