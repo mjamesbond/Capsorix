@@ -219,9 +219,12 @@ interface CodePanelProps {
 
 const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
   const { lang } = useI18n();
-  const LINES = lang === "ar" ? LINES_AR : LINES_EN;
-  const fileName = lang === "ar" ? "نكسورا · المحرّك.نكس" : "nexora · engine.ts";
-  const liveLabel = lang === "ar" ? "حيّ" : "live";
+  const LINES = lang === "ar" ? LINES_AR : lang === "fr" ? LINES_FR : LINES_EN;
+  const fileName =
+    lang === "ar" ? "نكسورا · المحرّك.نكس" :
+    lang === "fr" ? "nexora · moteur.ts" :
+    "nexora · engine.ts";
+  const liveLabel = lang === "ar" ? "حيّ" : lang === "fr" ? "en direct" : "live";
 
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);
