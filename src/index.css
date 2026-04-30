@@ -496,8 +496,8 @@
   }
   /* Inactive label drifts 1px outward at rest, settles when hovered.
      Only applies to the 2-state variant; the 3-state has a centered middle. */
-  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
-  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
+  .lang-switch:not(.lang-switch--tri):not(.lang-switch--quad) .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
+  .lang-switch:not(.lang-switch--tri):not(.lang-switch--quad) .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
   .lang-switch:hover .lang-switch__btn:not(.is-active) { transform: translateX(0); }
 
   /* ========================================================
