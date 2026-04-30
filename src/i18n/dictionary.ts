@@ -53,7 +53,7 @@ export const dict: Record<Lang, Dict> = {
       cta: "Start a project",
     },
     hero: {
-      badge: "Selective intake — a few projects each quarter",
+      badge: "Code without limits — Your next digital move",
       titleA: "We don’t ship",
       titleApps: "apps.",
       titleB: "We build",
@@ -197,7 +197,7 @@ export const dict: Record<Lang, Dict> = {
       },
     },
     finalCta: {
-      badge: "Selective intake — a few projects each quarter",
+      badge: "Code without limits — Your next digital move",
       titleA: "If you have an idea —",
       titleB: " send it.",
       lead:
@@ -227,7 +227,7 @@ export const dict: Record<Lang, Dict> = {
       cta: "ابدأ مشروعك",
     },
     hero: {
-      badge: "نختار مشاريعنا بعناية — عدد محدود كل ربع سنة",
+      badge: "برمجة بلا حدود — خُطوتك الرقمية القادمة",
       titleA: "لا نُطلق",
       titleApps: "مجرّد تطبيقات.",
       titleB: "نبني",
