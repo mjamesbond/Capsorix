@@ -255,6 +255,8 @@ const LINES_DE: Token[][] = [
   ],
 ];
 
+const totalChars = (line: Token[]) => line.reduce((n, tok) => n + tok.t.length, 0);
+
 const renderLine = (line: Token[], typed: number) => {
   let remaining = typed;
   return line.map((tok, i) => {
