@@ -31,7 +31,7 @@ const C = {
 // Per-language meanings keyed by token id. Each language is a
 // rewrite, not a literal translation — the same calm precision in
 // native phrasing for each audience.
-const MEANINGS: Record<"en" | "fr" | "ar", Record<string, string>> = {
+const MEANINGS: Record<"en" | "fr" | "ar" | "de", Record<string, string>> = {
   en: {
     "fe.const": "Immutable binding — predictable state.",
     "fe.experience": "The brand moment your visitor remembers.",
