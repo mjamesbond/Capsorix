@@ -193,6 +193,7 @@ const LINES_FR: Token[][] = [
     { t: ", ", c: C.pun },
     { t: "48", c: C.num },
     { t: ");", c: C.pun },
+  ],
 ];
 
 // German pseudo-code — same intent, native phrasing.
