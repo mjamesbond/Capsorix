@@ -193,7 +193,7 @@ const Contact = () => {
             <div className="relative">
               {submitted ? (
                 <div className="glass-strong rounded-3xl p-10 md:p-14 gold-border-glow gold-ring shadow-elegant relative overflow-hidden text-center animate-scale-in">
-                  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] rounded-full bg-primary/15 blur-[120px] animate-glow-pulse pointer-events-none" />
+                  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] rounded-full bg-primary/8 blur-[140px] pointer-events-none" />
                   <div className="relative">
                     <div className="mx-auto mb-8 w-20 h-20 rounded-full bg-gradient-gold-soft border border-primary/40 flex items-center justify-center gold-ring">
                       <CheckCircle2 className="w-9 h-9 text-primary-glow" strokeWidth={1.5} />
