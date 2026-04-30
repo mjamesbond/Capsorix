@@ -64,7 +64,7 @@ export const dict: Record<Lang, Dict> = {
       subStrong: "Read personally. Answered within 24–48 hours.",
       ctaPrimary: "Send your project",
       ctaSecondary: "See our work",
-      foot: "Selective intake · Read personally · NDA on request",
+      foot: "Code without limits · Read personally · NDA on request",
       scroll: "Scroll",
     },
     trust: {
@@ -238,7 +238,7 @@ export const dict: Record<Lang, Dict> = {
       subStrong: "نقرأ كل طلب بأنفسنا، ونردّ عليه خلال 24 إلى 48 ساعة.",
       ctaPrimary: "أرسل مشروعك",
       ctaSecondary: "شاهد ما نبنيه",
-      foot: "اختيار دقيق · قراءة شخصية · اتفاقية سرّية عند الطلب",
+      foot: "برمجة بلا حدود · قراءة شخصية · اتفاقية سرية",
       scroll: "تابع للأسفل",
     },
     trust: {
@@ -371,7 +371,7 @@ export const dict: Record<Lang, Dict> = {
       },
     },
     finalCta: {
-      badge: "اختيار دقيق — مشاريع محدودة كل ربع",
+      badge: "برمجة بلا حدود — خُطوتك الرقمية القادمة",
       titleA: "إن كانت لديك فكرة —",
       titleB: " أرسلها.",
       lead:
@@ -545,7 +545,7 @@ export const dict: Record<Lang, Dict> = {
       },
     },
     finalCta: {
-      badge: "Sélection rigoureuse — quelques projets par trimestre",
+      badge: "Code sans limites — Votre prochain mouvement digital",
       titleA: "Si vous avez une idée —",
       titleB: " envoyez-la.",
       lead:
