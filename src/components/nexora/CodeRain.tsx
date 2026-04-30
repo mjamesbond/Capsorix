@@ -77,6 +77,12 @@ const colorFor = (line: string) => {
       t.startsWith("طالما") || t.startsWith("انتظر") || t.startsWith("أنشئ") ||
       t.startsWith("ابنِ") || t.startsWith("أطلق"))
     return "text-[hsl(45_85%_60%)]";
+  // French keywords
+  if (t.startsWith("retourner") || t.startsWith("fonction") || t.startsWith("si ") ||
+      t.startsWith("tant que") || t.startsWith("attendre") || t.startsWith("créer") ||
+      t.startsWith("bâtir") || t.startsWith("déployer") || t.startsWith("livrer") ||
+      t.startsWith("garde"))
+    return "text-[hsl(45_85%_60%)]";
   return "text-[hsl(40_25%_70%)]";
 };
 
