@@ -1,6 +1,8 @@
 import heroBg from "@/assets/hero-bg.jpg";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useParallax } from "@/hooks/use-reveal";
+import CodePanel from "./CodePanel";
+import CodeRain from "./CodeRain";
 
 const Hero = () => {
   const bgRef = useParallax<HTMLDivElement>(0.25);
@@ -16,13 +18,16 @@ const Hero = () => {
           alt=""
           width={1920}
           height={1280}
-          className="w-full h-full object-cover opacity-55"
+          className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/70 to-background" />
         <div className="absolute inset-0 grid-bg opacity-40" />
         {/* Vignette */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background))_95%)]" />
       </div>
+
+      {/* Living code backdrop */}
+      <CodeRain density={7} parallaxSpeed={0.08} />
 
       {/* Floating gold orbs with parallax */}
       <div
@@ -36,7 +41,8 @@ const Hero = () => {
       />
 
       <div className="container relative">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
+        <div className="max-w-3xl text-center lg:text-left">
           <div className="inline-flex items-center gap-2.5 rounded-full glass-strong px-5 py-2.5 mb-10 animate-fade-in gold-ring">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-glow opacity-75" />
@@ -48,7 +54,7 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] leading-[0.92] font-medium mb-10 animate-fade-in-up tracking-tight">
+          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] font-medium mb-10 animate-fade-in-up tracking-tight">
             We Build{" "}
             <span className="text-gradient-gold italic relative inline-block">
               Digital
@@ -59,7 +65,7 @@ const Hero = () => {
           </h1>
 
           <p
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-fade-in-up"
             style={{ animationDelay: "0.25s" }}
           >
             Custom mobile apps, web platforms, and bespoke systems —
@@ -70,7 +76,7 @@ const Hero = () => {
           </p>
 
           <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up"
+            className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-fade-in-up"
             style={{ animationDelay: "0.45s" }}
           >
             <a
@@ -97,6 +103,15 @@ const Hero = () => {
           >
             Free 30-min strategy call · No obligation · NDA on request
           </p>
+        </div>
+
+        {/* Living code panel */}
+        <div
+          className="hidden lg:block animate-fade-in-up"
+          style={{ animationDelay: "0.35s" }}
+        >
+          <CodePanel />
+        </div>
         </div>
 
         {/* Scroll cue */}
