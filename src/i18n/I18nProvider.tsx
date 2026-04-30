@@ -10,12 +10,22 @@ interface I18nCtx {
 }
 
 const Ctx = createContext<I18nCtx | null>(null);
-const STORAGE_KEY = "nexora-lang";
+const STORAGE_KEY = "capsorix-lang";
+const LEGACY_STORAGE_KEY = "nexora-lang";
+
+const isLang = (v: unknown): v is Lang => v === "ar" || v === "en" || v === "fr";
 
 const getInitial = (): Lang => {
   if (typeof window === "undefined") return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "ar" || stored === "en" || stored === "fr") return stored;
+  if (isLang(stored)) return stored;
+  // Migrate any prior selection so returning visitors keep their language.
+  const legacy = window.localStorage.getItem(LEGACY_STORAGE_KEY);
+  if (isLang(legacy)) {
+    window.localStorage.setItem(STORAGE_KEY, legacy);
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+    return legacy;
+  }
   const nav = window.navigator.language?.toLowerCase() ?? "";
   if (nav.startsWith("ar")) return "ar";
   if (nav.startsWith("fr")) return "fr";

@@ -146,7 +146,7 @@ const SwiftEditor = ({ className = "", speed = 28 }: SwiftEditorProps) => {
         <span className="w-3 h-3 rounded-full bg-[hsl(45_85%_60%)]" />
         <span className="w-3 h-3 rounded-full bg-[hsl(140_50%_55%)]" />
         <div className="ml-4 flex items-center gap-2 text-[11px] text-muted-foreground/80">
-          <span className="font-mono">Nexora.xcodeproj</span>
+          <span className="font-mono">Capsorix.xcodeproj</span>
           <span className="text-muted-foreground/40">›</span>
           <span className="font-mono text-foreground/80">DigitalProduct.swift</span>
         </div>

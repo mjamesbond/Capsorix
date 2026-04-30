@@ -145,7 +145,7 @@ const Contact = () => {
 
             <ul className="space-y-4 pt-8 border-t border-border/40">
               {[
-                { icon: Mail, label: "studio@nexora.dev" },
+                { icon: Mail, label: "studio@capsorix.dev" },
                 { icon: Phone, label: "+1 (415) 555-0102" },
                 { icon: MapPin, label: "Remote · NYC · Dubai" },
               ].map((c) => (

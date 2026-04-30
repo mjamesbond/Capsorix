@@ -221,9 +221,9 @@ const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
   const { lang } = useI18n();
   const LINES = lang === "ar" ? LINES_AR : lang === "fr" ? LINES_FR : LINES_EN;
   const fileName =
-    lang === "ar" ? "نكسورا · المحرّك.نكس" :
-    lang === "fr" ? "nexora · moteur.ts" :
-    "nexora · engine.ts";
+    lang === "ar" ? "كابسوريكس · المحرّك.كبس" :
+    lang === "fr" ? "capsorix · moteur.ts" :
+    "capsorix · engine.ts";
   const liveLabel = lang === "ar" ? "حيّ" : lang === "fr" ? "en direct" : "live";
 
   const [lineIdx, setLineIdx] = useState(0);

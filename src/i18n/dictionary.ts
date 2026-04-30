@@ -184,7 +184,7 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "Please review the form",
       toastSendErr: "We couldn’t send your request",
-      toastSendErrDesc: "Please try again in a moment, or write to studio@nexora.dev directly.",
+      toastSendErrDesc: "Please try again in a moment, or write to studio@capsorix.dev directly.",
       validation: {
         full_name: "Please enter your full name",
         email: "Please enter a valid email",
@@ -203,7 +203,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "Or even a feeling that something needs to be built right. We’ll read it with a builder’s mindset, not a sales one — and reply personally within 24–48 hours.",
       cta: "Send your project",
-      or: "or write to studio@nexora.dev",
+      or: "or write to studio@capsorix.dev",
       reply: "Reply in 24–48h",
       nda: "NDA on request",
       noObligation: "No obligation",
@@ -358,7 +358,7 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "راجع البيانات من فضلك",
       toastSendErr: "تعذّر إرسال طلبك",
-      toastSendErrDesc: "حاول مجددًا بعد لحظات، أو راسلنا على studio@nexora.dev مباشرةً.",
+      toastSendErrDesc: "حاول مجددًا بعد لحظات، أو راسلنا على studio@capsorix.dev مباشرةً.",
       validation: {
         full_name: "اكتب اسمك الكامل من فضلك",
         email: "اكتب بريدًا إلكترونيًا صحيحًا",
@@ -377,7 +377,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "أو حتى مجرّد إحساس بأن شيئًا ما يستحقّ أن يُبنى بشكل صحيح. نقرأها بعقلية المهندس، لا عقلية البائع — ونردّ عليك شخصيًا خلال 24 إلى 48 ساعة.",
       cta: "أرسل مشروعك",
-      or: "أو راسلنا على studio@nexora.dev",
+      or: "أو راسلنا على studio@capsorix.dev",
       reply: "ردّ خلال 24–48 ساعة",
       nda: "اتفاقية سرّية عند الطلب",
       noObligation: "بلا أيّ التزام",
@@ -532,7 +532,7 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "Merci de vérifier le formulaire",
       toastSendErr: "Impossible d’envoyer votre demande",
-      toastSendErrDesc: "Réessayez dans un instant, ou écrivez-nous à studio@nexora.dev.",
+      toastSendErrDesc: "Réessayez dans un instant, ou écrivez-nous à studio@capsorix.dev.",
       validation: {
         full_name: "Veuillez saisir votre nom complet",
         email: "Veuillez saisir un e-mail valide",
@@ -551,7 +551,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "Ou simplement l’intuition que quelque chose mérite d’être bâti correctement. Nous la lirons en bâtisseurs, non en commerciaux — et répondrons personnellement sous 24 à 48 heures.",
       cta: "Envoyer le projet",
-      or: "ou écrivez à studio@nexora.dev",
+      or: "ou écrivez à studio@capsorix.dev",
       reply: "Réponse sous 24–48 h",
       nda: "NDA sur demande",
       noObligation: "Sans engagement",
