@@ -14,7 +14,7 @@ const steps = [
 const Process = () => {
   const orbRef = useParallax<HTMLDivElement>(0.18);
   return (
-    <section id="process" className="relative py-40 overflow-hidden">
+    <section id="process" className="relative section overflow-hidden">
       <div className="absolute inset-0 grid-bg opacity-30" />
       <CodeRain density={5} parallaxSpeed={0.15} className="opacity-70" />
       <div
@@ -44,8 +44,8 @@ const Process = () => {
               >
                 <div className="relative mb-6">
                   <div className="absolute inset-0 rounded-full bg-gradient-gold blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-700" />
-                  <div className="relative w-20 h-20 rounded-full glass-strong flex items-center justify-center gold-border-glow gold-ring group-hover:scale-110 transition-transform duration-700">
-                    <step.icon className="w-7 h-7 text-primary-glow group-hover:rotate-6 transition-transform duration-500" strokeWidth={1.4} />
+                  <div className="relative w-20 h-20 rounded-full glass-strong flex items-center justify-center gold-border-glow gold-ring icon-tile">
+                    <step.icon className="w-7 h-7 text-primary-glow " strokeWidth={1.4} />
                   </div>
                   <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-gold-animated text-primary-foreground text-xs font-bold flex items-center justify-center shadow-gold">
                     {i + 1}
