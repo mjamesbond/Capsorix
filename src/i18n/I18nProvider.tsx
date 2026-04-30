@@ -57,7 +57,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       dir: lang === "ar" ? "rtl" : "ltr",
       t: dict[lang],
       setLang,
-      toggle: () => setLang(lang === "en" ? "ar" : "en"),
+      toggle: () => {
+        const order: Lang[] = ["en", "fr", "ar"];
+        const idx = order.indexOf(lang);
+        setLang(order[(idx + 1) % order.length]);
+      },
     }),
     [lang],
   );
