@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap');
 
 @layer base {
   :root {
@@ -316,5 +316,45 @@
 @layer utilities {
   .font-display { font-family: 'Cormorant Garamond', serif; letter-spacing: -0.01em; }
   .font-sans { font-family: 'Inter', system-ui, sans-serif; }
+  .font-arabic { font-family: 'Tajawal', system-ui, sans-serif; }
   .will-parallax { will-change: transform; }
+
+  /* ========================================================
+   * Arabic / RTL — switch to a premium Arabic typeface set
+   * and balance line-height + tracking for readability.
+   * ======================================================*/
+  html[lang="ar"] body {
+    font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+    letter-spacing: 0;
+  }
+  html[lang="ar"] .font-display {
+    font-family: 'Amiri', 'Cormorant Garamond', serif;
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+  html[lang="ar"] .font-sans {
+    font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+  }
+  /* Keep latin-only utilities readable in RTL (uppercase tracking is ugly in Arabic) */
+  html[lang="ar"] .uppercase { text-transform: none; }
+  html[lang="ar"] .tracking-\[0\.35em\],
+  html[lang="ar"] .tracking-\[0\.3em\],
+  html[lang="ar"] .tracking-\[0\.25em\],
+  html[lang="ar"] .tracking-\[0\.2em\],
+  html[lang="ar"] .tracking-\[0\.4em\],
+  html[lang="ar"] .tracking-widest { letter-spacing: 0.04em; }
+
+  /* Mirror directional arrows in RTL */
+  html[dir="rtl"] .lucide-arrow-right { transform: scaleX(-1); }
+
+  /* Smooth, controlled language switch — quiet crossfade */
+  body {
+    transition: opacity 320ms var(--transition-smooth),
+                filter 320ms var(--transition-smooth);
+  }
+  body.lang-switching {
+    opacity: 0;
+    filter: blur(6px);
+    pointer-events: none;
+  }
 }
