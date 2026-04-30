@@ -1,8 +1,8 @@
-// Bilingual dictionary — English and Arabic.
-// Arabic is intentionally NOT a literal translation. It is a cultural rewrite
-// that carries the same calm, premium tone in native phrasing.
+// Trilingual dictionary — English, Arabic, French.
+// Each language is a *cultural rewrite*, not a literal translation: the same
+// calm, precise tone is carried in native phrasing for each audience.
 
-export type Lang = "en" | "ar";
+export type Lang = "en" | "ar" | "fr";
 
 type Pillar = { title: string; desc: string };
 type Principle = { k: string; t: string; d: string };
