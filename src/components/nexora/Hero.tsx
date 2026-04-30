@@ -52,11 +52,11 @@ const Hero = () => {
             </span>
           </div>
 
-          <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] font-medium mb-10 animate-fade-in-up tracking-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4.75rem] xl:text-[5.25rem] leading-[1.02] font-medium mb-8 animate-fade-in-up tracking-tight max-w-[18ch] mx-auto lg:mx-0">
             We don’t build{" "}
             <span className="text-gradient-gold italic relative inline-block">
               apps.
-              <span className="absolute -inset-x-6 -inset-y-3 bg-gradient-gold/10 blur-3xl -z-10" />
+              <span className="absolute -inset-x-4 -inset-y-2 bg-gradient-gold/10 blur-2xl -z-10" />
             </span>
             <br />
             We build <span className="text-gradient-gold">systems</span> that grow businesses.
