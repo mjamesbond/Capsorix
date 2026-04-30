@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { z } from "zod";
 import {
-  ArrowRight, Mail, MapPin, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send,
+  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,6 +52,10 @@ const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  // Captured at the moment of submission so the confirmation screen can
+  // greet the client by name and display a stable reference even after
+  // the form state is reset.
+  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date } | null>(null);
 
   // Build a localized schema each render — cheap and keeps messages in sync.
   const schema = useMemo(() => z.object({
