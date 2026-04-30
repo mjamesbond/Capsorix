@@ -2,10 +2,12 @@ import { useState } from "react";
 import { z } from "zod";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Reveal from "./Reveal";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
   email: z.string().trim().email("Invalid email").max(255),
+  phone: z.string().trim().max(40).optional().or(z.literal("")),
   projectType: z.string().min(1, "Select a project type"),
   budget: z.string().min(1, "Select a budget range"),
   timeline: z.string().min(1, "Select a timeline"),
@@ -19,7 +21,7 @@ const Contact = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    name: "", email: "", projectType: "", budget: "", timeline: "", description: "",
+    name: "", email: "", phone: "", projectType: "", budget: "", timeline: "", description: "",
   });
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
@@ -36,21 +38,22 @@ const Contact = () => {
     await new Promise((r) => setTimeout(r, 900));
     setSubmitting(false);
     toast({ title: "Request received", description: "Our team will reach out within 24 hours." });
-    setForm({ name: "", email: "", projectType: "", budget: "", timeline: "", description: "" });
+    setForm({ name: "", email: "", phone: "", projectType: "", budget: "", timeline: "", description: "" });
   };
 
   return (
-    <section id="contact" className="relative py-32">
+    <section id="contact" className="relative py-40">
+      <div className="absolute inset-x-0 top-0 section-divider" />
       <div className="container">
-        <div className="grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.3em] uppercase text-primary mb-4">— Contact</p>
+        <div className="grid lg:grid-cols-12 gap-16">
+          <Reveal className="lg:col-span-5">
+            <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">— Contact</p>
             <h2 className="font-display text-5xl md:text-6xl font-medium leading-[1.05] mb-6">
               Begin your
               <span className="text-gradient-gold italic"> ascent.</span>
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-              Share the outline of your vision. We respond personally within 24 hours
+            <p className="text-lg text-muted-foreground leading-relaxed mb-12">
+              Share the outline of your vision. We respond personally within 24–48 hours
               with a tailored direction for your project.
             </p>
 
@@ -60,21 +63,22 @@ const Contact = () => {
                 { icon: Phone, label: "+1 (415) 555-0102" },
                 { icon: MapPin, label: "Remote · NYC · Dubai" },
               ].map((c) => (
-                <li key={c.label} className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl glass flex items-center justify-center">
+                <li key={c.label} className="group flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl glass flex items-center justify-center gold-ring transition-transform duration-500 group-hover:scale-110">
                     <c.icon className="w-4 h-4 text-primary-glow" />
                   </div>
-                  <span className="text-foreground/90">{c.label}</span>
+                  <span className="text-foreground/90 group-hover:text-primary-glow transition-colors">{c.label}</span>
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-7">
+          <Reveal className="lg:col-span-7" delay={150}>
             <form
               onSubmit={onSubmit}
-              className="glass-strong rounded-3xl p-8 md:p-10 gold-border-glow shadow-elegant"
+              className="glass-strong rounded-3xl p-8 md:p-12 gold-border-glow gold-ring shadow-elegant relative overflow-hidden"
             >
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">Name</label>
@@ -83,6 +87,10 @@ const Contact = () => {
                 <div>
                   <label className="block text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">Email</label>
                   <input type="email" className={fieldClass} value={form.email} onChange={set("email")} maxLength={255} placeholder="you@company.com" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">Phone <span className="text-muted-foreground/60 normal-case tracking-normal">(optional)</span></label>
+                  <input className={fieldClass} value={form.phone} onChange={set("phone")} maxLength={40} placeholder="+1 (000) 000-0000" />
                 </div>
                 <div>
                   <label className="block text-xs tracking-[0.2em] uppercase text-muted-foreground mb-2">Project Type</label>
@@ -130,13 +138,13 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-8 group inline-flex items-center gap-3 rounded-full bg-gradient-gold px-8 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-wait"
+                className="btn-shimmer mt-10 group inline-flex items-center gap-3 rounded-full bg-gold-animated px-9 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.02] disabled:opacity-60 disabled:cursor-wait gold-ring"
               >
-                {submitting ? "Sending…" : "Submit Request"}
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span className="relative z-10">{submitting ? "Sending…" : "Submit Request"}</span>
+                <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
               </button>
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
