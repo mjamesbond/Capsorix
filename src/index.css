@@ -442,6 +442,10 @@
     will-change: transform;
     pointer-events: none;
   }
+  /* Tri-state variant: thumb is one-third of the rail */
+  .lang-switch__thumb--tri {
+    width: calc(33.333% - 2px);
+  }
   .lang-switch__thumb-inner {
     position: absolute;
     inset: 0;
