@@ -442,6 +442,10 @@
     will-change: transform;
     pointer-events: none;
   }
+  /* Tri-state variant: thumb is one-third of the rail */
+  .lang-switch__thumb--tri {
+    width: calc(33.333% - 2px);
+  }
   .lang-switch__thumb-inner {
     position: absolute;
     inset: 0;
@@ -486,8 +490,34 @@
   .lang-switch__btn.is-active {
     color: hsl(var(--primary-foreground));
   }
-  /* Inactive label drifts 1px outward at rest, settles when hovered */
-  .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
-  .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
+  /* Inactive label drifts 1px outward at rest, settles when hovered.
+     Only applies to the 2-state variant; the 3-state has a centered middle. */
+  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
+  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
   .lang-switch:hover .lang-switch__btn:not(.is-active) { transform: translateX(0); }
+
+  /* ========================================================
+   * French typography tuning
+   * ----------------------------------------------------
+   * French shares the Latin set, but reads with more *air* than English:
+   *   • Small caps and tracking on labels feel cold — soften them.
+   *   • Punctuation spacing (« » : ; ! ?) needs a touch more breathing room.
+   *   • Display headings sit a hair tighter for editorial gravitas.
+   * ======================================================*/
+  html[lang="fr"] body {
+    font-feature-settings: "kern", "calt", "liga", "ss01";
+  }
+  html[lang="fr"] .font-display {
+    letter-spacing: -0.012em;
+    line-height: 1.08;
+  }
+  html[lang="fr"] .uppercase {
+    letter-spacing: 0.18em;          /* slightly tighter than EN, more refined */
+  }
+  html[lang="fr"] .tracking-widest { letter-spacing: 0.22em; }
+  html[lang="fr"] p { line-height: 1.7; }
+
+  /* French high punctuation needs a thin space before — use a real Unicode
+     thin space in copy when authoring; this just ensures it doesn't collapse. */
+  html[lang="fr"] { word-spacing: 0.01em; }
 }

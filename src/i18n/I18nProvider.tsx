@@ -15,9 +15,11 @@ const STORAGE_KEY = "nexora-lang";
 const getInitial = (): Lang => {
   if (typeof window === "undefined") return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "ar" || stored === "en") return stored;
+  if (stored === "ar" || stored === "en" || stored === "fr") return stored;
   const nav = window.navigator.language?.toLowerCase() ?? "";
-  return nav.startsWith("ar") ? "ar" : "en";
+  if (nav.startsWith("ar")) return "ar";
+  if (nav.startsWith("fr")) return "fr";
+  return "en";
 };
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
@@ -55,7 +57,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       dir: lang === "ar" ? "rtl" : "ltr",
       t: dict[lang],
       setLang,
-      toggle: () => setLang(lang === "en" ? "ar" : "en"),
+      toggle: () => {
+        const order: Lang[] = ["en", "fr", "ar"];
+        const idx = order.indexOf(lang);
+        setLang(order[(idx + 1) % order.length]);
+      },
     }),
     [lang],
   );

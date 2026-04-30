@@ -46,6 +46,25 @@ const SNIPPETS_AR = [
   "// لا نَعِد بالكثير — نُسلّم ما يبقى",
 ];
 
+// French snippets — same rhythm, native voice.
+const SNIPPETS_FR = [
+  "retourner précision + stratégie + exécution;",
+  "si (client.nousFaitConfiance) étendre(client.métier);",
+  "créer({ qualité: 'haute', détail: 'obsessionnel' });",
+  "attendre répondre.sous(24, 48);",
+  "bâtir(produit, { confiance: vrai });",
+  "tant que (vision.vivante) affiner();",
+  "garde produit.estPrêt sinon { itérer() }",
+  "// le travail parle avant nous",
+  "déployer(produit, vers: .production, avec: .soin);",
+  "livrer({ impact: 'long-terme' });",
+  "fonction bâtirProduit(visionClient) {",
+  "résultat = maîtrise * patience;",
+  "// chaque détail se cumule",
+  "confiance = années * clientsServis;",
+  "système.optimiser('attention-au-détail');",
+];
+
 const colorFor = (line: string) => {
   const t = line.trim();
   if (t.startsWith("//")) return "text-[hsl(220_15%_38%)] italic";
@@ -57,6 +76,12 @@ const colorFor = (line: string) => {
   if (t.startsWith("إرجاع") || t.startsWith("دالّة") || t.startsWith("إذا") ||
       t.startsWith("طالما") || t.startsWith("انتظر") || t.startsWith("أنشئ") ||
       t.startsWith("ابنِ") || t.startsWith("أطلق"))
+    return "text-[hsl(45_85%_60%)]";
+  // French keywords
+  if (t.startsWith("retourner") || t.startsWith("fonction") || t.startsWith("si ") ||
+      t.startsWith("tant que") || t.startsWith("attendre") || t.startsWith("créer") ||
+      t.startsWith("bâtir") || t.startsWith("déployer") || t.startsWith("livrer") ||
+      t.startsWith("garde"))
     return "text-[hsl(45_85%_60%)]";
   return "text-[hsl(40_25%_70%)]";
 };
@@ -98,7 +123,7 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
   const { lang } = useI18n();
   const ref = useParallax<HTMLDivElement>(parallaxSpeed);
   const [mounted, setMounted] = useState(false);
-  const pool = lang === "ar" ? SNIPPETS_AR : SNIPPETS_EN;
+  const pool = lang === "ar" ? SNIPPETS_AR : lang === "fr" ? SNIPPETS_FR : SNIPPETS_EN;
   // Rebuild columns when language flips so the background actually swaps voices.
   const columns = useMemo(() => buildColumns(density, pool), [density, pool]);
 
