@@ -11,7 +11,7 @@ import Footer from "@/components/nexora/Footer";
 
 const Index = () => {
   return (
-    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden page-enter">
       <Navbar />
       <main>
         <Hero />

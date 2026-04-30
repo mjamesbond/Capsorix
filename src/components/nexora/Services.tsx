@@ -1,30 +1,42 @@
-import { Smartphone, Globe, LayoutDashboard, Rocket, ArrowRight } from "lucide-react";
+import { Smartphone, Globe, LayoutDashboard, Rocket, ArrowRight, Apple } from "lucide-react";
 import Reveal from "./Reveal";
+import { Link } from "react-router-dom";
 
 const services = [
   {
+    icon: Apple,
+    title: "iOS Development",
+    desc: "Native Swift apps engineered with Apple-grade discipline, taste, and frame-perfect polish.",
+    tags: ["Swift", "SwiftUI", "App Store"],
+    to: "/ios",
+  },
+  {
     icon: Smartphone,
-    title: "Mobile Applications",
-    desc: "Native-grade iOS and Android experiences crafted for performance, polish, and longevity.",
-    tags: ["iOS", "Android", "React Native"],
+    title: "Android Development",
+    desc: "Kotlin-first apps with modular architecture, hardened security, and Play Store mastery.",
+    tags: ["Kotlin", "Compose", "Play Store"],
+    to: "/android",
   },
   {
     icon: Globe,
     title: "Web Development",
-    desc: "High-converting websites and web apps built on modern stacks with cinematic UX.",
+    desc: "Frontend craft and backend rigor — interfaces that load instantly and run like clockwork.",
     tags: ["Next.js", "React", "Edge"],
+    to: "/web",
   },
   {
     icon: LayoutDashboard,
     title: "Custom Systems",
     desc: "Bespoke dashboards, internal tools, and enterprise platforms engineered to scale.",
     tags: ["SaaS", "ERP", "Analytics"],
+    to: "#contact",
   },
   {
     icon: Rocket,
     title: "Full-Cycle Product",
     desc: "From the first whiteboard sketch to launch-day applause — strategy, design, build, ship.",
     tags: ["MVP", "Scale", "Launch"],
+    to: "#contact",
   },
 ];
 
@@ -75,6 +87,15 @@ const Services = () => {
                       </span>
                     ))}
                   </div>
+                  {s.to.startsWith("/") && (
+                    <Link
+                      to={s.to}
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary-glow hover:text-primary transition-colors"
+                    >
+                      Enter the {s.title.split(" ")[0]} laboratory
+                      <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+                    </Link>
+                  )}
                 </div>
                 <span className="font-display text-5xl text-primary/20 group-hover:text-primary/60 transition-colors duration-500">
                   0{i + 1}

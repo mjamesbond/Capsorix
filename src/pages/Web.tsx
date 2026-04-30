@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import {
-  ArrowLeft,
   ArrowRight,
   Code2,
   Database,
@@ -16,6 +14,7 @@ import HybridEditor from "@/components/nexora/HybridEditor";
 import CursorOrbs from "@/components/nexora/CursorOrbs";
 import CodeRain from "@/components/nexora/CodeRain";
 import Reveal from "@/components/nexora/Reveal";
+import SubpageShell from "@/components/nexora/SubpageShell";
 
 const capabilities = [
   {
@@ -52,33 +51,13 @@ const capabilities = [
 
 const Web = () => {
   return (
-    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
-      {/* Top nav */}
-      <header className="fixed top-0 inset-x-0 z-50 border-b border-border/30 bg-background/70 backdrop-blur-xl">
-        <div className="container flex items-center justify-between h-16">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary-glow transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span className="tracking-[0.2em] uppercase text-[11px]">Nexora</span>
-          </Link>
-          <div className="hidden md:flex items-center gap-2 text-[11px] tracking-[0.25em] uppercase text-muted-foreground">
-            <Globe className="w-3.5 h-3.5 text-primary-glow" />
-            Web Engineering
-          </div>
-          <a
-            href="/#contact"
-            className="btn-shimmer inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2 text-xs font-semibold text-primary-foreground shadow-gold gold-ring"
-          >
-            Start a Project
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </header>
-
+    <SubpageShell>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-40 pb-20 overflow-hidden">
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-muted-foreground/70">
+          <Globe className="w-3 h-3 text-primary-glow" />
+          Web · Discipline No. 03
+        </div>
         <CodeRain density={5} parallaxSpeed={0.06} />
         <CursorOrbs />
 
@@ -196,7 +175,7 @@ const Web = () => {
           </Reveal>
         </div>
       </section>
-    </div>
+    </SubpageShell>
   );
 };
 
