@@ -15,48 +15,26 @@ import CursorOrbs from "@/components/nexora/CursorOrbs";
 import CodeRain from "@/components/nexora/CodeRain";
 import Reveal from "@/components/nexora/Reveal";
 import SubpageShell from "@/components/nexora/SubpageShell";
+import { useI18n } from "@/i18n/I18nProvider";
 
-const capabilities = [
-  {
-    icon: Layers,
-    title: "React · Next.js",
-    desc: "App Router, RSC, edge rendering — interfaces that load instantly and feel inevitable.",
-  },
-  {
-    icon: Code2,
-    title: "Design Systems",
-    desc: "Tokenized, themable, accessible component libraries that scale across teams and brands.",
-  },
-  {
-    icon: Database,
-    title: "Node · Edge APIs",
-    desc: "Type-safe APIs, queues, streams, and serverless that hold up under real traffic.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Auth · Security",
-    desc: "OAuth, RBAC, rate limiting, and audit trails — secure by architecture, not afterthought.",
-  },
-  {
-    icon: Gauge,
-    title: "Core Web Vitals",
-    desc: "Sub-second LCP, near-zero CLS, and INP tuned to the millisecond. Measurable polish.",
-  },
-  {
-    icon: Workflow,
-    title: "DevOps · CI/CD",
-    desc: "Preview environments, automated checks, observability, and zero-downtime deploys.",
-  },
-];
+const CAPABILITY_ICONS = [Layers, Code2, Database, ShieldCheck, Gauge, Workflow] as const;
 
 const Web = () => {
+  const { t, dir } = useI18n();
+  const s = t.subpages.web;
+  const common = t.subpages.common;
+  const capabilities = s.capabilities.map((c, i) => ({ ...c, icon: CAPABILITY_ICONS[i] }));
+
   return (
     <SubpageShell>
       {/* Hero */}
       <section className="relative pt-40 pb-20 overflow-hidden">
-        <div className="absolute top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-muted-foreground/70">
+        <div
+          className="absolute top-24 left-1/2 -translate-x-1/2 flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-muted-foreground/70"
+          dir={dir}
+        >
           <Globe className="w-3 h-3 text-primary-glow" />
-          Web · Discipline No. 03
+          {s.eyebrow}
         </div>
         <CodeRain density={5} parallaxSpeed={0.06} />
         <CursorOrbs />
@@ -66,21 +44,20 @@ const Web = () => {
             <div className="inline-flex items-center gap-2 rounded-full glass-strong px-5 py-2 mb-8 gold-ring">
               <Globe className="w-3.5 h-3.5 text-primary-glow" />
               <span className="text-[11px] tracking-[0.3em] uppercase text-foreground/80">
-                Web Development
+                {s.chip}
               </span>
             </div>
             <h1 className="font-display text-5xl md:text-7xl lg:text-[6rem] font-medium leading-[0.95] tracking-tight">
-              Where
-              <span className="text-gradient-gold italic"> beauty </span>
-              meets
+              {s.titleA}
+              <span className="text-gradient-gold italic">{s.titleBeauty}</span>
+              {s.titleC}
               <br />
-              <span className="text-gradient-gold">logic.</span>
+              <span className="text-gradient-gold">{s.titleLogic}</span>
             </h1>
             <p className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Frontend craft and backend rigor — composed by the same hands.
-              Sites and platforms that look inevitable and run like clockwork.
+              {s.lead}
               <span className="block mt-2 text-foreground/80 text-sm tracking-wide">
-                Hover any token below to reveal its meaning.
+                {s.hint}
               </span>
             </p>
           </Reveal>
@@ -89,9 +66,9 @@ const Web = () => {
             <HybridEditor />
           </Reveal>
 
-          {/* Live request flow */}
+          {/* Live request flow — kept in mono/English (real protocol tokens) */}
           <Reveal delay={300} className="mt-10">
-            <div className="rounded-2xl glass border border-border/40 px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="rounded-2xl glass border border-border/40 px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-4" dir="ltr">
               <div className="flex items-center gap-3 text-[12px] font-mono text-muted-foreground">
                 <span className="px-2.5 py-1 rounded-full bg-[hsl(200_85%_60%/0.15)] text-[hsl(200_85%_72%)] border border-[hsl(200_85%_60%/0.3)]">
                   client
@@ -105,9 +82,9 @@ const Web = () => {
                 <span className="text-muted-foreground/50">→</span>
                 <span className="text-[hsl(45_85%_65%)]">200 OK · 38ms</span>
               </div>
-              <div className="flex items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
+              <div className="flex items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-muted-foreground" dir={dir}>
                 <span className="w-1.5 h-1.5 rounded-full bg-[hsl(95_55%_55%)] animate-pulse" />
-                Round-trip live
+                {s.flowLive}
               </div>
             </div>
           </Reveal>
@@ -118,14 +95,13 @@ const Web = () => {
       <section className="relative section">
         <div className="container">
           <Reveal className="max-w-3xl mb-20">
-            <p className="text-xs tracking-[0.35em] uppercase text-primary mb-5">— Capabilities</p>
+            <p className="text-xs tracking-[0.35em] uppercase text-primary mb-5">{s.capabilitiesKicker}</p>
             <h2 className="font-display text-5xl md:text-6xl font-medium leading-[1.05]">
-              Two disciplines.
-              <span className="text-gradient-gold italic"> One studio.</span>
+              {s.capabilitiesTitleA}
+              <span className="text-gradient-gold italic">{s.capabilitiesTitleB}</span>
             </h2>
             <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-              We don't hand off between design and engineering — we are both.
-              That's why our products feel coherent from the first pixel to the last query.
+              {s.capabilitiesLead}
             </p>
           </Reveal>
 
@@ -156,21 +132,20 @@ const Web = () => {
           <Reveal className="max-w-3xl mx-auto text-center rounded-3xl glass-strong gold-border-glow gold-ring p-14">
             <Sparkles className="w-6 h-6 text-primary-glow mx-auto mb-6" />
             <h3 className="font-display text-4xl md:text-5xl font-medium leading-tight mb-5">
-              They understand both
+              {s.ctaTitleA}
               <br />
-              <span className="text-gradient-gold italic">beauty and logic.</span>
+              <span className="text-gradient-gold italic">{s.ctaTitleB}</span>
             </h3>
             <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-              If your web product needs taste and engineering in equal measure,
-              start the conversation. Senior reply within 24–48 hours.
+              {s.ctaLead} {common.replyNote}
             </p>
             <a
               href="/#contact"
               className="btn-shimmer inline-flex items-center gap-3 rounded-full bg-gold-animated px-8 py-4 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.04] gold-ring"
             >
               <Zap className="w-4 h-4" />
-              Request Private Consultation
-              <ArrowRight className="w-4 h-4" />
+              {common.consultCta}
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </a>
           </Reveal>
         </div>
