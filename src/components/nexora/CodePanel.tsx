@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/i18n/I18nProvider";
 
 /**
- * Premium "living code" panel — types out symbolic, intentional lines
- * with syntax highlighting and a glowing caret. Loops gracefully.
+ * Living code panel. Two parallel scripts — English JS, Arabic pseudo-code —
+ * type out the same intent in two voices. Switching language swaps the
+ * script entirely (not a translation underneath; a different program).
  */
 
 type Token = { t: string; c: string };
 
-// Tailwind classes for token colors (semantic-ish, gold-leaning palette)
 const C = {
   kw: "text-[hsl(45_90%_70%)]",          // keyword — gold
   fn: "text-[hsl(200_85%_72%)]",         // function — soft cyan
@@ -19,9 +20,7 @@ const C = {
   cls: "text-[hsl(280_55%_75%)]",        // class — soft violet
 };
 
-// Pre-tokenized lines. Real-looking code carrying quiet meaning:
-// each function name and value reinforces precision, control, longevity.
-const LINES: Token[][] = [
+const LINES_EN: Token[][] = [
   [{ t: "// engine — every decision compounds", c: C.cmt }],
   [
     { t: "function ", c: C.kw },
@@ -47,21 +46,9 @@ const LINES: Token[][] = [
     { t: "create", c: C.fn },
     { t: "({", c: C.pun },
   ],
-  [
-    { t: "  quality: ", c: C.var },
-    { t: "'premium'", c: C.str },
-    { t: ",", c: C.pun },
-  ],
-  [
-    { t: "  detail: ", c: C.var },
-    { t: "'obsessive'", c: C.str },
-    { t: ",", c: C.pun },
-  ],
-  [
-    { t: "  impact: ", c: C.var },
-    { t: "'long-term'", c: C.str },
-    { t: ",", c: C.pun },
-  ],
+  [{ t: "  quality: ", c: C.var }, { t: "'premium'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  detail: ", c: C.var }, { t: "'obsessive'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  impact: ", c: C.var }, { t: "'long-term'", c: C.str }, { t: ",", c: C.pun }],
   [{ t: "});", c: C.pun }],
   [{ t: "// trust is the real currency", c: C.cmt }],
   [
@@ -88,6 +75,65 @@ const LINES: Token[][] = [
     { t: ", ", c: C.pun },
     { t: "48", c: C.num },
     { t: ");", c: C.pun },
+  ],
+];
+
+// Arabic pseudo-code — same intent, native phrasing.
+const LINES_AR: Token[][] = [
+  [{ t: "// المحرّك — كل قرار يتراكم", c: C.cmt }],
+  [
+    { t: "دالّة ", c: C.kw },
+    { t: "ابنِ_المنتج", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "رؤية_العميل", c: C.var },
+    { t: ") {", c: C.pun },
+  ],
+  [
+    { t: "  إرجاع ", c: C.kw },
+    { t: "دقّة", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "استراتيجية", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "تنفيذ", c: C.var },
+    { t: "؛", c: C.pun },
+  ],
+  [{ t: "}", c: C.pun }],
+  [
+    { t: "ثابت ", c: C.kw },
+    { t: "النتيجة", c: C.var },
+    { t: " = ", c: C.pun },
+    { t: "أنشئ", c: C.fn },
+    { t: "({", c: C.pun },
+  ],
+  [{ t: "  جودة: ", c: C.var }, { t: "'عالية'", c: C.str }, { t: "،", c: C.pun }],
+  [{ t: "  تفصيل: ", c: C.var }, { t: "'دقيق'", c: C.str }, { t: "،", c: C.pun }],
+  [{ t: "  أثر: ", c: C.var }, { t: "'طويل_المدى'", c: C.str }, { t: "،", c: C.pun }],
+  [{ t: "})؛", c: C.pun }],
+  [{ t: "// الثقة هي العملة الحقيقية", c: C.cmt }],
+  [
+    { t: "إذا ", c: C.kw },
+    { t: "(", c: C.pun },
+    { t: "العميل", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "واثقٌ_بنا", c: C.fn },
+    { t: ") { ", c: C.pun },
+    { t: "وسّع", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "العميل", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "عمله", c: C.var },
+    { t: ")؛ }", c: C.pun },
+  ],
+  [
+    { t: "انتظر ", c: C.kw },
+    { t: "الردّ", c: C.fn },
+    { t: ".", c: C.pun },
+    { t: "خلال", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "٢٤", c: C.num },
+    { t: "، ", c: C.pun },
+    { t: "٤٨", c: C.num },
+    { t: ")؛", c: C.pun },
   ],
 ];
 
