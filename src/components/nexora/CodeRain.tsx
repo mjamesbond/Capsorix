@@ -8,21 +8,21 @@ import { useParallax } from "@/hooks/use-reveal";
  */
 
 const SNIPPETS = [
-  "system.build('precision');",
-  "deploy(excellence);",
-  "if (idea.isPowerful()) scaleGlobally();",
-  "const studio = new Nexora({ tier: 'elite' });",
-  "await client.respondWithin(24, 48);",
-  "return { quality: Infinity };",
-  "engine.optimize('attention-to-detail');",
-  "// crafted in private, shipped with pride",
-  "ship(product, { confidence: true });",
-  "user.feel('impressed').within(3000);",
-  "design = art.meets(engineering);",
-  "while (vision.alive) iterate();",
-  "export default function Empire() {}",
-  "trust = (years, clients) => years * clients;",
-  "nexora.partners.accept({ slots: 3 });",
+  "return precision + strategy + execution;",
+  "if (client.trustsUs) scale(client.business);",
+  "create({ quality: 'premium', detail: 'obsessive' });",
+  "await respond.within(24, 48);",
+  "build(product, { confidence: true });",
+  "while (vision.alive) refine();",
+  "guard product.isReady else { iterate() }",
+  "// the work speaks before we do",
+  "deploy(product, to: .production, with: .care);",
+  "ship({ impact: 'long-term' });",
+  "function buildProduct(clientVision) {",
+  "outcome = mastery * patience;",
+  "// every detail compounds",
+  "trust = years * clientsServed;",
+  "system.optimize('attention-to-detail');",
 ];
 
 const colorFor = (line: string) => {
