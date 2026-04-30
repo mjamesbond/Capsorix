@@ -62,7 +62,25 @@ const SNIPPETS_FR = [
   "résultat = maîtrise * patience;",
   "// chaque détail se cumule",
   "confiance = années * clientsServis;",
-  "système.optimiser('attention-au-détail');",
+];
+
+// German snippets — sober DSL voice. Identifiers stay German; structure familiar.
+const SNIPPETS_DE = [
+  "rückgabe: präzision + strategie + ausführung;",
+  "wenn (kunde.vertrautUns) skaliere(kunde.geschäft);",
+  "erstelle({ qualität: 'hoch', detail: 'kompromisslos' });",
+  "warte antworten.binnen(24, 48);",
+  "baue(produkt, { vertrauen: wahr });",
+  "solange (vision.lebt) verfeinere();",
+  "wache produkt.istBereit sonst { iteriere() }",
+  "// die Arbeit spricht vor uns",
+  "starte(produkt, nach: .produktion, mit: .sorgfalt);",
+  "liefere({ wirkung: 'langfristig' });",
+  "funktion baueProdukt(kundenVision) {",
+  "ergebnis = meisterschaft * geduld;",
+  "// jedes Detail summiert sich",
+  "vertrauen = jahre * betreuteKunden;",
+  "system.optimiere('detailtreue');",
 ];
 
 const colorFor = (line: string) => {
