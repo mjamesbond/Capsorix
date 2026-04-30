@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { subscribeScroll } from "@/lib/scroll-engine";
 
 /**
  * Adds the `is-visible` class to the element (and any descendants
@@ -51,28 +52,18 @@ export const useParallax = <T extends HTMLElement = HTMLElement>(speed = 0.2) =>
     if (!node) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let frame = 0;
-    const update = () => {
+    // Driven by the shared scroll engine — same eased tempo as the rest
+    // of the site. No per-element rAF, no per-element scroll listener.
+    const unsubscribe = subscribeScroll(({ eased }) => {
       const rect = node.getBoundingClientRect();
-      const viewportCenter = window.innerHeight / 2;
-      const elementCenter = rect.top + rect.height / 2;
-      const offset = (elementCenter - viewportCenter) * speed * -1;
+      // Recover absolute element center from current eased value
+      const elementCenter = rect.top + window.scrollY + rect.height / 2;
+      const viewportCenter = eased + window.innerHeight / 2;
+      const offset = (elementCenter - viewportCenter) * speed;
       node.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
-    };
+    });
 
-    const onScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    return unsubscribe;
   }, [speed]);
 
   return ref;

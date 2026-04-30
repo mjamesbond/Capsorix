@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { subscribeScroll } from "@/lib/scroll-engine";
 
 const sectionLinks = [
   { href: "services", label: "Services" },
@@ -20,10 +21,11 @@ const Navbar = () => {
   const onHome = pathname === "/";
   const sectionHref = (id: string) => (onHome ? `#${id}` : `/#${id}`);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    // Single shared scroll engine — same eased tempo as the rest of the site.
+    return subscribeScroll(({ eased }) => {
+      const next = eased > 20;
+      setScrolled((prev) => (prev === next ? prev : next));
+    });
   }, []);
 
   return (
