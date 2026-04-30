@@ -145,23 +145,23 @@ const Contact = () => {
         <div className="grid lg:grid-cols-12 gap-16">
           <Reveal className="lg:col-span-5">
             <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">
-              — Start Your Project
+              — Send your project
             </p>
             <h2 className="font-display text-5xl md:text-6xl font-medium leading-[1.05] mb-6">
-              Begin your
-              <span className="text-gradient-gold italic"> ascent.</span>
+              Tell us what should
+              <span className="text-gradient-gold italic"> exist.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-10">
-              Share the outline of your vision. A senior partner will respond
-              personally within{" "}
-              <span className="text-foreground font-medium">24–48 hours</span>{" "}
-              with a tailored direction for your project — no obligation.
+              A few lines is enough. We’ll review it with a builder’s mindset,
+              not a sales mindset, and respond personally within{" "}
+              <span className="text-foreground font-medium">24–48 hours</span>.
+              If your project fits how we work, we’d be glad to take it on.
             </p>
 
             <ul className="space-y-3 mb-10">
               {[
-                "Custom solutions, never templated",
-                "Senior team — no juniors on your project",
+                "We carefully choose the projects we take on",
+                "Built by senior engineers — start to finish",
                 "Confidential by default · NDA on request",
               ].map((line) => (
                 <li key={line} className="flex items-start gap-3 text-sm text-foreground/85">
@@ -199,16 +199,16 @@ const Contact = () => {
                       <CheckCircle2 className="w-9 h-9 text-primary-glow" strokeWidth={1.5} />
                     </div>
                     <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-4">
-                      Request Received
+                      Request received
                     </p>
                     <h3 className="font-display text-4xl md:text-5xl font-medium leading-tight mb-5">
-                      Thank you. Your brief is{" "}
-                      <span className="text-gradient-gold italic">in our hands.</span>
+                      Your request has been{" "}
+                      <span className="text-gradient-gold italic">received.</span>
                     </h3>
                     <p className="text-muted-foreground max-w-md mx-auto leading-relaxed mb-10">
-                      A senior partner is reviewing it personally and will reach out
-                      within <span className="text-foreground font-medium">24–48 hours</span>
-                      {" "}with a tailored direction for your project.
+                      We are reviewing it and will respond within{" "}
+                      <span className="text-foreground font-medium">24–48 hours</span>.
+                      If your project fits how we work, we’d be glad to take it on.
                     </p>
 
                     <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-muted-foreground mb-10">
@@ -237,9 +237,9 @@ const Contact = () => {
                   <div className="relative mb-8 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium tracking-[0.25em] uppercase text-primary mb-1">
-                        Project Brief
+                        Project brief
                       </p>
-                      <p className="text-sm text-muted-foreground">Takes about 60 seconds.</p>
+                      <p className="text-sm text-muted-foreground">A few minutes is enough.</p>
                     </div>
                     <span className="hidden sm:inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase text-muted-foreground">
                       <Clock className="w-3.5 h-3.5 text-primary-glow" /> 24–48h reply
@@ -357,7 +357,7 @@ const Contact = () => {
                         </>
                       ) : (
                         <>
-                          Request Private Consultation
+                          Send your project
                           <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
                         </>
                       )}

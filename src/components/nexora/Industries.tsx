@@ -18,14 +18,14 @@ const Industries = () => {
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-20 items-center">
           <Reveal className="lg:col-span-5">
-            <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">— Industries</p>
+            <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">— Where we work</p>
             <h2 className="font-display text-5xl md:text-6xl font-medium leading-[1.05] mb-6">
-              Trusted across
-              <span className="text-gradient-gold italic"> every vertical.</span>
+              Different industries.
+              <span className="text-gradient-gold italic"> Same standard.</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Whether you serve plates or scale platforms, we shape technology
-              that fits your craft — discreet, powerful, unmistakably premium.
+              The surface changes. The method doesn’t. We adapt to the field
+              without lowering the bar — and we only take on what we can do well.
             </p>
           </Reveal>
 

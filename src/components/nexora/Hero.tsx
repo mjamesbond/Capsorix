@@ -48,28 +48,29 @@ const Hero = () => {
             </span>
             <Sparkles className="w-3.5 h-3.5 text-primary-glow" />
             <span className="text-[11px] font-medium tracking-[0.25em] text-foreground/80 uppercase">
-              Now booking Q3 — 3 partner slots remaining
+              Selective intake — a few projects accepted each quarter
             </span>
           </div>
 
           <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] font-medium mb-10 animate-fade-in-up tracking-tight">
-            We Build{" "}
+            We don’t build{" "}
             <span className="text-gradient-gold italic relative inline-block">
-              Digital
+              apps.
               <span className="absolute -inset-x-6 -inset-y-3 bg-gradient-gold/10 blur-3xl -z-10" />
             </span>
             <br />
-            <span className="text-gradient-gold">Empires</span>
+            We build <span className="text-gradient-gold">systems</span> that grow businesses.
           </h1>
 
           <p
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-fade-in-up"
             style={{ animationDelay: "0.25s" }}
           >
-            Custom mobile apps, web platforms, and bespoke systems —
-            engineered end-to-end for businesses that refuse the ordinary.
+            Full-cycle development for mobile, web, and the internal tools
+            that hold a business together — designed, engineered, and
+            shipped by the same senior team, end to end.
             <span className="block mt-2 text-foreground/80 font-medium">
-              Senior reply within 24–48 hours. Always.
+              Reviewed personally. Replied to within 24–48 hours.
             </span>
           </p>
 
@@ -81,14 +82,14 @@ const Hero = () => {
               href="#contact"
               className="btn-shimmer group relative inline-flex items-center gap-3 rounded-full bg-gold-animated px-9 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.04] gold-ring"
             >
-              <span className="relative z-10">Request Private Consultation</span>
+              <span className="relative z-10">Send your project</span>
               <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
             </a>
             <a
               href="#services"
               className="group inline-flex items-center gap-2 rounded-full glass px-9 py-4 text-base font-medium text-foreground/90 hover:text-primary-glow transition-all duration-500 gold-border-glow gold-ring"
             >
-              See What We Build
+              See what we build
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
                 →
               </span>
@@ -99,7 +100,7 @@ const Hero = () => {
             className="mt-6 text-xs tracking-[0.2em] uppercase text-muted-foreground/80 animate-fade-in-up"
             style={{ animationDelay: "0.6s" }}
           >
-            Free 30-min strategy call · No obligation · NDA on request
+            Selective intake · Reviewed personally · NDA on request
           </p>
         </div>
 

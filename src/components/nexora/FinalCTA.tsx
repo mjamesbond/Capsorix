@@ -13,17 +13,18 @@ const FinalCTA = () => {
             <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-primary-glow" />
               <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-foreground/80">
-                Accepting 3 new partners this quarter
+                Selective intake — a few projects each quarter
               </span>
             </div>
 
             <h2 className="font-display text-5xl md:text-7xl font-medium leading-[1.05] mb-6">
-              Ready to build something
-              <span className="text-gradient-gold italic"> unforgettable?</span>
+              If you have an idea —
+              <span className="text-gradient-gold italic"> send it.</span>
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed mb-10">
-              Tell us about your vision. A senior partner will respond personally
-              within 24–48 hours with a tailored direction — no obligation.
+              Or even a feeling that something needs to be built right.
+              We’ll review it with a builder’s mindset, not a sales mindset —
+              and reply personally within 24–48 hours.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
@@ -31,7 +32,7 @@ const FinalCTA = () => {
                 href="#contact"
                 className="btn-shimmer group inline-flex items-center gap-3 rounded-full bg-gold-animated px-10 py-4 text-base font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.04] gold-ring"
               >
-                <span className="relative z-10">Claim Your Strategy Call</span>
+                <span className="relative z-10">Send your project</span>
                 <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
               </a>
               <a
@@ -43,7 +44,7 @@ const FinalCTA = () => {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-primary-glow" /> 24–48 hour reply</span>
+              <span className="inline-flex items-center gap-2"><Clock className="w-3.5 h-3.5 text-primary-glow" /> Reply in 24–48h</span>
               <span className="inline-flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5 text-primary-glow" /> NDA on request</span>
               <span className="inline-flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-primary" /> No obligation</span>
             </div>

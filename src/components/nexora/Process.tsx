@@ -3,12 +3,15 @@ import Reveal from "./Reveal";
 import { useParallax } from "@/hooks/use-reveal";
 import CodeRain from "./CodeRain";
 
+import { LifeBuoy } from "lucide-react";
+
 const steps = [
-  { icon: Lightbulb, title: "Idea", desc: "We listen, challenge, and refine your vision into a sharp brief." },
-  { icon: Compass, title: "Strategy", desc: "Roadmaps, architecture, and KPIs aligned to real business outcomes." },
-  { icon: Palette, title: "Design", desc: "Cinematic interfaces engineered for clarity, emotion, and conversion." },
-  { icon: Code2, title: "Development", desc: "Production-grade engineering with rigorous QA and zero compromise." },
-  { icon: Rocket, title: "Launch", desc: "Seamless deployment, analytics, and post-launch optimization." },
+  { icon: Lightbulb, title: "Understand", desc: "We listen first. The brief gets sharper before anything else moves." },
+  { icon: Compass, title: "Analyze", desc: "Constraints, users, edge cases. We map the system before drawing a screen." },
+  { icon: Palette, title: "Design", desc: "Quiet interfaces with clear hierarchy. Built to be used, not admired." },
+  { icon: Code2, title: "Build", desc: "Clean engineering, real testing, no shortcuts hiding under the surface." },
+  { icon: Rocket, title: "Launch", desc: "Shipped with care. Monitored from the first hour, not the first complaint." },
+  { icon: LifeBuoy, title: "Stay", desc: "We remain — refining, supporting, and growing the system over time." },
 ];
 
 const Process = () => {
@@ -26,16 +29,19 @@ const Process = () => {
         <Reveal className="text-center max-w-3xl mx-auto mb-24">
           <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">— Process</p>
           <h2 className="font-display text-5xl md:text-7xl font-medium leading-[1.05]">
-            From spark to
-            <span className="text-gradient-gold italic"> sovereignty.</span>
+            Six steps.
+            <span className="text-gradient-gold italic"> None of them skipped.</span>
           </h2>
+          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            No step is skipped — because every step matters.
+          </p>
         </Reveal>
 
         <div className="relative">
           {/* Connecting line */}
           <div className="hidden lg:block absolute top-10 left-[8%] right-[8%] h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
             {steps.map((step, i) => (
               <Reveal
                 key={step.title}
