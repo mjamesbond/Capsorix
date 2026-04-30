@@ -4,7 +4,43 @@
 
 export type Lang = "en" | "ar";
 
-export const dict = {
+type Pillar = { title: string; desc: string };
+type Principle = { k: string; t: string; d: string };
+type ServiceItem = { title: string; desc: string; tags: string[] };
+type Step = { title: string; desc: string };
+type Stat = { value: string; label: string };
+
+export interface Dict {
+  nav: { services: string; process: string; industries: string; contact: string; ios: string; android: string; web: string; cta: string };
+  hero: {
+    badge: string; titleA: string; titleApps: string; titleB: string; titleSystems: string; titleC: string;
+    sub: string; subStrong: string; ctaPrimary: string; ctaSecondary: string; foot: string; scroll: string;
+  };
+  trust: { pillars: Pillar[] };
+  about: { kicker: string; titleA: string; titleB: string; lead: string; tail: string; principles: Principle[] };
+  services: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    items: ServiceItem[]; enter: string; footer: string; footerLink: string;
+  };
+  process: { kicker: string; titleA: string; titleB: string; lead: string; steps: Step[] };
+  industries: { kicker: string; titleA: string; titleB: string; lead: string; labels: string[] };
+  stats: Stat[];
+  contact: {
+    kicker: string; titleA: string; titleB: string; lead: string; leadStrong: string; leadTail: string;
+    bullets: string[]; formKicker: string; formSub: string; replyChip: string;
+    labels: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description: string };
+    placeholders: { full_name: string; email: string; phone: string; description: string; select: string };
+    projectTypes: string[]; budgets: string[]; timelines: string[];
+    submit: string; submitting: string; reviewed: string; confidential: string;
+    success: { kicker: string; titleA: string; titleB: string; body: string; bodyStrong: string; bodyTail: string; chip1: string; chip2: string; chip3: string; again: string };
+    toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
+    validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
+  };
+  finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
+  footer: { tagline: string; rights: string; values: string };
+}
+
+export const dict: Record<Lang, Dict> = {
   en: {
     nav: {
       services: "Services",
