@@ -114,12 +114,24 @@ const Contact = () => {
       return;
     }
 
+    // Build a short, human-readable reference (e.g. CPX-7F3K-2A91) so the
+    // confirmation screen feels like a real receipt rather than a toast.
+    const ref =
+      "CPX-" +
+      Math.random().toString(36).slice(2, 6).toUpperCase() +
+      "-" +
+      Math.random().toString(36).slice(2, 6).toUpperCase();
+    const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
+    setSubmittedMeta({ name: firstName, ref, at: new Date() });
     setSubmitted(true);
     setForm(EMPTY);
     setErrors({});
   };
 
-  const resetForm = () => setSubmitted(false);
+  const resetForm = () => {
+    setSubmitted(false);
+    setSubmittedMeta(null);
+  };
 
   return (
     <section id="contact" className="relative section scroll-mt-24" data-lang={lang}>
