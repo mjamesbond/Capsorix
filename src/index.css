@@ -446,6 +446,10 @@
   .lang-switch__thumb--tri {
     width: calc(33.333% - 2px);
   }
+  /* Quad-state variant: thumb is one-quarter of the rail */
+  .lang-switch__thumb--quad {
+    width: calc(25% - 1.5px);
+  }
   .lang-switch__thumb-inner {
     position: absolute;
     inset: 0;
