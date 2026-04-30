@@ -38,6 +38,53 @@ export interface Dict {
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
+  subpages: {
+    common: {
+      capabilitiesKicker: string;
+      consultCta: string;
+      replyNote: string;
+    };
+    ios: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleSwift: string; titleB: string;
+      lead: string;
+      navigatorLabel: string;
+      inspectorLabel: string;
+      consoleLabel: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+    android: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleKotlin: string; titleB: string;
+      lead: string;
+      projectLabel: string;
+      moduleInfoLabel: string;
+      gradleLabel: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+    web: {
+      eyebrow: string;
+      chip: string;
+      titleA: string; titleBeauty: string; titleC: string; titleLogic: string;
+      lead: string;
+      hint: string;
+      flowLive: string;
+      capabilitiesKicker: string;
+      capabilitiesTitleA: string; capabilitiesTitleB: string;
+      capabilitiesLead: string;
+      capabilities: { title: string; desc: string }[];
+      ctaTitleA: string; ctaTitleB: string;
+      ctaLead: string;
+    };
+  };
 }
 
 export const dict: Record<Lang, Dict> = {
@@ -213,6 +260,87 @@ export const dict: Record<Lang, Dict> = {
       rights: "All rights reserved.",
       values: "Selective · Precise · Long-term",
     },
+    subpages: {
+      common: {
+        capabilitiesKicker: "— Capabilities",
+        consultCta: "Request Private Consultation",
+        replyNote: "Senior reply within 24–48 hours.",
+      },
+      ios: {
+        eyebrow: "iOS · Discipline No. 01",
+        chip: "iOS Development",
+        titleA: "Engineered in",
+        titleSwift: " Swift.",
+        titleB: "Crafted for Apple.",
+        lead: "Native iOS apps built the way Apple intended — with discipline, taste, and an obsession for the smallest details. From first prototype to App Store launch.",
+        navigatorLabel: "Project Navigator",
+        inspectorLabel: "Inspector",
+        consoleLabel: "Console",
+        capabilitiesTitleA: "Every detail, deliberate.",
+        capabilitiesTitleB: " Every frame, earned.",
+        capabilities: [
+          { title: "Native Performance", desc: "Hand-tuned Swift, Metal-aware rendering, sub-16ms interactions across every device class." },
+          { title: "SwiftUI · UIKit", desc: "Composable architectures, state-driven UIs, and seamless interop where it matters." },
+          { title: "Privacy-First", desc: "App Tracking Transparency, Keychain, on-device intelligence, and audited data flows." },
+          { title: "Polished UX", desc: "Frame-perfect animations, haptics, dynamic type, and Human Interface obsession." },
+          { title: "Apple Ecosystem", desc: "Widgets, Live Activities, App Intents, watchOS, visionOS — natively integrated." },
+          { title: "App Store Ready", desc: "Submission, review-readiness, and post-launch optimization handled end-to-end." },
+        ],
+        ctaTitleA: "This is not a team.",
+        ctaTitleB: "This is elite engineering.",
+        ctaLead: "If your iOS product deserves the same care Apple puts into the platform, start the conversation.",
+      },
+      android: {
+        eyebrow: "Android · Discipline No. 02",
+        chip: "Android Development",
+        titleA: "Forged in",
+        titleKotlin: " Kotlin.",
+        titleB: "Built to endure.",
+        lead: "Native Android apps engineered with structural strength — modular, performant, and obsessively reliable. From architecture to Play Store, executed with precision.",
+        projectLabel: "Project",
+        moduleInfoLabel: "Module Info",
+        gradleLabel: "Gradle Tasks",
+        capabilitiesTitleA: "Engineered for strength.",
+        capabilitiesTitleB: " Designed to scale.",
+        capabilities: [
+          { title: "Kotlin · Coroutines", desc: "Modern, type-safe, structured concurrency. Code that scales without breaking." },
+          { title: "Jetpack Compose", desc: "Declarative, reactive UI engineered for performance and maintainability." },
+          { title: "Hardened Security", desc: "Encrypted storage, biometric auth, certificate pinning, and SafetyNet attestation." },
+          { title: "Modular Architecture", desc: "Clean Architecture, MVI, multi-module Gradle — built to grow with your business." },
+          { title: "Tuned Performance", desc: "Baseline profiles, R8 optimization, and frame-perfect rendering on every device." },
+          { title: "Play Store Ready", desc: "Signed bundles, staged rollouts, Play Console mastery, and post-launch monitoring." },
+        ],
+        ctaTitleA: "Engineered with discipline.",
+        ctaTitleB: "Delivered with precision.",
+        ctaLead: "If your Android product needs the architecture and rigor to scale across millions of devices, start the conversation.",
+      },
+      web: {
+        eyebrow: "Web · Discipline No. 03",
+        chip: "Web Development",
+        titleA: "Where",
+        titleBeauty: " beauty ",
+        titleC: "meets",
+        titleLogic: "logic.",
+        lead: "Frontend craft and backend rigor — composed by the same hands. Sites and platforms that look inevitable and run like clockwork.",
+        hint: "Hover any token below to reveal its meaning.",
+        flowLive: "Round-trip live",
+        capabilitiesKicker: "— Capabilities",
+        capabilitiesTitleA: "Two disciplines.",
+        capabilitiesTitleB: " One studio.",
+        capabilitiesLead: "We don't hand off between design and engineering — we are both. That's why our products feel coherent from the first pixel to the last query.",
+        capabilities: [
+          { title: "React · Next.js", desc: "App Router, RSC, edge rendering — interfaces that load instantly and feel inevitable." },
+          { title: "Design Systems", desc: "Tokenized, themable, accessible component libraries that scale across teams and brands." },
+          { title: "Node · Edge APIs", desc: "Type-safe APIs, queues, streams, and serverless that hold up under real traffic." },
+          { title: "Auth · Security", desc: "OAuth, RBAC, rate limiting, and audit trails — secure by architecture, not afterthought." },
+          { title: "Core Web Vitals", desc: "Sub-second LCP, near-zero CLS, and INP tuned to the millisecond. Measurable polish." },
+          { title: "DevOps · CI/CD", desc: "Preview environments, automated checks, observability, and zero-downtime deploys." },
+        ],
+        ctaTitleA: "They understand both",
+        ctaTitleB: "beauty and logic.",
+        ctaLead: "If your web product needs taste and engineering in equal measure, start the conversation.",
+      },
+    },
   },
 
   ar: {
@@ -387,6 +515,87 @@ export const dict: Record<Lang, Dict> = {
       rights: "جميع الحقوق محفوظة.",
       values: "اختيار · دقّة · أفق طويل",
     },
+    subpages: {
+      common: {
+        capabilitiesKicker: "— القدرات",
+        consultCta: "اطلب استشارة خاصة",
+        replyNote: "ردّ من فريق أوّل خلال 24 إلى 48 ساعة.",
+      },
+      ios: {
+        eyebrow: "iOS · التخصّص رقم 01",
+        chip: "تطوير تطبيقات iOS",
+        titleA: "هندسة بـ",
+        titleSwift: " Swift.",
+        titleB: "بروح آبل.",
+        lead: "تطبيقات iOS أصلية تُبنى كما أرادت آبل: انضباط، ذوق، وهوس بأدقّ التفاصيل — من النموذج الأوّل إلى الإطلاق على App Store.",
+        navigatorLabel: "متصفّح المشروع",
+        inspectorLabel: "المُعاين",
+        consoleLabel: "وحدة التحكّم",
+        capabilitiesTitleA: "كل تفصيل مدروس.",
+        capabilitiesTitleB: " كل إطار مُستحقّ.",
+        capabilities: [
+          { title: "أداء أصلي", desc: "Swift مضبوطة يدويًا، تصيير يفهم Metal، وتفاعل تحت 16 مللي ثانية على كل الأجهزة." },
+          { title: "SwiftUI · UIKit", desc: "بنى قابلة للتركيب، واجهات تعتمد الحالة، وتكامل سلس حيث يجب." },
+          { title: "الخصوصيّة أوّلًا", desc: "App Tracking Transparency و Keychain وذكاء على الجهاز وتدفّقات بيانات مُدقّقة." },
+          { title: "تجربة مصقولة", desc: "حركات بدقّة الإطار، لمسات اهتزازية، ونوع ديناميكي — التزام كامل بـ Human Interface." },
+          { title: "نظام آبل المتكامل", desc: "Widgets و Live Activities و App Intents و watchOS و visionOS — تكامل أصلي." },
+          { title: "جاهز لـ App Store", desc: "تقديم، استعداد للمراجعة، وتحسين ما بعد الإطلاق — من البداية للنهاية." },
+        ],
+        ctaTitleA: "هذا ليس فريقًا عاديًا.",
+        ctaTitleB: "هذه هندسة من طراز رفيع.",
+        ctaLead: "إن كان منتج iOS لديك يستحقّ نفس العناية التي تضعها آبل في منصّتها — لنبدأ الحديث.",
+      },
+      android: {
+        eyebrow: "Android · التخصّص رقم 02",
+        chip: "تطوير تطبيقات Android",
+        titleA: "صياغة بـ",
+        titleKotlin: " Kotlin.",
+        titleB: "تُبنى لتدوم.",
+        lead: "تطبيقات Android أصلية بقوّة بنيويّة: معياريّة، عالية الأداء، وموثوقة بشكل صارم — من المعمار إلى Play Store، بدقّة كاملة.",
+        projectLabel: "المشروع",
+        moduleInfoLabel: "معلومات الوحدة",
+        gradleLabel: "مهام Gradle",
+        capabilitiesTitleA: "هندسة لقوّة.",
+        capabilitiesTitleB: " تصميم للنموّ.",
+        capabilities: [
+          { title: "Kotlin · Coroutines", desc: "تزامن حديث وآمن من حيث النوع، كود ينمو دون أن ينكسر." },
+          { title: "Jetpack Compose", desc: "واجهة تصريحيّة وتفاعليّة، مهندسة للأداء وقابلية الصيانة." },
+          { title: "أمان مُحصَّن", desc: "تخزين مُشفّر، مصادقة بصمة، تثبيت شهادات، وتصديق SafetyNet." },
+          { title: "معمار معياري", desc: "Clean Architecture و MVI و Gradle متعدّد الوحدات — يكبر مع عملك." },
+          { title: "أداء مضبوط", desc: "Baseline Profiles، تحسين R8، وتصيير بدقّة الإطار على كل جهاز." },
+          { title: "جاهز لـ Play Store", desc: "حِزَم موقّعة، طرح تدريجي، إتقان Play Console، ومراقبة ما بعد الإطلاق." },
+        ],
+        ctaTitleA: "هندسة بانضباط.",
+        ctaTitleB: "تسليم بدقّة.",
+        ctaLead: "إن كان منتج Android لديك يحتاج المعمار والصرامة لينمو على ملايين الأجهزة — لنبدأ الحديث.",
+      },
+      web: {
+        eyebrow: "Web · التخصّص رقم 03",
+        chip: "تطوير الويب",
+        titleA: "حيث",
+        titleBeauty: " الجمال ",
+        titleC: "يلتقي",
+        titleLogic: "بالمنطق.",
+        lead: "حِرفة الواجهة وصرامة الخلفيّة — بأيدٍ واحدة. مواقع ومنصّات تبدو حتميّة وتعمل كآليّة ساعة.",
+        hint: "مرّر فوق أي رمز أدناه لكشف معناه.",
+        flowLive: "رحلة كاملة مباشرة",
+        capabilitiesKicker: "— القدرات",
+        capabilitiesTitleA: "تخصّصان.",
+        capabilitiesTitleB: " استوديو واحد.",
+        capabilitiesLead: "لا نُسلّم العمل بين التصميم والهندسة — نحن الاثنان. لذلك تشعر منتجاتنا بالاتّساق من أوّل بكسل إلى آخر استعلام.",
+        capabilities: [
+          { title: "React · Next.js", desc: "App Router و RSC وتصيير حافّة — واجهات تُحمَّل فورًا وتشعرك بأنّها حتميّة." },
+          { title: "أنظمة تصميم", desc: "مكتبات مكوّنات قائمة على tokens، قابلة للسمات والوصول، تنمو عبر الفِرق والعلامات." },
+          { title: "Node · Edge APIs", desc: "واجهات آمنة من حيث النوع، طوابير، تدفّقات، وخواديم بلا حالة تصمد تحت ضغط حقيقي." },
+          { title: "مصادقة وأمان", desc: "OAuth و RBAC وحدّ معدّل وسجلّات تدقيق — أمان بالبنية، لا بالترميم." },
+          { title: "Core Web Vitals", desc: "LCP تحت الثانية، CLS قرب الصفر، و INP مضبوط للملي ثانية. صقلٌ قابل للقياس." },
+          { title: "DevOps · CI/CD", desc: "بيئات معاينة، فحوص آليّة، مراقبة، ونشر بلا انقطاع." },
+        ],
+        ctaTitleA: "يفهمون كليهما:",
+        ctaTitleB: "الجمال والمنطق.",
+        ctaLead: "إن كان منتجك على الويب يحتاج الذوق والهندسة بنفس القدر — لنبدأ الحديث.",
+      },
+    },
   },
 
   fr: {
@@ -560,6 +769,87 @@ export const dict: Record<Lang, Dict> = {
       tagline: "Nous bâtissons des systèmes qui font avancer les entreprises. Peu de projets, faits correctement.",
       rights: "Tous droits réservés.",
       values: "Sélectif · Précis · Long terme",
+    },
+    subpages: {
+      common: {
+        capabilitiesKicker: "— Compétences",
+        consultCta: "Demander une consultation privée",
+        replyNote: "Réponse d’un partenaire sous 24 à 48 heures.",
+      },
+      ios: {
+        eyebrow: "iOS · Discipline N°01",
+        chip: "Développement iOS",
+        titleA: "Conçu en",
+        titleSwift: " Swift.",
+        titleB: "Pensé pour Apple.",
+        lead: "Des applications iOS natives bâties dans l’esprit d’Apple — discipline, goût, et obsession du détail. Du premier prototype au lancement sur l’App Store.",
+        navigatorLabel: "Navigateur de projet",
+        inspectorLabel: "Inspecteur",
+        consoleLabel: "Console",
+        capabilitiesTitleA: "Chaque détail, voulu.",
+        capabilitiesTitleB: " Chaque image, méritée.",
+        capabilities: [
+          { title: "Performance native", desc: "Swift ajusté à la main, rendu Metal-aware, interactions sous 16 ms sur tous les appareils." },
+          { title: "SwiftUI · UIKit", desc: "Architectures composables, interfaces pilotées par l’état, interopérabilité fluide là où elle compte." },
+          { title: "Confidentialité d’abord", desc: "App Tracking Transparency, Keychain, intelligence sur l’appareil, flux de données audités." },
+          { title: "UX soignée", desc: "Animations à l’image près, retours haptiques, type dynamique — obsession Human Interface." },
+          { title: "Écosystème Apple", desc: "Widgets, Live Activities, App Intents, watchOS, visionOS — intégration native." },
+          { title: "Prêt pour l’App Store", desc: "Soumission, préparation à la review, optimisation post-lancement — de bout en bout." },
+        ],
+        ctaTitleA: "Ce n’est pas une équipe.",
+        ctaTitleB: "C’est une ingénierie d’élite.",
+        ctaLead: "Si votre produit iOS mérite le même soin qu’Apple met dans sa plateforme, parlons-en.",
+      },
+      android: {
+        eyebrow: "Android · Discipline N°02",
+        chip: "Développement Android",
+        titleA: "Forgé en",
+        titleKotlin: " Kotlin.",
+        titleB: "Bâti pour durer.",
+        lead: "Des applications Android natives à la solidité structurelle : modulaires, performantes, d’une fiabilité obsessionnelle. De l’architecture au Play Store, exécutées avec précision.",
+        projectLabel: "Projet",
+        moduleInfoLabel: "Infos module",
+        gradleLabel: "Tâches Gradle",
+        capabilitiesTitleA: "Pensé pour la solidité.",
+        capabilitiesTitleB: " Conçu pour grandir.",
+        capabilities: [
+          { title: "Kotlin · Coroutines", desc: "Concurrence moderne, typée, structurée. Du code qui grandit sans casser." },
+          { title: "Jetpack Compose", desc: "UI déclarative et réactive, pensée pour la performance et la maintenabilité." },
+          { title: "Sécurité durcie", desc: "Stockage chiffré, biométrie, certificate pinning, attestation SafetyNet." },
+          { title: "Architecture modulaire", desc: "Clean Architecture, MVI, Gradle multi-modules — bâti pour grandir avec votre activité." },
+          { title: "Performance ajustée", desc: "Baseline profiles, optimisation R8, rendu à l’image près sur tout appareil." },
+          { title: "Prêt pour le Play Store", desc: "Bundles signés, déploiements progressifs, maîtrise du Play Console, supervision post-lancement." },
+        ],
+        ctaTitleA: "Ingénierie disciplinée.",
+        ctaTitleB: "Livraison précise.",
+        ctaLead: "Si votre produit Android exige l’architecture et la rigueur pour passer à l’échelle de millions d’appareils, parlons-en.",
+      },
+      web: {
+        eyebrow: "Web · Discipline N°03",
+        chip: "Développement Web",
+        titleA: "Là où",
+        titleBeauty: " la beauté ",
+        titleC: "rencontre",
+        titleLogic: "la logique.",
+        lead: "Le soin du frontend et la rigueur du backend — dans les mêmes mains. Des sites et plateformes qui semblent évidents et tournent comme une horloge.",
+        hint: "Survolez n’importe quel jeton ci-dessous pour révéler son sens.",
+        flowLive: "Aller-retour en direct",
+        capabilitiesKicker: "— Compétences",
+        capabilitiesTitleA: "Deux disciplines.",
+        capabilitiesTitleB: " Un seul studio.",
+        capabilitiesLead: "Pas de passe entre design et ingénierie — nous sommes les deux. C’est pour ça que nos produits paraissent cohérents, du premier pixel à la dernière requête.",
+        capabilities: [
+          { title: "React · Next.js", desc: "App Router, RSC, rendu en edge — des interfaces qui se chargent instantanément et paraissent évidentes." },
+          { title: "Design Systems", desc: "Bibliothèques de composants tokenisées, thématisables et accessibles — qui passent à l’échelle." },
+          { title: "Node · Edge APIs", desc: "APIs typées, files, flux et serverless qui tiennent sous une charge réelle." },
+          { title: "Auth · Sécurité", desc: "OAuth, RBAC, rate limiting, journaux d’audit — sécurisé par l’architecture, pas en bout de course." },
+          { title: "Core Web Vitals", desc: "LCP sous la seconde, CLS proche de zéro, INP au millième près. Une finition mesurable." },
+          { title: "DevOps · CI/CD", desc: "Environnements de preview, contrôles automatisés, observabilité, déploiements sans interruption." },
+        ],
+        ctaTitleA: "Ils maîtrisent les deux :",
+        ctaTitleB: "la beauté et la logique.",
+        ctaLead: "Si votre produit web demande autant de goût que d’ingénierie, parlons-en.",
+      },
     },
   },
 };
