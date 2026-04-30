@@ -176,23 +176,73 @@
     background: linear-gradient(90deg, transparent 0%, hsl(42 65% 58% / 0.5) 50%, transparent 100%);
   }
 
-  /* Reveal-on-scroll base */
+  /* Reveal-on-scroll base — slow-in, smooth-out cinematic */
   .reveal {
     opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1s var(--transition-smooth), transform 1.1s var(--transition-smooth);
+    transform: translate3d(0, 28px, 0);
+    transition:
+      opacity 1.4s var(--transition-smooth),
+      transform 1.6s var(--transition-smooth);
     will-change: opacity, transform;
   }
   .reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
   .reveal-blur {
-    filter: blur(8px);
-    transition: opacity 1s var(--transition-smooth), transform 1.1s var(--transition-smooth), filter 1s var(--transition-smooth);
+    filter: blur(10px);
+    transition:
+      opacity 1.4s var(--transition-smooth),
+      transform 1.6s var(--transition-smooth),
+      filter 1.4s var(--transition-smooth);
   }
   .reveal-blur.is-visible {
     filter: blur(0);
+  }
+
+  /* Section fade — quiet boundary between layers of the system */
+  .section-fade {
+    position: relative;
+    isolation: isolate;
+  }
+  .section-fade::before,
+  .section-fade::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 96px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .section-fade::before {
+    top: 0;
+    background: linear-gradient(to bottom, hsl(var(--background)) 0%, transparent 100%);
+  }
+  .section-fade::after {
+    bottom: 0;
+    background: linear-gradient(to top, hsl(var(--background)) 0%, transparent 100%);
+  }
+
+  /* Soft hover lift — 1–2px micro-movement + quiet glow */
+  .lift {
+    transition:
+      transform 0.7s var(--transition-smooth),
+      box-shadow 0.7s var(--transition-smooth),
+      border-color 0.7s var(--transition-smooth);
+    will-change: transform;
+  }
+  .lift:hover {
+    transform: translate3d(0, -2px, 0);
+    box-shadow: 0 12px 40px -16px hsl(42 70% 50% / 0.25);
+  }
+
+  /* Soft glow ring on hover — barely there */
+  .glow-soft {
+    transition: box-shadow 0.9s var(--transition-smooth), border-color 0.9s var(--transition-smooth);
+  }
+  .glow-soft:hover {
+    box-shadow: 0 0 0 1px hsl(42 65% 58% / 0.25), 0 0 32px hsl(45 90% 70% / 0.12);
   }
 }
 
@@ -218,13 +268,13 @@
   50%, 100% { opacity: 0.15; }
 }
 
-/* Unified page-enter transition — single, controlled, no noise */
+/* Unified page-enter transition — slow-in, smooth-out */
 @keyframes page-enter {
-  from { opacity: 0; transform: translateY(12px); filter: blur(6px); }
-  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  from { opacity: 0; transform: translate3d(0, 16px, 0); filter: blur(8px); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0);    filter: blur(0); }
 }
 .page-enter {
-  animation: page-enter 0.7s var(--transition-smooth) both;
+  animation: page-enter 1.1s var(--transition-smooth) both;
 }
 
 @layer utilities {
