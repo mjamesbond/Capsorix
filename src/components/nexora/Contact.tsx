@@ -147,7 +147,6 @@ const Contact = () => {
               {[
                 { icon: Mail, label: "studio@capsorix.dev" },
                 { icon: Phone, label: "+1 (415) 555-0102" },
-                { icon: MapPin, label: "Remote · NYC · Dubai" },
               ].map((c) => (
                 <li key={c.label} className="group flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl glass flex items-center justify-center icon-tile">
