@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParallax } from "@/hooks/use-reveal";
+import { useI18n } from "@/i18n/I18nProvider";
 
 /**
- * Ambient "living code" backdrop. Multiple dim columns of meaningful
- * code symbols slowly stream / type, with parallax depth. Used as a
- * background layer behind sections — not as decoration but as identity.
+ * Ambient "living code" backdrop. Two snippet sets — one in JS-ish syntax
+ * for English, one in an Arabic pseudo-code for Arabic — so the system's
+ * background language follows the user's language. Same rhythm, two voices.
  */
 
-const SNIPPETS = [
+const SNIPPETS_EN = [
   "return precision + strategy + execution;",
   "if (client.trustsUs) scale(client.business);",
   "create({ quality: 'premium', detail: 'obsessive' });",
@@ -25,11 +26,37 @@ const SNIPPETS = [
   "system.optimize('attention-to-detail');",
 ];
 
+// Arabic "pseudo-code" — looks like a small DSL, reads like Arabic.
+// Identifiers stay in Arabic; structure stays familiar (braces, ;, ()).
+const SNIPPETS_AR = [
+  "إرجاع: دقّة + استراتيجية + تنفيذ؛",
+  "إذا (العميل.واثقٌ_بنا) { نُوسّع(عمله)؛ }",
+  "أنشئ({ جودة: 'عالية', تفصيل: 'دقيق' })؛",
+  "انتظر الردّ.خلال(٢٤، ٤٨)؛",
+  "ابنِ(المنتج، { ثقة: صحيح })؛",
+  "طالما (الرؤية.حيّة) { حسّن()؛ }",
+  "// العمل يتكلّم قبلنا",
+  "أطلق(المنتج، نحو: .الإنتاج، باهتمام)؛",
+  "أطلق({ أثر: 'طويل_المدى' })؛",
+  "دالّة ابنِ_المنتج(رؤية_العميل) {",
+  "النتيجة = إتقان × صبر؛",
+  "// كل تفصيلة تتراكم",
+  "ثقة = سنين × عملاء_خُدِموا؛",
+  "النظام.حسّن('الانتباه_للتفاصيل')؛",
+  "// لا نَعِد بالكثير — نُسلّم ما يبقى",
+];
+
 const colorFor = (line: string) => {
-  if (line.startsWith("//")) return "text-[hsl(220_15%_38%)] italic";
-  if (line.startsWith("const ") || line.startsWith("export ") || line.startsWith("return "))
+  const t = line.trim();
+  if (t.startsWith("//")) return "text-[hsl(220_15%_38%)] italic";
+  if (t.startsWith("return") || t.startsWith("const ") || t.startsWith("export "))
     return "text-[hsl(45_70%_55%)]";
-  if (line.startsWith("if ") || line.startsWith("while ") || line.startsWith("await "))
+  if (t.startsWith("if ") || t.startsWith("while ") || t.startsWith("await "))
+    return "text-[hsl(45_85%_60%)]";
+  // Arabic keywords
+  if (t.startsWith("إرجاع") || t.startsWith("دالّة") || t.startsWith("إذا") ||
+      t.startsWith("طالما") || t.startsWith("انتظر") || t.startsWith("أنشئ") ||
+      t.startsWith("ابنِ") || t.startsWith("أطلق"))
     return "text-[hsl(45_85%_60%)]";
   return "text-[hsl(40_25%_70%)]";
 };
