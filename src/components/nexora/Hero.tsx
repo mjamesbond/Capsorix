@@ -3,8 +3,10 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { useParallax } from "@/hooks/use-reveal";
 import CodePanel from "./CodePanel";
 import CodeRain from "./CodeRain";
+import { useI18n } from "@/i18n/I18nProvider";
 
 const Hero = () => {
+  const { t } = useI18n();
   const bgRef = useParallax<HTMLDivElement>(0.25);
   const orbARef = useParallax<HTMLDivElement>(0.15);
   const orbBRef = useParallax<HTMLDivElement>(-0.12);
