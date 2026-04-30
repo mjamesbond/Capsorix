@@ -19,7 +19,7 @@ import SubpageShell from "@/components/nexora/SubpageShell";
 import { useParallax } from "@/hooks/use-reveal";
 
 const navigator = [
-  { icon: Folder, label: "Nexora", muted: false },
+  { icon: Folder, label: "Capsorix", muted: false },
   { icon: Folder, label: "Sources", muted: true, indent: 1 },
   { icon: FileCode2, label: "DigitalProduct.swift", active: true, indent: 2 },
   { icon: FileCode2, label: "AppStore.swift", indent: 2 },
@@ -115,7 +115,7 @@ const IOS = () => {
                 <span className="w-3 h-3 rounded-full bg-[hsl(45_85%_60%)]" />
                 <span className="w-3 h-3 rounded-full bg-[hsl(140_50%_55%)]" />
                 <div className="mx-auto flex items-center gap-2 text-[11px] text-muted-foreground">
-                  <span className="font-mono">Nexora</span>
+                  <span className="font-mono">Capsorix</span>
                   <span className="text-muted-foreground/40">—</span>
                   <span className="font-mono">iPhone 15 Pro</span>
                   <span className="text-muted-foreground/40">—</span>
@@ -184,7 +184,7 @@ const IOS = () => {
                     </p>
                     <div className="font-mono text-[11px] space-y-1">
                       <div className="text-[hsl(140_50%_60%)]">▸ Compile DigitalProduct.swift</div>
-                      <div className="text-muted-foreground/70">▸ Linking Nexora</div>
+                      <div className="text-muted-foreground/70">▸ Linking Capsorix</div>
                       <div className="text-[hsl(45_85%_65%)]">▸ Validating archive…</div>
                       <div className="text-foreground/80">▸ Ready for submission ✓</div>
                     </div>

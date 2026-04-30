@@ -17,7 +17,7 @@ const Footer = () => {
               <div className="w-8 h-8 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
                 <span className="font-display font-bold text-primary-foreground">N</span>
               </div>
-              <span className="font-display text-xl font-semibold tracking-widest text-gradient-gold">NEXORA</span>
+              <span className="font-display text-xl font-semibold tracking-widest text-gradient-gold">CAPSORIX</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">{t.footer.tagline}</p>
           </div>
@@ -32,7 +32,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} NEXORA Studio. {t.footer.rights}</p>
+          <p>© {new Date().getFullYear()} Capsorix Studio. {t.footer.rights}</p>
           <p className="tracking-[0.2em] uppercase">{t.footer.values}</p>
         </div>
       </div>

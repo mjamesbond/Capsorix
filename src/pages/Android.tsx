@@ -120,7 +120,7 @@ const Android = () => {
                 <span className="w-3 h-3 rounded-full bg-[hsl(45_85%_60%)]" />
                 <span className="w-3 h-3 rounded-full bg-[hsl(140_50%_55%)]" />
                 <div className="mx-auto flex items-center gap-2 text-[11px] text-muted-foreground">
-                  <span className="font-mono">Nexora</span>
+                  <span className="font-mono">Capsorix</span>
                   <span className="text-muted-foreground/40">—</span>
                   <span className="font-mono">Pixel 8 Pro · API 34</span>
                   <span className="text-muted-foreground/40">—</span>
@@ -174,7 +174,7 @@ const Android = () => {
                     </div>
                     <div className="px-4 py-3 font-mono text-[11px] space-y-1">
                       <div className="text-[hsl(200_85%_72%)]">
-                        I/Nexora <span className="text-muted-foreground/70">› buildApp() initialized</span>
+                        I/Capsorix <span className="text-muted-foreground/70">› buildApp() initialized</span>
                       </div>
                       <div className="text-[hsl(95_55%_70%)]">
                         D/Engine <span className="text-muted-foreground/70">› performance=optimized · scalability=true</span>

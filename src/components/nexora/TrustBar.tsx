@@ -9,7 +9,7 @@ const TrustBar = () => {
   const pillars = t.trust.pillars.map((p, i) => ({ ...p, icon: ICONS[i] }));
 
   return (
-    <section aria-label="Why NEXORA" className="relative -mt-12 md:-mt-20 mb-8 z-10">
+    <section aria-label="Why Capsorix" className="relative -mt-12 md:-mt-20 mb-8 z-10">
       <div className="container">
         <Reveal className="glass-strong rounded-2xl md:rounded-full px-6 md:px-10 py-6 md:py-5 gold-border-glow shadow-elegant">
           <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 items-center">

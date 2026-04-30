@@ -49,7 +49,7 @@ const Navbar = () => {
               <div className="absolute inset-0 rounded-lg bg-gradient-gold blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
             </div>
             <span className="font-display text-2xl font-semibold tracking-widest text-gradient-gold">
-              NEXORA
+              CAPSORIX
             </span>
           </Link>
 
