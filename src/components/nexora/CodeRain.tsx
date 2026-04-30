@@ -113,8 +113,11 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
     >
       {columns.map((col, i) => (
         <div
-          key={i}
-          className="absolute font-mono text-[11px] leading-[1.9] whitespace-nowrap opacity-[0.08]"
+          key={`${lang}-${i}`}
+          className={`absolute text-[11px] leading-[1.9] whitespace-nowrap opacity-[0.08] ${
+            lang === "ar" ? "font-arabic" : "font-mono"
+          }`}
+          dir={lang === "ar" ? "rtl" : "ltr"}
           style={{
             left: col.left,
             top: col.top,
