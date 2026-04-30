@@ -15,16 +15,16 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
-        <TrustBar />
+        <div className="section-fade"><TrustBar /></div>
         <div className="container"><div className="section-divider" /></div>
         <Services />
         <div className="container"><div className="section-divider" /></div>
-        <Process />
+        <div className="section-fade"><Process /></div>
         <div className="container"><div className="section-divider" /></div>
-        <Industries />
-        <Stats />
-        <Contact />
-        <FinalCTA />
+        <div className="section-fade"><Industries /></div>
+        <div className="section-fade"><Stats /></div>
+        <div className="section-fade"><Contact /></div>
+        <div className="section-fade"><FinalCTA /></div>
       </main>
       <Footer />
     </div>
