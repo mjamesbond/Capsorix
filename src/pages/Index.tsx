@@ -1,6 +1,7 @@
 import Navbar from "@/components/nexora/Navbar";
 import Hero from "@/components/nexora/Hero";
 import TrustBar from "@/components/nexora/TrustBar";
+import About from "@/components/nexora/About";
 import Services from "@/components/nexora/Services";
 import Process from "@/components/nexora/Process";
 import Industries from "@/components/nexora/Industries";
@@ -16,6 +17,8 @@ const Index = () => {
       <main>
         <Hero />
         <div className="section-fade"><TrustBar /></div>
+        <div className="container"><div className="section-divider" /></div>
+        <div className="section-fade"><About /></div>
         <div className="container"><div className="section-divider" /></div>
         <Services />
         <div className="container"><div className="section-divider" /></div>

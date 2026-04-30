@@ -1,9 +1,7 @@
-import { Lightbulb, Compass, Palette, Code2, Rocket } from "lucide-react";
+import { Lightbulb, Compass, Palette, Code2, Rocket, LifeBuoy } from "lucide-react";
 import Reveal from "./Reveal";
 import { useParallax } from "@/hooks/use-reveal";
 import CodeRain from "./CodeRain";
-
-import { LifeBuoy } from "lucide-react";
 
 const steps = [
   { icon: Lightbulb, title: "Understand", desc: "We listen first. The brief gets sharper before anything else moves." },
