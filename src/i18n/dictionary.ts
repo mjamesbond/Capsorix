@@ -37,7 +37,15 @@ export interface Dict {
     placeholders: { full_name: string; email: string; phone: string; description: string; select: string };
     projectTypes: string[]; budgets: string[]; timelines: string[];
     submit: string; submitting: string; reviewed: string; confidential: string;
-    success: { kicker: string; titleA: string; titleB: string; body: string; bodyStrong: string; bodyTail: string; chip1: string; chip2: string; chip3: string; again: string };
+    success: {
+      kicker: string; titleA: string; titleB: string;
+      body: string; bodyStrong: string; bodyTail: string;
+      chip1: string; chip2: string; chip3: string; again: string;
+      greeting: (name: string) => string;
+      steps: { title: string; desc: string }[];
+      refLabel: string; mailLabel: string; mailCta: string;
+      stepsKicker: string;
+    };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
     validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
   };
