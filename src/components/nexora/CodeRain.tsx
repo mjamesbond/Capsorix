@@ -67,7 +67,7 @@ interface CodeRainProps {
   parallaxSpeed?: number;
 }
 
-const CodeRain = ({ className = "", density = 6, parallaxSpeed = 0.12 }: CodeRainProps) => {
+const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRainProps) => {
   const ref = useParallax<HTMLDivElement>(parallaxSpeed);
   const [mounted, setMounted] = useState(false);
   const columns = useMemo(() => buildColumns(density), [density]);
@@ -84,11 +84,11 @@ const CodeRain = ({ className = "", density = 6, parallaxSpeed = 0.12 }: CodeRai
       {columns.map((col, i) => (
         <div
           key={i}
-          className="absolute font-mono text-[11px] leading-[1.9] whitespace-nowrap opacity-[0.18]"
+          className="absolute font-mono text-[11px] leading-[1.9] whitespace-nowrap opacity-[0.08]"
           style={{
             left: col.left,
             top: col.top,
-            animation: `code-fall ${col.speed}s linear ${col.delay}s infinite`,
+            animation: `code-fall ${col.speed * 1.6}s linear ${col.delay}s infinite`,
           }}
         >
           {col.lines.map((line, j) => (
