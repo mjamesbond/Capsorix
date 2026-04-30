@@ -598,6 +598,7 @@ export const dict: Record<Lang, Dict> = {
     },
   },
 
+  fr: {
     nav: {
       services: "Savoir-faire",
       process: "Méthode",
