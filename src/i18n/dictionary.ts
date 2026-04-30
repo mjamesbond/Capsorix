@@ -388,6 +388,5 @@ export const dict: Record<Lang, Dict> = {
       values: "انتقاء · دقّة · أفق طويل",
     },
   },
-} as const;
+};
 
-export type Dict = typeof dict.en;
