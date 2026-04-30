@@ -53,9 +53,9 @@ const Navbar = () => {
 
           <a
             href="#contact"
-            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-gold px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
+            className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
           >
-            Start Project
+            <span className="relative z-10">Start Your Project</span>
           </a>
         </nav>
       </div>
