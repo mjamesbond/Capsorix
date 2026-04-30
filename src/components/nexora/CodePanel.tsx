@@ -278,12 +278,21 @@ interface CodePanelProps {
 
 const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
   const { lang } = useI18n();
-  const LINES = lang === "ar" ? LINES_AR : lang === "fr" ? LINES_FR : LINES_EN;
+  const LINES =
+    lang === "ar" ? LINES_AR :
+    lang === "fr" ? LINES_FR :
+    lang === "de" ? LINES_DE :
+    LINES_EN;
   const fileName =
     lang === "ar" ? "كابسوريكس · المحرّك.كبس" :
     lang === "fr" ? "capsorix · moteur.ts" :
+    lang === "de" ? "capsorix · motor.ts" :
     "capsorix · engine.ts";
-  const liveLabel = lang === "ar" ? "حيّ" : lang === "fr" ? "en direct" : "live";
+  const liveLabel =
+    lang === "ar" ? "حيّ" :
+    lang === "fr" ? "en direct" :
+    lang === "de" ? "live" :
+    "live";
 
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);
