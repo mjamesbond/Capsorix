@@ -357,4 +357,88 @@
     filter: blur(6px);
     pointer-events: none;
   }
+
+  /* ========================================================
+   * Language switcher — bespoke control, lives in the navbar.
+   * ======================================================*/
+  .lang-switch__shell {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: hsl(222 50% 9% / 0.5);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid hsl(42 50% 60% / 0.18);
+    transition:
+      border-color 0.7s var(--transition-smooth),
+      box-shadow 0.7s var(--transition-smooth),
+      background 0.7s var(--transition-smooth);
+    pointer-events: none;
+  }
+  .lang-switch:hover .lang-switch__shell {
+    border-color: hsl(42 65% 58% / 0.4);
+    box-shadow:
+      0 0 0 1px hsl(42 65% 58% / 0.15),
+      0 6px 24px -8px hsl(42 70% 50% / 0.25);
+  }
+
+  .lang-switch__thumb {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 9999px;
+    transition: transform 0.7s var(--transition-smooth);
+    will-change: transform;
+    pointer-events: none;
+  }
+  .lang-switch__thumb-inner {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(42 70% 50%), hsl(45 90% 70%), hsl(40 60% 50%));
+    background-size: 200% 100%;
+    box-shadow:
+      0 4px 14px -4px hsl(42 70% 50% / 0.55),
+      inset 0 1px 0 hsl(48 95% 85% / 0.45),
+      inset 0 -1px 0 hsl(38 60% 35% / 0.35);
+    animation: gradient-shift 9s ease-in-out infinite;
+  }
+
+  /* Snap micro-interaction — fires only on toggle, not on initial paint */
+  @keyframes lang-thumb-snap {
+    0%   { scale: 1; }
+    35%  { scale: 0.94 1.02; }
+    70%  { scale: 1.02 0.98; }
+    100% { scale: 1; }
+  }
+  .lang-thumb-snap .lang-switch__thumb-inner {
+    animation:
+      gradient-shift 9s ease-in-out infinite,
+      lang-thumb-snap 0.55s var(--transition-smooth);
+  }
+
+  .lang-switch__btn {
+    position: relative;
+    z-index: 10;
+    flex: 1 1 0;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--foreground) / 0.55);
+    transition:
+      color 0.6s var(--transition-smooth),
+      transform 0.6s var(--transition-smooth);
+    cursor: pointer;
+  }
+  .lang-switch__btn:hover { color: hsl(var(--foreground) / 0.9); }
+  .lang-switch__btn.is-active {
+    color: hsl(var(--primary-foreground));
+  }
+  /* Inactive label drifts 1px outward at rest, settles when hovered */
+  .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
+  .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
+  .lang-switch:hover .lang-switch__btn:not(.is-active) { transform: translateX(0); }
 }
