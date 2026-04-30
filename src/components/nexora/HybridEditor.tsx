@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useI18n } from "@/i18n/I18nProvider";
 
 /**
  * Hybrid editor: a single panel showing two stacked editors —
  * Frontend (HTML/CSS/JS) and Backend (Node.js). Each types its own
  * symbolic snippet, with hover tooltips revealing the meaning of
- * every key token.
+ * every key token. The CODE itself is intentionally English (real
+ * programming idioms); only the prose meanings are localized.
  */
 
 type Token = {
   t: string;
   c: string;
-  /** Hover meaning — shown as a soft tooltip on hover. */
-  m?: string;
+  /** A stable id used to look up a localized meaning. Untranslated tokens omit it. */
+  k?: string;
 };
 
 const C = {
@@ -26,37 +28,139 @@ const C = {
   type: "text-[hsl(265_70%_75%)]",
 };
 
+// Per-language meanings keyed by token id. Each language is a
+// rewrite, not a literal translation — the same calm precision in
+// native phrasing for each audience.
+const MEANINGS: Record<"en" | "fr" | "ar", Record<string, string>> = {
+  en: {
+    "fe.const": "Immutable binding — predictable state.",
+    "fe.experience": "The brand moment your visitor remembers.",
+    "fe.createUI": "Composes design tokens into a living interface.",
+    "fe.design": "Visual system, typography, motion.",
+    "fe.premium": "No templates. No compromises.",
+    "fe.interaction": "How the interface responds to intent.",
+    "fe.smooth": "60fps, 16ms frames, frame-perfect.",
+    "fe.detail": "The thing competitors skip.",
+    "fe.obsessive": "Pixel by pixel, until it disappears.",
+    "fe.remember": "Engineered to stay in memory long after leaving.",
+    "fe.visitor": "Not a user. A future client.",
+    "be.app": "Express server — the studio's runtime.",
+    "be.post": "Receives client vision, returns product.",
+    "be.build": "Endpoint that turns intent into product.",
+    "be.req": "What the client wants.",
+    "be.res": "What we promise back.",
+    "be.processClientVision": "Strategy → architecture → execution.",
+    "be.body": "The brief, validated and parsed.",
+    "be.if": "A condition we earn, not assume.",
+    "be.trustsUs": "Trust is the real authentication layer.",
+    "be.scale": "Grow the client's business, not just the system.",
+    "be.business": "Revenue, reach, reputation.",
+    "be.send": "Confirmation, not just a response.",
+    "be.deployed": "Shipped. Live. Done.",
+    "be.respond": "Senior reply within 24–48 hours. Always.",
+    "be.48": "Hours. Not days.",
+    paneFrontend: "Frontend",
+    paneBackend: "Backend",
+    badgeLive: "Live Reload",
+    badgeListening: "Listening :443",
+  },
+  fr: {
+    "fe.const": "Liaison immuable — un état prévisible.",
+    "fe.experience": "Le moment de marque dont votre visiteur se souviendra.",
+    "fe.createUI": "Compose les tokens de design en interface vivante.",
+    "fe.design": "Système visuel, typographie, mouvement.",
+    "fe.premium": "Pas de gabarits. Aucun compromis.",
+    "fe.interaction": "Comment l’interface répond à l’intention.",
+    "fe.smooth": "60 fps, images de 16 ms, à l’image près.",
+    "fe.detail": "Ce que les autres survolent.",
+    "fe.obsessive": "Pixel par pixel, jusqu’à disparaître.",
+    "fe.remember": "Pensé pour rester en mémoire longtemps après la visite.",
+    "fe.visitor": "Pas un utilisateur. Un futur client.",
+    "be.app": "Serveur Express — le runtime du studio.",
+    "be.post": "Reçoit la vision du client, renvoie un produit.",
+    "be.build": "L’endpoint qui transforme l’intention en produit.",
+    "be.req": "Ce que veut le client.",
+    "be.res": "Ce que nous promettons en retour.",
+    "be.processClientVision": "Stratégie → architecture → exécution.",
+    "be.body": "Le brief, validé et analysé.",
+    "be.if": "Une condition qu’on gagne, jamais qu’on suppose.",
+    "be.trustsUs": "La confiance est la vraie couche d’authentification.",
+    "be.scale": "Faire grandir l’activité du client, pas seulement le système.",
+    "be.business": "Revenu, portée, réputation.",
+    "be.send": "Une confirmation, pas une simple réponse.",
+    "be.deployed": "Livré. En ligne. Fait.",
+    "be.respond": "Réponse d’un partenaire sous 24–48 heures. Toujours.",
+    "be.48": "Heures. Pas des jours.",
+    paneFrontend: "Frontend",
+    paneBackend: "Backend",
+    badgeLive: "Live Reload",
+    badgeListening: "Listening :443",
+  },
+  ar: {
+    "fe.const": "ارتباط ثابت — حالة يمكن توقّعها.",
+    "fe.experience": "اللحظة التي يحفظها زائرك عن علامتك.",
+    "fe.createUI": "يجمع رموز التصميم في واجهة حيّة.",
+    "fe.design": "نظام بصري، طباعة، حركة.",
+    "fe.premium": "لا قوالب. لا تنازلات.",
+    "fe.interaction": "كيف تستجيب الواجهة لنيّة المستخدم.",
+    "fe.smooth": "60 إطار/ث، 16 ملي ثانية لكل إطار، بدقّة الإطار.",
+    "fe.detail": "ما يتجاوزه المنافسون.",
+    "fe.obsessive": "بكسل بكسل، حتى يختفي.",
+    "fe.remember": "مهندسة لتبقى في الذاكرة طويلًا بعد المغادرة.",
+    "fe.visitor": "ليس مستخدمًا. عميلًا قادمًا.",
+    "be.app": "خادم Express — بيئة تشغيل الاستوديو.",
+    "be.post": "يستقبل رؤية العميل، ويُعيد منتجًا.",
+    "be.build": "المسار الذي يحوّل النيّة إلى منتج.",
+    "be.req": "ما يريده العميل.",
+    "be.res": "ما نَعِد به في المقابل.",
+    "be.processClientVision": "استراتيجية ← معمار ← تنفيذ.",
+    "be.body": "البريف، مُتحقَّق منه ومُحلَّل.",
+    "be.if": "شرط نَكسبه، لا نفترضه.",
+    "be.trustsUs": "الثقة هي طبقة المصادقة الحقيقيّة.",
+    "be.scale": "ننمّي عمل العميل، لا النظام فحسب.",
+    "be.business": "إيرادات، انتشار، سمعة.",
+    "be.send": "تأكيد، لا مجرّد ردّ.",
+    "be.deployed": "مُسلَّم. حيّ. منتهٍ.",
+    "be.respond": "ردّ من فريق أوّل خلال 24 إلى 48 ساعة. دائمًا.",
+    "be.48": "ساعات. لا أيّام.",
+    paneFrontend: "الواجهة",
+    paneBackend: "الخلفيّة",
+    badgeLive: "إعادة تحميل حيّة",
+    badgeListening: "Listening :443",
+  },
+};
+
 const FRONTEND: Token[][] = [
   [{ t: "// frontend — beauty, engineered", c: C.cmt }],
   [
-    { t: "const ", c: C.kw, m: "Immutable binding — predictable state." },
-    { t: "experience", c: C.var, m: "The brand moment your visitor remembers." },
+    { t: "const ", c: C.kw, k: "fe.const" },
+    { t: "experience", c: C.var, k: "fe.experience" },
     { t: " = ", c: C.pun },
-    { t: "createUI", c: C.fn, m: "Composes design tokens into a living interface." },
+    { t: "createUI", c: C.fn, k: "fe.createUI" },
     { t: "({", c: C.pun },
   ],
   [
-    { t: "  design: ", c: C.prop, m: "Visual system, typography, motion." },
-    { t: '"premium"', c: C.str, m: "No templates. No compromises." },
+    { t: "  design: ", c: C.prop, k: "fe.design" },
+    { t: '"premium"', c: C.str, k: "fe.premium" },
     { t: ",", c: C.pun },
   ],
   [
-    { t: "  interaction: ", c: C.prop, m: "How the interface responds to intent." },
-    { t: '"smooth"', c: C.str, m: "60fps, 16ms frames, frame-perfect." },
+    { t: "  interaction: ", c: C.prop, k: "fe.interaction" },
+    { t: '"smooth"', c: C.str, k: "fe.smooth" },
     { t: ",", c: C.pun },
   ],
   [
-    { t: "  detail: ", c: C.prop, m: "The thing competitors skip." },
-    { t: '"obsessive"', c: C.str, m: "Pixel by pixel, until it disappears." },
+    { t: "  detail: ", c: C.prop, k: "fe.detail" },
+    { t: '"obsessive"', c: C.str, k: "fe.obsessive" },
     { t: ",", c: C.pun },
   ],
   [{ t: "});", c: C.pun }],
   [
     { t: "experience", c: C.var },
     { t: ".", c: C.pun },
-    { t: "remember", c: C.fn, m: "Engineered to stay in memory long after leaving." },
+    { t: "remember", c: C.fn, k: "fe.remember" },
     { t: "(", c: C.pun },
-    { t: "visitor", c: C.var, m: "Not a user. A future client." },
+    { t: "visitor", c: C.var, k: "fe.visitor" },
     { t: ");", c: C.pun },
   ],
 ];
@@ -64,72 +168,78 @@ const FRONTEND: Token[][] = [
 const BACKEND: Token[][] = [
   [{ t: "// backend — logic that ships", c: C.cmt }],
   [
-    { t: "app", c: C.var, m: "Express server — the studio's runtime." },
+    { t: "app", c: C.var, k: "be.app" },
     { t: ".", c: C.pun },
-    { t: "post", c: C.fn, m: "Receives client vision, returns product." },
+    { t: "post", c: C.fn, k: "be.post" },
     { t: "(", c: C.pun },
-    { t: "'/build'", c: C.str, m: "Endpoint that turns intent into product." },
+    { t: "'/build'", c: C.str, k: "be.build" },
     { t: ", (", c: C.pun },
-    { t: "req", c: C.var, m: "What the client wants." },
+    { t: "req", c: C.var, k: "be.req" },
     { t: ", ", c: C.pun },
-    { t: "res", c: C.var, m: "What we promise back." },
+    { t: "res", c: C.var, k: "be.res" },
     { t: ") => {", c: C.pun },
   ],
   [
-    { t: "  processClientVision", c: C.fn, m: "Strategy → architecture → execution." },
+    { t: "  processClientVision", c: C.fn, k: "be.processClientVision" },
     { t: "(", c: C.pun },
     { t: "req", c: C.var },
     { t: ".", c: C.pun },
-    { t: "body", c: C.prop, m: "The brief, validated and parsed." },
+    { t: "body", c: C.prop, k: "be.body" },
     { t: ");", c: C.pun },
   ],
   [
-    { t: "  if ", c: C.kw, m: "A condition we earn, not assume." },
+    { t: "  if ", c: C.kw, k: "be.if" },
     { t: "(", c: C.pun },
     { t: "client", c: C.var },
     { t: ".", c: C.pun },
-    { t: "trustsUs", c: C.fn, m: "Trust is the real authentication layer." },
+    { t: "trustsUs", c: C.fn, k: "be.trustsUs" },
     { t: ") ", c: C.pun },
-    { t: "scale", c: C.fn, m: "Grow the client's business, not just the system." },
+    { t: "scale", c: C.fn, k: "be.scale" },
     { t: "(", c: C.pun },
     { t: "client", c: C.var },
     { t: ".", c: C.pun },
-    { t: "business", c: C.prop, m: "Revenue, reach, reputation." },
+    { t: "business", c: C.prop, k: "be.business" },
     { t: ");", c: C.pun },
   ],
   [
     { t: "  res", c: C.var },
     { t: ".", c: C.pun },
-    { t: "send", c: C.fn, m: "Confirmation, not just a response." },
+    { t: "send", c: C.fn, k: "be.send" },
     { t: "(", c: C.pun },
-    { t: '"Deployed Successfully"', c: C.str, m: "Shipped. Live. Done." },
+    { t: '"Deployed Successfully"', c: C.str, k: "be.deployed" },
     { t: ");", c: C.pun },
   ],
   [{ t: "});", c: C.pun }],
   [
     { t: "app", c: C.var },
     { t: ".", c: C.pun },
-    { t: "respond", c: C.fn, m: "Senior reply within 24–48 hours. Always." },
+    { t: "respond", c: C.fn, k: "be.respond" },
     { t: ".", c: C.pun },
     { t: "within", c: C.fn },
     { t: "(", c: C.pun },
     { t: "24", c: C.num },
     { t: ", ", c: C.pun },
-    { t: "48", c: C.num, m: "Hours. Not days." },
+    { t: "48", c: C.num, k: "be.48" },
     { t: ");", c: C.pun },
   ],
 ];
 
 const totalChars = (line: Token[]) => line.reduce((n, tok) => n + tok.t.length, 0);
 
-const renderLine = (line: Token[], typed: number, withMeaning: boolean) => {
+const renderLine = (
+  line: Token[],
+  typed: number,
+  withMeaning: boolean,
+  meanings: Record<string, string>,
+) => {
   let remaining = typed;
   return line.map((tok, i) => {
     if (remaining <= 0) return null;
     const slice = tok.t.slice(0, remaining);
     const fullyTyped = remaining >= tok.t.length;
     remaining -= tok.t.length;
-    const interactive = withMeaning && fullyTyped && !!tok.m;
+    const m = tok.k ? meanings[tok.k] : undefined;
+    const interactive = withMeaning && fullyTyped && !!m;
     return (
       <span
         key={i}
@@ -141,7 +251,7 @@ const renderLine = (line: Token[], typed: number, withMeaning: boolean) => {
             role="tooltip"
             className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-30 whitespace-nowrap rounded-md glass-strong gold-border-glow px-3 py-1.5 text-[11px] font-sans not-italic text-foreground/90 opacity-0 -translate-y-1 group-hover/tok:opacity-100 group-hover/tok:translate-y-0 transition-all duration-300 shadow-elegant"
           >
-            {tok.m}
+            {m}
           </span>
         )}
       </span>
@@ -156,9 +266,10 @@ interface PaneProps {
   filename: string;
   lines: Token[][];
   speed?: number;
+  meanings: Record<string, string>;
 }
 
-const Pane = ({ title, badge, accent, filename, lines, speed = 28 }: PaneProps) => {
+const Pane = ({ title, badge, accent, filename, lines, speed = 28, meanings }: PaneProps) => {
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [committed, setCommitted] = useState<number[]>([]);
@@ -187,7 +298,7 @@ const Pane = ({ title, badge, accent, filename, lines, speed = 28 }: PaneProps) 
   const totalLines = committed.length + 1;
 
   return (
-    <div className="relative overflow-visible rounded-2xl glass-strong gold-border-glow shadow-elegant">
+    <div className="relative overflow-visible rounded-2xl glass-strong gold-border-glow shadow-elegant" dir="ltr">
       <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/40 bg-[hsl(222_45%_5%/0.7)]">
         <span className="w-2 h-2 rounded-full" style={{ background: accent }} />
         <span className="font-mono text-[11px] text-foreground/90">{filename}</span>
@@ -212,7 +323,7 @@ const Pane = ({ title, badge, accent, filename, lines, speed = 28 }: PaneProps) 
           </p>
           {committed.map((idx, k) => (
             <div key={`c-${k}-${idx}`} className="opacity-55">
-              {renderLine(lines[idx], totalChars(lines[idx]), true)}
+              {renderLine(lines[idx], totalChars(lines[idx]), true, meanings)}
             </div>
           ))}
           <div
@@ -222,7 +333,7 @@ const Pane = ({ title, badge, accent, filename, lines, speed = 28 }: PaneProps) 
               boxShadow: `inset 2px 0 0 ${accent}aa`,
             }}
           >
-            {renderLine(lines[lineIdx], charCount, true)}
+            {renderLine(lines[lineIdx], charCount, true, meanings)}
             <span
               className="inline-block align-middle ml-0.5 w-[2px] h-[16px] -mb-[3px]"
               style={{
@@ -239,22 +350,27 @@ const Pane = ({ title, badge, accent, filename, lines, speed = 28 }: PaneProps) 
 };
 
 const HybridEditor = () => {
+  const { lang } = useI18n();
+  const meanings = useMemo(() => MEANINGS[lang], [lang]);
+
   return (
     <div className="grid lg:grid-cols-2 gap-6">
       <Pane
-        title="Frontend"
-        badge="Live Reload"
+        title={meanings.paneFrontend}
+        badge={meanings.badgeLive}
         accent="hsl(200 85% 65%)"
         filename="experience.tsx"
         lines={FRONTEND}
+        meanings={meanings}
       />
       <Pane
-        title="Backend"
-        badge="Listening :443"
+        title={meanings.paneBackend}
+        badge={meanings.badgeListening}
         accent="hsl(95 55% 60%)"
         filename="server.js"
         lines={BACKEND}
         speed={26}
+        meanings={meanings}
       />
     </div>
   );

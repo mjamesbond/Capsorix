@@ -36,13 +36,31 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Lang>(getInitial);
   const [transitioning, setTransitioning] = useState(false);
 
-  // Apply <html lang/dir> + persist
+  // Apply <html lang/dir>, document title, meta description + persist
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("lang", lang);
     root.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
     root.dataset.lang = lang;
     window.localStorage.setItem(STORAGE_KEY, lang);
+
+    // Localized <title> + meta description so the browser tab and SEO
+    // reflect the active language. Title is intentionally short.
+    const titles: Record<Lang, string> = {
+      en: "Capsorix — We Build Digital Empires",
+      fr: "Capsorix — Nous bâtissons des empires numériques",
+      ar: "كابسوريكس — نبني إمبراطوريات رقميّة",
+    };
+    const descriptions: Record<Lang, string> = {
+      en: "Capsorix crafts elite mobile apps, web platforms, and custom systems. Full-cycle product development from idea to launch.",
+      fr: "Capsorix conçoit des applications mobiles, plateformes web et systèmes sur mesure d’élite. Développement produit de bout en bout, de l’idée au lancement.",
+      ar: "تصنع كابسوريكس تطبيقات موبايل ومنصّات ويب وأنظمة مخصّصة من الطراز الرفيع. تطوير منتجات متكامل من الفكرة إلى الإطلاق.",
+    };
+    document.title = titles[lang];
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", descriptions[lang]);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", titles[lang]);
   }, [lang]);
 
   const setLang = (next: Lang) => {
