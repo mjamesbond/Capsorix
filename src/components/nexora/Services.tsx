@@ -1,4 +1,5 @@
 import { Smartphone, Globe, LayoutDashboard, Rocket } from "lucide-react";
+import Reveal from "./Reveal";
 
 const services = [
   {
@@ -29,49 +30,56 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="relative py-32">
+    <section id="services" className="relative py-40">
       <div className="container">
-        <div className="max-w-3xl mb-20">
-          <p className="text-xs font-medium tracking-[0.3em] uppercase text-primary mb-4">
+        <Reveal className="max-w-3xl mb-24">
+          <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">
             — Services
           </p>
           <h2 className="font-display text-5xl md:text-7xl font-medium leading-[1.05]">
             Crafted with
             <span className="text-gradient-gold italic"> obsession.</span>
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground max-w-xl">
+          <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
             A focused suite of disciplines, executed at the highest standard. No filler. No shortcuts.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-7">
           {services.map((s, i) => (
-            <article
+            <Reveal
               key={s.title}
-              className="group relative overflow-hidden rounded-3xl glass p-10 gold-border-glow transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
+              as="article"
+              delay={i * 120}
+              className="group relative overflow-hidden rounded-3xl glass p-10 md:p-12 gold-border-glow gold-ring transition-all duration-700 hover:-translate-y-1.5 hover:shadow-elegant"
             >
-              <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-primary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/15 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
               <div className="relative flex items-start gap-6">
-                <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-gold-soft flex items-center justify-center border border-primary/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-gold-soft flex items-center justify-center border border-primary/30 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-gold transition-all duration-700">
                   <s.icon className="w-7 h-7 text-primary-glow" strokeWidth={1.4} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-display text-3xl font-semibold mb-3">{s.title}</h3>
+                  <h3 className="font-display text-3xl font-semibold mb-3 group-hover:text-gradient-gold transition-all duration-500">
+                    {s.title}
+                  </h3>
                   <p className="text-muted-foreground leading-relaxed mb-6">{s.desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {s.tags.map((t) => (
-                      <span key={t} className="text-[11px] tracking-wider uppercase rounded-full border border-border/60 px-3 py-1 text-muted-foreground">
+                      <span
+                        key={t}
+                        className="text-[11px] tracking-wider uppercase rounded-full border border-border/60 px-3 py-1 text-muted-foreground transition-colors duration-500 group-hover:border-primary/40 group-hover:text-foreground/80"
+                      >
                         {t}
                       </span>
                     ))}
                   </div>
                 </div>
-                <span className="font-display text-5xl text-primary/20 group-hover:text-primary/50 transition-colors">
+                <span className="font-display text-5xl text-primary/20 group-hover:text-primary/60 transition-colors duration-500">
                   0{i + 1}
                 </span>
               </div>
-            </article>
+            </Reveal>
           ))}
         </div>
       </div>

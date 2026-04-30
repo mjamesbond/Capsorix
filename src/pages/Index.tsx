@@ -13,8 +13,11 @@ const Index = () => {
       <Navbar />
       <main>
         <Hero />
+        <div className="container"><div className="section-divider" /></div>
         <Services />
+        <div className="container"><div className="section-divider" /></div>
         <Process />
+        <div className="container"><div className="section-divider" /></div>
         <Industries />
         <Stats />
         <Contact />
