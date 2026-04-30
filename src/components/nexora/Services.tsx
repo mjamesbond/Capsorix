@@ -5,36 +5,36 @@ import { Link } from "react-router-dom";
 const services = [
   {
     icon: Apple,
-    title: "iOS Development",
-    desc: "Native Swift apps engineered with Apple-grade discipline, taste, and frame-perfect polish.",
+    title: "Mobile apps — iOS",
+    desc: "Native Swift apps built the way Apple builds its own — quiet, fast, considered down to the last frame.",
     tags: ["Swift", "SwiftUI", "App Store"],
     to: "/ios",
   },
   {
     icon: Smartphone,
-    title: "Android Development",
-    desc: "Kotlin-first apps with modular architecture, hardened security, and Play Store mastery.",
+    title: "Mobile apps — Android",
+    desc: "Kotlin-first apps with clean architecture and the kind of details users feel without naming.",
     tags: ["Kotlin", "Compose", "Play Store"],
     to: "/android",
   },
   {
     icon: Globe,
-    title: "Web Development",
-    desc: "Frontend craft and backend rigor — interfaces that load instantly and run like clockwork.",
+    title: "Websites as full experiences",
+    desc: "Not pages — environments. Interfaces that load instantly, read clearly, and convert without shouting.",
     tags: ["Next.js", "React", "Edge"],
     to: "/web",
   },
   {
     icon: LayoutDashboard,
-    title: "Custom Systems",
-    desc: "Bespoke dashboards, internal tools, and enterprise platforms engineered to scale.",
+    title: "Internal systems",
+    desc: "Dashboards, operations tools, and platforms that quietly run the business behind the business.",
     tags: ["SaaS", "ERP", "Analytics"],
     to: "#contact",
   },
   {
     icon: Rocket,
-    title: "Full-Cycle Product",
-    desc: "From the first whiteboard sketch to launch-day applause — strategy, design, build, ship.",
+    title: "Full-cycle product",
+    desc: "Strategy, design, engineering, launch — handled by the same team, in one continuous line of thought.",
     tags: ["MVP", "Scale", "Launch"],
     to: "#contact",
   },
@@ -46,15 +46,15 @@ const Services = () => {
       <div className="container">
         <Reveal className="max-w-3xl mb-24">
           <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">
-            — Services
+            — What we build
           </p>
           <h2 className="font-display text-5xl md:text-7xl font-medium leading-[1.05]">
-            Crafted with
-            <span className="text-gradient-gold italic"> obsession.</span>
+            We build
+            <span className="text-gradient-gold italic"> only what should exist.</span>
           </h2>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed">
-            Custom solutions tailored to your business — never templated.
-            A focused suite of disciplines executed at the highest standard.
+            A focused set of disciplines, each held to the same standard.
+            Tailored to the business — never templated.
           </p>
         </Reveal>
 
@@ -106,11 +106,14 @@ const Services = () => {
         </div>
 
         <Reveal className="mt-16 text-center" delay={200}>
+          <p className="text-base md:text-lg text-foreground/85 mb-4">
+            Anything software-related — done right.
+          </p>
           <a
             href="#contact"
             className="group inline-flex items-center gap-2 text-sm font-medium text-primary-glow hover:text-primary transition-colors"
           >
-            Not sure which fits? Talk to a senior partner
+            Not sure where it fits? Send it anyway
             <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
           </a>
         </Reveal>

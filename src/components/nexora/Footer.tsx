@@ -11,7 +11,7 @@ const Footer = () => {
               <span className="font-display text-xl font-semibold tracking-widest text-gradient-gold">NEXORA</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">
-              Engineered in shadow. Delivered in light. We build digital empires for those who lead.
+              We build systems that grow businesses. Few projects, done right.
             </p>
           </div>
 
@@ -26,7 +26,7 @@ const Footer = () => {
 
         <div className="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} NEXORA Studio. All rights reserved.</p>
-          <p className="tracking-[0.2em] uppercase">Crafted with obsession</p>
+          <p className="tracking-[0.2em] uppercase">Selective · Precise · Long-term</p>
         </div>
       </div>
     </footer>

@@ -3,24 +3,24 @@ import Reveal from "./Reveal";
 
 const pillars = [
   {
+    icon: ShieldCheck,
+    title: "What we build, works",
+    desc: "We don’t promise much. We focus on what holds up over time.",
+  },
+  {
     icon: Clock,
     title: "Reply in 24–48 hours",
-    desc: "Every inquiry reviewed personally by a senior partner.",
+    desc: "Every request is read personally — not routed through a funnel.",
   },
   {
     icon: Sparkles,
-    title: "Tailored to your business",
-    desc: "No templates. Every system engineered for your goals.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Obsessive attention to detail",
-    desc: "Premium development held to a single standard: excellent.",
+    title: "The details others ignore",
+    desc: "The small things shape how a product feels. We don’t skip them.",
   },
   {
     icon: Lock,
-    title: "Discreet & confidential",
-    desc: "NDAs standard. Your vision stays yours, end to end.",
+    title: "Selective by design",
+    desc: "We choose projects carefully so each one gets the attention it needs.",
   },
 ];
 
