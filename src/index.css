@@ -51,6 +51,27 @@
     --glass-border: 1px solid hsl(42 50% 60% / 0.18);
 
     --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* System rhythm — every motion in the site obeys this tempo */
+    --rhythm: 140ms;          /* base stagger between elements */
+    --tempo-fast: 0.5s;       /* micro-interactions */
+    --tempo-med: 0.9s;        /* hovers, surface changes */
+    --tempo-slow: 1.4s;       /* reveals, scene shifts */
+    --section-pad-y: 9rem;    /* unified vertical breathing */
+  }
+}
+@layer components {
+  /* One rhythm — every section breathes the same */
+  .section { padding-top: var(--section-pad-y); padding-bottom: var(--section-pad-y); }
+
+  /* Soft, controlled icon container — replaces ad-hoc rotate/scale flourishes */
+  .icon-tile {
+    transition: transform var(--tempo-med) var(--transition-smooth),
+                background var(--tempo-med) var(--transition-smooth),
+                border-color var(--tempo-med) var(--transition-smooth);
+  }
+  .group:hover .icon-tile {
+    transform: translate3d(0, -1px, 0) scale(1.03);
   }
 }
 
