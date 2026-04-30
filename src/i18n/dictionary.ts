@@ -1,8 +1,13 @@
-// Trilingual dictionary — English, Arabic, French.
+// Quadrilingual dictionary — English, Arabic, French, German.
 // Each language is a *cultural rewrite*, not a literal translation: the same
 // calm, precise tone is carried in native phrasing for each audience.
+//
+// German voice: sober, engineered, structurally precise. We lean on the
+// language's natural gravity (compound nouns, deliberate cadence) without
+// drifting into stiffness — a tone fit for a Werkstatt of senior engineers,
+// not a marketing brochure.
 
-export type Lang = "en" | "ar" | "fr";
+export type Lang = "en" | "ar" | "fr" | "de";
 
 type Pillar = { title: string; desc: string };
 type Principle = { k: string; t: string; d: string };
