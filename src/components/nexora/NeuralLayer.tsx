@@ -149,7 +149,6 @@ const NeuralLayer = ({
 
       // Eased scroll parallax — barely perceptible drift
       scroll.y += (scroll.target - scroll.y) * 0.04;
-      const scrollOffset = (scroll.y - scroll.target) * 0.0; // placeholder
       const drift = scroll.y * 0.015; // cumulative slow drift
       ctx.save();
       ctx.translate(0, -drift % height);
