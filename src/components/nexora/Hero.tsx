@@ -89,7 +89,7 @@ const Hero = () => {
               href="#services"
               className="group inline-flex items-center gap-2 rounded-full glass px-9 py-4 text-base font-medium text-foreground/90 hover:text-primary-glow transition-all duration-500 gold-border-glow gold-ring"
             >
-              {t.hero.ctaSecondary}
+              <span className="lang-morph">{t.hero.ctaSecondary}</span>
               <span className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
                 →
               </span>
