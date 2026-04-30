@@ -13,7 +13,7 @@ const Ctx = createContext<I18nCtx | null>(null);
 const STORAGE_KEY = "capsorix-lang";
 const LEGACY_STORAGE_KEY = "nexora-lang";
 
-const isLang = (v: unknown): v is Lang => v === "ar" || v === "en" || v === "fr";
+const isLang = (v: unknown): v is Lang => v === "ar" || v === "en" || v === "fr" || v === "de";
 
 const getInitial = (): Lang => {
   if (typeof window === "undefined") return "en";
@@ -29,6 +29,7 @@ const getInitial = (): Lang => {
   const nav = window.navigator.language?.toLowerCase() ?? "";
   if (nav.startsWith("ar")) return "ar";
   if (nav.startsWith("fr")) return "fr";
+  if (nav.startsWith("de")) return "de";
   return "en";
 };
 
@@ -50,11 +51,13 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       en: "Capsorix — We Build Digital Empires",
       fr: "Capsorix — Nous bâtissons des empires numériques",
       ar: "كابسوريكس — نبني إمبراطوريات رقميّة",
+      de: "Capsorix — Wir bauen digitale Imperien",
     };
     const descriptions: Record<Lang, string> = {
       en: "Capsorix crafts elite mobile apps, web platforms, and custom systems. Full-cycle product development from idea to launch.",
       fr: "Capsorix conçoit des applications mobiles, plateformes web et systèmes sur mesure d’élite. Développement produit de bout en bout, de l’idée au lancement.",
       ar: "تصنع كابسوريكس تطبيقات موبايل ومنصّات ويب وأنظمة مخصّصة من الطراز الرفيع. تطوير منتجات متكامل من الفكرة إلى الإطلاق.",
+      de: "Capsorix entwickelt erstklassige Mobile-Apps, Web-Plattformen und maßgeschneiderte Systeme. Produktentwicklung von der Idee bis zum Launch — aus einer Hand.",
     };
     document.title = titles[lang];
     const meta = document.querySelector('meta[name="description"]');
@@ -86,7 +89,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
       t: dict[lang],
       setLang,
       toggle: () => {
-        const order: Lang[] = ["en", "fr", "ar"];
+        const order: Lang[] = ["en", "fr", "de", "ar"];
         const idx = order.indexOf(lang);
         setLang(order[(idx + 1) % order.length]);
       },

@@ -196,6 +196,65 @@ const LINES_FR: Token[][] = [
   ],
 ];
 
+// German pseudo-code — same intent, native phrasing.
+const LINES_DE: Token[][] = [
+  [{ t: "// der Motor — jede Entscheidung summiert sich", c: C.cmt }],
+  [
+    { t: "funktion ", c: C.kw },
+    { t: "baueProdukt", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "kundenVision", c: C.var },
+    { t: ") {", c: C.pun },
+  ],
+  [
+    { t: "  rückgabe ", c: C.kw },
+    { t: "präzision", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "strategie", c: C.var },
+    { t: " + ", c: C.pun },
+    { t: "ausführung", c: C.var },
+    { t: ";", c: C.pun },
+  ],
+  [{ t: "}", c: C.pun }],
+  [
+    { t: "konst ", c: C.kw },
+    { t: "ergebnis", c: C.var },
+    { t: " = ", c: C.pun },
+    { t: "erstelle", c: C.fn },
+    { t: "({", c: C.pun },
+  ],
+  [{ t: "  qualität: ", c: C.var }, { t: "'hoch'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  detail: ", c: C.var }, { t: "'kompromisslos'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "  wirkung: ", c: C.var }, { t: "'langfristig'", c: C.str }, { t: ",", c: C.pun }],
+  [{ t: "});", c: C.pun }],
+  [{ t: "// Vertrauen ist die wahre Währung", c: C.cmt }],
+  [
+    { t: "wenn ", c: C.kw },
+    { t: "(", c: C.pun },
+    { t: "kunde", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "vertrautUns", c: C.fn },
+    { t: ") { ", c: C.pun },
+    { t: "skaliere", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "kunde", c: C.var },
+    { t: ".", c: C.pun },
+    { t: "geschäft", c: C.var },
+    { t: "); }", c: C.pun },
+  ],
+  [
+    { t: "warte ", c: C.kw },
+    { t: "antworten", c: C.fn },
+    { t: ".", c: C.pun },
+    { t: "binnen", c: C.fn },
+    { t: "(", c: C.pun },
+    { t: "24", c: C.num },
+    { t: ", ", c: C.pun },
+    { t: "48", c: C.num },
+    { t: ");", c: C.pun },
+  ],
+];
+
 const totalChars = (line: Token[]) => line.reduce((n, tok) => n + tok.t.length, 0);
 
 const renderLine = (line: Token[], typed: number) => {
@@ -219,12 +278,21 @@ interface CodePanelProps {
 
 const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
   const { lang } = useI18n();
-  const LINES = lang === "ar" ? LINES_AR : lang === "fr" ? LINES_FR : LINES_EN;
+  const LINES =
+    lang === "ar" ? LINES_AR :
+    lang === "fr" ? LINES_FR :
+    lang === "de" ? LINES_DE :
+    LINES_EN;
   const fileName =
     lang === "ar" ? "كابسوريكس · المحرّك.كبس" :
     lang === "fr" ? "capsorix · moteur.ts" :
+    lang === "de" ? "capsorix · motor.ts" :
     "capsorix · engine.ts";
-  const liveLabel = lang === "ar" ? "حيّ" : lang === "fr" ? "en direct" : "live";
+  const liveLabel =
+    lang === "ar" ? "حيّ" :
+    lang === "fr" ? "en direct" :
+    lang === "de" ? "live" :
+    "live";
 
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);

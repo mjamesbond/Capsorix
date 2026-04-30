@@ -446,6 +446,10 @@
   .lang-switch__thumb--tri {
     width: calc(33.333% - 2px);
   }
+  /* Quad-state variant: thumb is one-quarter of the rail */
+  .lang-switch__thumb--quad {
+    width: calc(25% - 1.5px);
+  }
   .lang-switch__thumb-inner {
     position: absolute;
     inset: 0;
@@ -492,8 +496,8 @@
   }
   /* Inactive label drifts 1px outward at rest, settles when hovered.
      Only applies to the 2-state variant; the 3-state has a centered middle. */
-  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
-  .lang-switch:not(.lang-switch--tri) .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
+  .lang-switch:not(.lang-switch--tri):not(.lang-switch--quad) .lang-switch__btn:not(.is-active):first-of-type { transform: translateX(-1px); }
+  .lang-switch:not(.lang-switch--tri):not(.lang-switch--quad) .lang-switch__btn:not(.is-active):last-of-type  { transform: translateX(1px); }
   .lang-switch:hover .lang-switch__btn:not(.is-active) { transform: translateX(0); }
 
   /* ========================================================
@@ -520,4 +524,31 @@
   /* French high punctuation needs a thin space before — use a real Unicode
      thin space in copy when authoring; this just ensures it doesn't collapse. */
   html[lang="fr"] { word-spacing: 0.01em; }
+
+  /* ========================================================
+   * German typography tuning
+   * ----------------------------------------------------
+   * German nouns run long; the eye needs a touch more air.
+   *   • Display headings tighten almost imperceptibly for gravitas.
+   *   • Body copy gets generous leading for the long compounds.
+   *   • Hyphenation engaged so words break cleanly when they must.
+   *   • UI uppercase tracking eased for a calmer, less Teutonic feel.
+   * ======================================================*/
+  html[lang="de"] body {
+    font-feature-settings: "kern", "calt", "liga", "ss01";
+  }
+  html[lang="de"] .font-display {
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  html[lang="de"] .uppercase { letter-spacing: 0.18em; }
+  html[lang="de"] .tracking-widest { letter-spacing: 0.22em; }
+  html[lang="de"] p { line-height: 1.72; }
+  html[lang="de"] h1,
+  html[lang="de"] h2,
+  html[lang="de"] h3,
+  html[lang="de"] p {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
 }

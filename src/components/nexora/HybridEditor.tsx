@@ -31,7 +31,7 @@ const C = {
 // Per-language meanings keyed by token id. Each language is a
 // rewrite, not a literal translation — the same calm precision in
 // native phrasing for each audience.
-const MEANINGS: Record<"en" | "fr" | "ar", Record<string, string>> = {
+const MEANINGS: Record<"en" | "fr" | "ar" | "de", Record<string, string>> = {
   en: {
     "fe.const": "Immutable binding — predictable state.",
     "fe.experience": "The brand moment your visitor remembers.",
@@ -126,6 +126,38 @@ const MEANINGS: Record<"en" | "fr" | "ar", Record<string, string>> = {
     paneFrontend: "الواجهة",
     paneBackend: "الخلفيّة",
     badgeLive: "إعادة تحميل حيّة",
+    badgeListening: "Listening :443",
+  },
+  de: {
+    "fe.const": "Unveränderliche Bindung — vorhersagbarer Zustand.",
+    "fe.experience": "Der Markenmoment, an den sich Ihr Besucher erinnert.",
+    "fe.createUI": "Komponiert Design-Tokens zu einer lebendigen Oberfläche.",
+    "fe.design": "Visuelles System, Typografie, Bewegung.",
+    "fe.premium": "Keine Vorlagen. Keine Kompromisse.",
+    "fe.interaction": "Wie die Oberfläche auf Absicht reagiert.",
+    "fe.smooth": "60 fps, 16-ms-Frames, frame-genau.",
+    "fe.detail": "Das, was die Konkurrenz überspringt.",
+    "fe.obsessive": "Pixel für Pixel — bis es verschwindet.",
+    "fe.remember": "Gebaut, um lange nach dem Verlassen im Gedächtnis zu bleiben.",
+    "fe.visitor": "Kein Nutzer. Ein künftiger Kunde.",
+    "be.app": "Express-Server — die Laufzeit des Studios.",
+    "be.post": "Empfängt die Vision des Kunden, gibt ein Produkt zurück.",
+    "be.build": "Endpunkt, der Absicht in Produkt verwandelt.",
+    "be.req": "Was der Kunde will.",
+    "be.res": "Was wir im Gegenzug versprechen.",
+    "be.processClientVision": "Strategie → Architektur → Ausführung.",
+    "be.body": "Der Brief — geprüft und geparst.",
+    "be.if": "Eine Bedingung, die wir verdienen, nicht annehmen.",
+    "be.trustsUs": "Vertrauen ist die wahre Authentifizierungsschicht.",
+    "be.scale": "Das Geschäft des Kunden wachsen lassen, nicht nur das System.",
+    "be.business": "Umsatz, Reichweite, Reputation.",
+    "be.send": "Bestätigung — nicht bloß eine Antwort.",
+    "be.deployed": "Ausgeliefert. Live. Erledigt.",
+    "be.respond": "Antwort eines erfahrenen Partners in 24–48 Stunden. Immer.",
+    "be.48": "Stunden. Keine Tage.",
+    paneFrontend: "Frontend",
+    paneBackend: "Backend",
+    badgeLive: "Live Reload",
     badgeListening: "Listening :443",
   },
 };
