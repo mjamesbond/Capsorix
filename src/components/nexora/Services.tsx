@@ -42,7 +42,7 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="relative py-40 section-fade">
+    <section id="services" className="relative section section-fade">
       <div className="container">
         <Reveal className="max-w-3xl mb-24">
           <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">
@@ -63,7 +63,7 @@ const Services = () => {
             <Reveal
               key={s.title}
               as="article"
-              delay={i * 160}
+              delay={i * 140}
               className="group relative overflow-hidden rounded-3xl glass p-10 md:p-12 gold-border-glow gold-ring lift glow-soft"
             >
               <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />

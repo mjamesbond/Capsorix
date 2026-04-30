@@ -3,15 +3,15 @@ import Reveal from "./Reveal";
 
 const FinalCTA = () => {
   return (
-    <section className="relative pt-10 pb-32">
+    <section className="relative section section-fade">
       <div className="container">
         <Reveal className="relative overflow-hidden rounded-[2.5rem] glass-strong gold-border-glow gold-ring p-10 md:p-16 text-center shadow-elegant">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full bg-primary/15 blur-[140px] animate-glow-pulse pointer-events-none" />
-          <div className="absolute inset-0 grid-bg opacity-20 pointer-events-none" />
+          {/* Single, still glow — defers to the neural layer for motion */}
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full bg-primary/10 blur-[160px] pointer-events-none" />
 
           <div className="relative max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-glow animate-glow-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary-glow" />
               <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-foreground/80">
                 Accepting 3 new partners this quarter
               </span>
