@@ -26,26 +26,24 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,hsl(var(--background))_95%)]" />
       </div>
 
-      {/* Living code backdrop */}
-      <CodeRain density={7} parallaxSpeed={0.08} />
+      {/* Living code backdrop — quieter, supports the neural layer */}
+      <CodeRain density={4} parallaxSpeed={0.06} />
 
       {/* Floating gold orbs with parallax */}
       <div
         ref={orbARef}
-        className="absolute top-[18%] -left-32 w-[32rem] h-[32rem] rounded-full bg-primary/25 blur-[140px] animate-glow-pulse will-parallax"
+        className="absolute top-[18%] -left-32 w-[32rem] h-[32rem] rounded-full bg-primary/10 blur-[160px] will-parallax"
       />
       <div
         ref={orbBRef}
-        className="absolute bottom-[12%] -right-32 w-[36rem] h-[36rem] rounded-full bg-primary-glow/15 blur-[160px] animate-glow-pulse will-parallax"
-        style={{ animationDelay: "2s" }}
+        className="absolute bottom-[12%] -right-32 w-[36rem] h-[36rem] rounded-full bg-primary-glow/[0.06] blur-[180px] will-parallax"
       />
 
       <div className="container relative">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center">
         <div className="max-w-3xl text-center lg:text-left">
-          <div className="inline-flex items-center gap-2.5 rounded-full glass-strong px-5 py-2.5 mb-10 animate-fade-in gold-ring">
+          <div className="inline-flex items-center gap-2.5 rounded-full glass-strong px-5 py-2.5 mb-10 animate-fade-in">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-glow opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-glow" />
             </span>
             <Sparkles className="w-3.5 h-3.5 text-primary-glow" />
@@ -58,7 +56,7 @@ const Hero = () => {
             We Build{" "}
             <span className="text-gradient-gold italic relative inline-block">
               Digital
-              <span className="absolute -inset-x-6 -inset-y-3 bg-gradient-gold/15 blur-3xl -z-10 animate-glow-pulse" />
+              <span className="absolute -inset-x-6 -inset-y-3 bg-gradient-gold/10 blur-3xl -z-10" />
             </span>
             <br />
             <span className="text-gradient-gold">Empires</span>

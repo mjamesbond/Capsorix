@@ -8,6 +8,7 @@ import IOS from "./pages/IOS.tsx";
 import Android from "./pages/Android.tsx";
 import Web from "./pages/Web.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import NeuralLayer from "./components/nexora/NeuralLayer";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <NeuralLayer />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/ios" element={<IOS />} />
