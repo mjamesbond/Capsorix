@@ -14,7 +14,7 @@ const industries = [
 
 const Industries = () => {
   return (
-    <section id="industries" className="relative py-40">
+    <section id="industries" className="relative section section-fade">
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-20 items-center">
           <Reveal className="lg:col-span-5">
@@ -34,11 +34,11 @@ const Industries = () => {
               {industries.map((ind, i) => (
                 <Reveal
                   key={ind.label}
-                  delay={i * 70}
-                  className="group aspect-square glass rounded-2xl flex flex-col items-center justify-center gap-3 p-4 gold-border-glow gold-ring transition-all duration-700 hover:-translate-y-1.5 hover:bg-gradient-gold-soft"
+                  delay={i * 100}
+                  className="group aspect-square glass rounded-2xl flex flex-col items-center justify-center gap-3 p-4 gold-border-glow lift glow-soft"
                 >
                   <ind.icon
-                    className="w-8 h-8 text-primary-glow group-hover:scale-125 group-hover:-rotate-6 transition-transform duration-700"
+                    className="w-8 h-8 text-primary-glow icon-tile"
                     strokeWidth={1.3}
                   />
                   <span className="text-sm font-medium text-foreground/90 group-hover:text-primary-glow transition-colors">

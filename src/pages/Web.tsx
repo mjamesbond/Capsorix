@@ -115,7 +115,7 @@ const Web = () => {
       </section>
 
       {/* Capabilities */}
-      <section className="relative py-32">
+      <section className="relative section">
         <div className="container">
           <Reveal className="max-w-3xl mb-20">
             <p className="text-xs tracking-[0.35em] uppercase text-primary mb-5">— Capabilities</p>
@@ -136,7 +136,7 @@ const Web = () => {
                 delay={i * 100}
                 className="group relative rounded-2xl glass p-8 gold-border-glow gold-ring transition-all duration-700 hover:-translate-y-1"
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-gold-soft flex items-center justify-center border border-primary/30 mb-5 group-hover:scale-110 group-hover:shadow-gold transition-all duration-700">
+                <div className="w-12 h-12 rounded-xl bg-gradient-gold-soft flex items-center justify-center border border-primary/30 mb-5 icon-tile">
                   <c.icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
                 </div>
                 <h3 className="font-display text-2xl font-semibold mb-2 group-hover:text-gradient-gold transition-all duration-500">
@@ -150,7 +150,7 @@ const Web = () => {
       </section>
 
       {/* CTA */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative section overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(42_70%_45%/0.12),transparent_70%)]" />
         <div className="container relative">
           <Reveal className="max-w-3xl mx-auto text-center rounded-3xl glass-strong gold-border-glow gold-ring p-14">

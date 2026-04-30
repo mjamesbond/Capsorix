@@ -139,7 +139,7 @@ const Contact = () => {
   const resetForm = () => setSubmitted(false);
 
   return (
-    <section id="contact" className="relative py-40 scroll-mt-24">
+    <section id="contact" className="relative section scroll-mt-24">
       <div className="absolute inset-x-0 top-0 section-divider" />
       <div className="container">
         <div className="grid lg:grid-cols-12 gap-16">
@@ -178,7 +178,7 @@ const Contact = () => {
                 { icon: MapPin, label: "Remote · NYC · Dubai" },
               ].map((c) => (
                 <li key={c.label} className="group flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl glass flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                  <div className="w-10 h-10 rounded-xl glass flex items-center justify-center icon-tile">
                     <c.icon className="w-4 h-4 text-primary-glow" />
                   </div>
                   <span className="text-sm text-foreground/90 group-hover:text-primary-glow transition-colors">
@@ -193,7 +193,7 @@ const Contact = () => {
             <div className="relative">
               {submitted ? (
                 <div className="glass-strong rounded-3xl p-10 md:p-14 gold-border-glow gold-ring shadow-elegant relative overflow-hidden text-center animate-scale-in">
-                  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] rounded-full bg-primary/15 blur-[120px] animate-glow-pulse pointer-events-none" />
+                  <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[28rem] h-[28rem] rounded-full bg-primary/8 blur-[140px] pointer-events-none" />
                   <div className="relative">
                     <div className="mx-auto mb-8 w-20 h-20 rounded-full bg-gradient-gold-soft border border-primary/40 flex items-center justify-center gold-ring">
                       <CheckCircle2 className="w-9 h-9 text-primary-glow" strokeWidth={1.5} />

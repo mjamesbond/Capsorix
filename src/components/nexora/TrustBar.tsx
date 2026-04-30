@@ -38,7 +38,7 @@ const TrustBar = () => {
                 {i > 0 && (
                   <span className="hidden md:block absolute -left-2 top-1/2 -translate-y-1/2 h-8 w-px bg-gradient-to-b from-transparent via-primary/25 to-transparent" />
                 )}
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
                   <p.icon className="w-4 h-4 text-primary-glow" strokeWidth={1.6} />
                 </div>
                 <div className="min-w-0">

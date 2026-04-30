@@ -156,7 +156,7 @@ const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
         </span>
         <span className="ml-auto flex items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase text-primary-glow/80">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-glow opacity-75" />
+            
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary-glow" />
           </span>
           live
