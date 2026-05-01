@@ -1132,6 +1132,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48 h", label: "Fenêtre de réponse personnelle" },
       { value: "Long", label: "Terme de chaque relation" },
     ],
+    caseStudies: {
+      kicker: "— Travaux choisis",
+      titleA: "Trois projets,",
+      titleB: " trois échelles différentes.",
+      lead:
+        "Un aperçu du type de travail que nous prenons en charge. Les noms sont retenus quand la confidentialité l’exige — les résultats, jamais.",
+      durationLabel: "Durée d’engagement",
+      stackLabel: "Pile technique",
+      challengeLabel: "Contexte",
+      approachLabel: "Démarche",
+      confidentialNote: "Nom du client protégé par NDA.",
+      items: [
+        {
+          tag: "iOS · Hôtellerie",
+          client: "Groupe de restauration méditerranéen",
+          title: "Une app iPhone côté client qui a remplacé quatre points de contact.",
+          summary:
+            "Réservations, commandes, fidélité et carte signée par le chef — réunis en une expérience iPhone discrète que la marque avait vraiment envie de lancer.",
+          challenge:
+            "Quatre outils éditeurs déconnectés érodaient l’expérience en salle. Le personnel contournait le logiciel au lieu de s’en servir.",
+          approach:
+            "Nous avons reconstruit le parcours client en natif Swift, autour d’un système de design petit et assumé. Les intégrations backend ont été regroupées derrière une seule API interne.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+          metrics: [
+            { value: "−61 %", label: "Tickets de support" },
+            { value: "4,8★", label: "Note App Store" },
+            { value: "1,4×", label: "Panier moyen" },
+          ],
+          duration: "11 semaines",
+        },
+        {
+          tag: "Android · Logistique",
+          client: "Opérateur de flotte régional",
+          title: "Un outil de répartition Android utilisé par 240 chauffeurs.",
+          summary:
+            "Une app conducteur taillée sur mesure et une console répartiteur, pensées autour des dix gestes qui occupent quatre-vingt-dix pour cent de la journée.",
+          challenge:
+            "Une suite logistique générique ne suffisait plus. Les répartiteurs maintenaient un tableur parallèle pour rester opérationnels.",
+          approach:
+            "Entretiens terrain dans trois dépôts, puis une app Kotlin réglée pour les appareils modestes et la connectivité instable. La console a suivi le flux du chauffeur, pas l’inverse.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34 %", label: "Tournées par poste" },
+            { value: "−2,1 min", label: "Temps moyen de répartition" },
+            { value: "0", label: "Tableurs restants" },
+          ],
+          duration: "16 semaines",
+        },
+        {
+          tag: "Web · Industriel",
+          client: "Groupe industriel européen",
+          title: "Une plateforme web reliant huit usines à une seule source de vérité.",
+          summary:
+            "Un tableau de bord production unifié, une couche d’admin par rôle et un flux d’anomalies en temps réel — à la place d’un éparpillement d’outils internes que personne n’aimait.",
+          challenge:
+            "Chaque usine pilotait ses propres tableaux. La direction ne voyait jamais l’entreprise au même endroit — et n’y croyait pas non plus quand elle la voyait.",
+          approach:
+            "Nous avons d’abord modélisé un schéma partagé propre, puis bâti par-dessus une UI web calme et dense — RBAC, traçabilité et télémétrie temps réel intégrés dès le premier jour.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
+          metrics: [
+            { value: "8 → 1", label: "Tableaux unifiés" },
+            { value: "−47 %", label: "Latence des rapports" },
+            { value: "99,98 %", label: "Disponibilité plateforme" },
+          ],
+          duration: "5 mois",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— Selon eux",
+      titleA: "Ce que les personnes",
+      titleB: " avec qui nous avons construit en disent.",
+      lead:
+        "Quelques mots de fondateurs, opérateurs et responsables produit avec qui nous avons travaillé.",
+      prev: "Précédent", next: "Suivant",
+      items: [
+        {
+          quote:
+            "Ils se sont comportés comme des partenaires, pas comme des prestataires. Les décisions étaient expliquées, les compromis nommés à voix haute, et le produit a été livré à l’heure sans un seul appel d’urgence.",
+          name: "Lina Aboul-Saoud",
+          role: "Fondatrice et CEO",
+          company: "Groupe d’hôtellerie · Beyrouth",
+          initials: "LA",
+        },
+        {
+          quote:
+            "C’était un ingénieur senior qui lisait chaque brief, pas un tunnel commercial. Le premier appel a déjà fait avancer notre réflexion — et la suite était au même niveau.",
+          name: "Marcus Hartmann",
+          role: "VP Produit",
+          company: "SaaS industriel · Munich",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Soigné, retenu, rapide. Six mois plus tard, nous utilisons toujours l’architecture posée le premier jour — et nous n’avons rien eu à redessiner.",
+          name: "Sara El-Khoury",
+          role: "Directrice de l’ingénierie",
+          company: "Plateforme fintech · Dubaï",
+          initials: "SK",
+        },
+        {
+          quote:
+            "La première chose qu’ils ont faite, c’est nous dire ce qu’il ne fallait pas construire. Cette seule conversation nous a fait gagner un trimestre — et probablement l’entreprise.",
+          name: "Jonas Berger",
+          role: "Cofondateur",
+          company: "Logistique B2B · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Questions fréquentes",
+      titleA: "Des réponses",
+      titleB: " avant même la question.",
+      lead:
+        "Les questions que l’on nous pose le plus, traitées honnêtement. Si la vôtre n’y figure pas, glissez-la dans le brief — nous y répondrons directement.",
+      stillCurious: "Une question reste en suspens ?",
+      ctaLabel: "Posez votre question",
+      items: [
+        {
+          q: "Combien coûte un projet ?",
+          a: "Cela dépend du périmètre, mais la plupart des engagements se situent entre 25 000 et 180 000 $. Nous ne donnons jamais de chiffre avant d’avoir compris votre besoin réel — une réponse en une ligne serait malhonnête. Après votre brief, vous recevez une proposition écrite avec un forfait clair.",
+        },
+        {
+          q: "Combien de temps prend un projet ?",
+          a: "Un MVP focalisé prend 6 à 12 semaines. Un produit complet — mobile, web et backend — prend généralement 3 à 5 mois. Nous livrons par paliers, vous voyez du logiciel fonctionnel dès les trois premières semaines, pas à la fin.",
+        },
+        {
+          q: "À qui appartiennent le code et la PI ?",
+          a: "À vous. Code source, fichiers de design et accès infrastructure sont transférés sur vos comptes en fin de mission. Aucune porte dérobée, aucune licence, aucune dépendance cachée à nous.",
+        },
+        {
+          q: "Signez-vous un NDA ?",
+          a: "Oui — volontiers, à toute étape. Nous pouvons contresigner le vôtre avant le premier appel, ou envoyer le nôtre dans l’heure. La confidentialité est la règle, pas l’exception.",
+        },
+        {
+          q: "Travaillez-vous avec des fondateurs en early-stage ou seulement des entreprises établies ?",
+          a: "Les deux. Ce que nous cherchons, c’est l’intention et la clarté — un fondateur qui sait quel problème il résout, ou une équipe prête à investir dans quelque chose de bien fait. Nous refusons des projets, quelle que soit la taille, quand l’adéquation n’est pas là.",
+        },
+        {
+          q: "Que se passe-t-il après la mise en ligne ?",
+          a: "La plupart des clients nous gardent sous un retainer calme pour l’évolution, le monitoring et les petites améliorations. Aucun verrouillage — vous pouvez confier le code à votre équipe à tout moment et nous accompagnons la transition.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Confier un projet",
       titleA: "Dites-nous ce qui mérite",
