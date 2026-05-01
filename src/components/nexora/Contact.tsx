@@ -58,7 +58,8 @@ const Contact = () => {
   // Captured at the moment of submission so the confirmation screen can
   // greet the client by name and display a stable reference even after
   // the form state is reset.
-  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date } | null>(null);
+  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date; data: FormState } | null>(null);
+  const [copied, setCopied] = useState(false);
   // Autosave state — `restored` shows a quiet pill above the form for a
   // few seconds after a draft is brought back, and `savedAt` powers the
   // tiny "saved locally" footer hint.
