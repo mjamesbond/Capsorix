@@ -30,6 +30,41 @@ export interface Dict {
   process: { kicker: string; titleA: string; titleB: string; lead: string; steps: Step[] };
   industries: { kicker: string; titleA: string; titleB: string; lead: string; labels: string[] };
   stats: Stat[];
+  caseStudies: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    items: {
+      tag: string;
+      client: string;
+      title: string;
+      summary: string;
+      challenge: string;
+      approach: string;
+      stack: string[];
+      metrics: { value: string; label: string }[];
+      duration: string;
+    }[];
+    durationLabel: string;
+    stackLabel: string;
+    challengeLabel: string;
+    approachLabel: string;
+    confidentialNote: string;
+  };
+  testimonials: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    items: {
+      quote: string;
+      name: string;
+      role: string;
+      company: string;
+      initials: string;
+    }[];
+    prev: string; next: string;
+  };
+  faq: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    stillCurious: string; ctaLabel: string;
+    items: { q: string; a: string }[];
+  };
   contact: {
     kicker: string; titleA: string; titleB: string; lead: string; leadStrong: string; leadTail: string;
     bullets: string[]; formKicker: string; formSub: string; replyChip: string;
@@ -217,6 +252,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48h", label: "Personal reply window" },
       { value: "Long", label: "Term of every relationship" },
     ],
+    caseStudies: {
+      kicker: "— Selected work",
+      titleA: "Three projects,",
+      titleB: " three different scales.",
+      lead:
+        "A glimpse at the kind of work we take on. Names are withheld where confidentiality applies — outcomes are not.",
+      durationLabel: "Engagement",
+      stackLabel: "Stack",
+      challengeLabel: "Brief",
+      approachLabel: "Approach",
+      confidentialNote: "Client name held under NDA.",
+      items: [
+        {
+          tag: "iOS · Hospitality",
+          client: "Mediterranean restaurant group",
+          title: "A guest-side iOS app that replaced four touchpoints.",
+          summary:
+            "Reservations, ordering, loyalty, and a chef-curated menu — folded into a single, quiet iPhone experience that the brand actually wanted to ship.",
+          challenge:
+            "Four disconnected vendor tools were eroding the in-room experience. Staff worked around the software instead of with it.",
+          approach:
+            "We rebuilt the guest journey natively in Swift, anchored on a small, opinionated design system. Backend integrations were collapsed behind a single internal API.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+          metrics: [
+            { value: "−61%", label: "Support tickets" },
+            { value: "4.8★", label: "App Store rating" },
+            { value: "1.4×", label: "Avg. order value" },
+          ],
+          duration: "11 weeks",
+        },
+        {
+          tag: "Android · Logistics",
+          client: "Regional fleet operator",
+          title: "An Android dispatch tool that 240 drivers actually use.",
+          summary:
+            "A purpose-built driver app and a dispatcher console, designed around the ten things that happen ninety percent of the day.",
+          challenge:
+            "An off-the-shelf logistics suite was too generic. Dispatchers were keeping a parallel spreadsheet to stay sane.",
+          approach:
+            "Field interviews on three depots, then a Kotlin app tuned for low-end devices and patchy connectivity. The dispatcher console followed the driver flow — not the other way around.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34%", label: "Routes per shift" },
+            { value: "−2.1m", label: "Avg. dispatch time" },
+            { value: "0", label: "Spreadsheets left" },
+          ],
+          duration: "16 weeks",
+        },
+        {
+          tag: "Web · Industrial",
+          client: "European manufacturing group",
+          title: "A web platform tying eight factories to one source of truth.",
+          summary:
+            "A unified production dashboard, a role-aware admin layer, and a real-time anomaly stream — replacing a sprawl of internal tools no one liked.",
+          challenge:
+            "Each plant ran its own dashboards. Leadership couldn’t see the company in one place — and couldn’t trust the numbers when they did.",
+          approach:
+            "We modelled a clean shared schema first, then built a calm, dense web UI on top — RBAC, auditability, and live telemetry baked in from day one.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
+          metrics: [
+            { value: "8 → 1", label: "Dashboards unified" },
+            { value: "−47%", label: "Reporting lag" },
+            { value: "99.98%", label: "Platform uptime" },
+          ],
+          duration: "5 months",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— In their words",
+      titleA: "What the people we",
+      titleB: " worked with say.",
+      lead:
+        "A few quotes from founders, operators, and product leaders we’ve built alongside.",
+      prev: "Previous", next: "Next",
+      items: [
+        {
+          quote:
+            "They behaved like partners, not vendors. Decisions were explained, trade-offs were named out loud, and the product shipped on time without a single emergency call.",
+          name: "Lina Aboul-Saoud",
+          role: "Founder & CEO",
+          company: "Hospitality group · Beirut",
+          initials: "LA",
+        },
+        {
+          quote:
+            "We had a senior engineer reading every brief, not a sales funnel. The first call already moved our thinking forward — and the work that followed matched the bar.",
+          name: "Marcus Hartmann",
+          role: "VP of Product",
+          company: "Industrial SaaS · Munich",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Polished, restrained, fast. Six months in, we’re still using the same architecture they put down on day one — and we haven’t had to redesign anything.",
+          name: "Sara El-Khoury",
+          role: "Head of Engineering",
+          company: "Fintech platform · Dubai",
+          initials: "SK",
+        },
+        {
+          quote:
+            "The first thing they did was tell us what not to build. That single conversation saved us a quarter of work and probably the company.",
+          name: "Jonas Berger",
+          role: "Co-founder",
+          company: "B2B logistics · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Common questions",
+      titleA: "Answers",
+      titleB: " before you ask.",
+      lead:
+        "The questions we hear most often, answered honestly. If yours isn’t here, write it in the brief — we’ll address it directly in our reply.",
+      stillCurious: "Still curious about something?",
+      ctaLabel: "Send your question",
+      items: [
+        {
+          q: "How much does a project cost?",
+          a: "It depends on scope, but most engagements land between $25k and $180k. We never quote a number until we understand what you actually need — a one-line answer would be a disservice. After your brief, you receive a written proposal with a fixed fee and a clear scope.",
+        },
+        {
+          q: "How long does it take to build something with you?",
+          a: "A focused MVP runs 6–12 weeks. A full product — mobile, web, and backend — typically takes 3–5 months. We stage delivery so you see working software within the first three weeks, not at the end.",
+        },
+        {
+          q: "Who owns the code and the IP?",
+          a: "You do. Full source code, design files, and infrastructure access are transferred to your accounts at the end of the engagement. We do not retain backdoors, licenses, or hidden dependencies on us.",
+        },
+        {
+          q: "Do you sign an NDA?",
+          a: "Yes — gladly, and at any stage. We can countersign your NDA before the first call, or send ours within an hour. Confidentiality is the default, not the exception.",
+        },
+        {
+          q: "Do you work with early-stage founders or only established companies?",
+          a: "Both. What we look for is intent and clarity — a founder who knows what problem they’re solving, or a team that’s ready to invest in something built right. We turn down projects, regardless of size, when the fit isn’t there.",
+        },
+        {
+          q: "What happens after launch?",
+          a: "Most clients keep us on a calm retainer for evolution, monitoring, and small improvements. There is no lock-in — you can hand the code to your own team at any point and we’ll support the transition.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Send your project",
       titleA: "Tell us what should",
@@ -512,6 +692,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48س", label: "نافذة الردّ الشخصي" },
       { value: "طويلة", label: "مدّة كل علاقة عمل" },
     ],
+    caseStudies: {
+      kicker: "— أعمال مختارة",
+      titleA: "ثلاثة مشاريع،",
+      titleB: " وثلاثة مقاييس مختلفة.",
+      lead:
+        "لمحة عن نوع العمل الذي نتولّاه. نُخفي الأسماء حين تقتضي السرّيّة ذلك — أمّا النتائج فلا.",
+      durationLabel: "مدّة المشروع",
+      stackLabel: "التقنيات",
+      challengeLabel: "السياق",
+      approachLabel: "المنهج",
+      confidentialNote: "اسم العميل محفوظ بموجب اتفاقيّة سرّيّة.",
+      items: [
+        {
+          tag: "iOS · ضيافة",
+          client: "مجموعة مطاعم متوسّطيّة",
+          title: "تطبيق iPhone للضيف يستبدل أربع نقاط تَماسّ بنقطة واحدة.",
+          summary:
+            "حجوزات وطلبات وولاء وقائمة طعام يختارها الشيف — في تجربة هاتف هادئة أرادت العلامة فعلًا أن تُطلقها.",
+          challenge:
+            "أربع أدوات منفصلة من موردين مختلفين كانت تُفسد تجربة الغرفة، والموظّفون يلتفّون حول البرنامج بدل العمل به.",
+          approach:
+            "أعدنا بناء رحلة الضيف أصيلة بـ Swift فوق نظام تصميم صغير ومُحكَم، وجمعنا تكاملات الـ backend خلف واجهة داخليّة واحدة.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+          metrics: [
+            { value: "−61%", label: "تذاكر الدعم" },
+            { value: "4.8★", label: "تقييم App Store" },
+            { value: "1.4×", label: "متوسّط قيمة الطلب" },
+          ],
+          duration: "11 أسبوعًا",
+        },
+        {
+          tag: "Android · لوجستيّات",
+          client: "مُشغّل أسطول إقليمي",
+          title: "أداة Android للسائقين يستخدمها 240 سائقًا فعلًا.",
+          summary:
+            "تطبيق سائق مبنيّ لغرضه، ولوحة تحكّم للموزّع — مصمّمة حول العشر مهامّ التي تتكرّر تسعين بالمئة من اليوم.",
+          challenge:
+            "حلّ لوجستيّ جاهز كان عامًّا أكثر من اللازم، حتّى صار الموزّعون يحتفظون بجدول بيانات موازٍ ليُبقوا أعصابهم.",
+          approach:
+            "مقابلات ميدانيّة في ثلاث محطّات، ثمّ تطبيق Kotlin مُحكَم لأجهزة محدودة الموارد واتّصال متذبذب. لوحة الموزّع تَبِعَت تدفّق السائق، لا العكس.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34%", label: "مسارات لكل وردية" },
+            { value: "−2.1د", label: "متوسّط زمن التوزيع" },
+            { value: "0", label: "جداول متبقّية" },
+          ],
+          duration: "16 أسبوعًا",
+        },
+        {
+          tag: "Web · صناعي",
+          client: "مجموعة تصنيع أوروبيّة",
+          title: "منصّة ويب تربط ثمانية مصانع بمصدر حقيقة واحد.",
+          summary:
+            "لوحة إنتاج موحَّدة، وطبقة إدارة تعرف الأدوار، وتدفّق مباشر للأخطاء — بدل تشتُّت أدوات داخليّة لم يُحبّها أحد.",
+          challenge:
+            "كلّ مصنع يدير لوحاته الخاصّة، فلا الإدارة ترى الشركة في مكان واحد، ولا تثق بالأرقام حين تراها.",
+          approach:
+            "نمذجنا أوّلًا مخطّطًا مشتركًا نظيفًا، ثمّ بنينا فوقه واجهة ويب هادئة كثيفة المعنى — صلاحيّات وتدقيق وتيليمتري حيّ منذ اليوم الأوّل.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
+          metrics: [
+            { value: "8 → 1", label: "لوحات تمّ توحيدها" },
+            { value: "−47%", label: "تأخير التقارير" },
+            { value: "99.98%", label: "جاهزيّة المنصّة" },
+          ],
+          duration: "5 أشهر",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— بكلماتهم",
+      titleA: "ما يقوله مَن",
+      titleB: " عملنا معهم.",
+      lead:
+        "بضع شهادات من مؤسّسين ومسؤولي تشغيل وقادة منتج بنينا إلى جانبهم.",
+      prev: "السابق", next: "التالي",
+      items: [
+        {
+          quote:
+            "تصرّفوا كشركاء لا كموردين. القرارات كانت تُشرَح، والمفاضلات تُسمّى بصوت عالٍ، وأُطلق المنتج في موعده دون مكالمة طوارئ واحدة.",
+          name: "لينا أبو السعود",
+          role: "المؤسِّسة والرئيسة التنفيذيّة",
+          company: "مجموعة ضيافة · بيروت",
+          initials: "LA",
+        },
+        {
+          quote:
+            "كان مهندس أوّل يقرأ كلّ طلب، لا قمعَ مبيعات. المكالمة الأولى وحدها قدّمت تفكيرنا للأمام — والعمل الذي تلاها كان على المستوى نفسه.",
+          name: "ماركوس هارتمان",
+          role: "نائب رئيس المنتج",
+          company: "SaaS صناعي · ميونخ",
+          initials: "MH",
+        },
+        {
+          quote:
+            "أنيق، مُتحفّظ، سريع. بعد ستّة أشهر، لا نزال نستخدم البنية ذاتها التي وضعوها في اليوم الأوّل، ولم نضطر لإعادة تصميم شيء.",
+          name: "سارة الخوري",
+          role: "رئيسة الهندسة",
+          company: "منصّة فينتك · دبي",
+          initials: "SK",
+        },
+        {
+          quote:
+            "أوّل ما فعلوه أنّهم أخبرونا بما يجب ألّا نبنيه. تلك المحادثة وحدها وفّرت علينا ربعًا من العمل، وربّما الشركة كلّها.",
+          name: "يوناس برغر",
+          role: "شريك مؤسِّس",
+          company: "لوجستيّات B2B · برلين",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— أسئلة شائعة",
+      titleA: "إجابات",
+      titleB: " قبل أن تسأل.",
+      lead:
+        "الأسئلة الأكثر تكرارًا، نُجيب عنها بصراحة. إن لم يكن سؤالك هنا، اكتبه في الطلب — وسنتناوله مباشرةً في ردّنا.",
+      stillCurious: "ما زال هناك شيء يشغل بالك؟",
+      ctaLabel: "أرسل سؤالك",
+      items: [
+        {
+          q: "كم تبلغ تكلفة المشروع؟",
+          a: "تختلف حسب النطاق، ولكنّ معظم مشاريعنا تتراوح بين 25 ألف و180 ألف دولار. لا نُسعّر شيئًا قبل أن نفهم احتياجك الفعليّ — جواب مختصر لا يُنصفك. بعد طلبك، تتلقّى عرضًا مكتوبًا برسوم ثابتة ونطاق واضح.",
+        },
+        {
+          q: "كم يستغرق بناء منتجٍ معكم؟",
+          a: "نسخة أوليّة مُركَّزة تستغرق 6 إلى 12 أسبوعًا. منتج كامل — موبايل وويب وbackend — عادةً ما يأخذ من 3 إلى 5 أشهر. نسلّم على مراحل بحيث ترى برمجيّات تعمل خلال أوّل ثلاثة أسابيع لا في النهاية.",
+        },
+        {
+          q: "لمن تعود ملكيّة الكود والملكيّة الفكريّة؟",
+          a: "لك أنت. تنتقل الشيفرة المصدريّة وملفّات التصميم وصلاحيّات البنية التحتيّة إلى حساباتك بنهاية المشروع. لا نحتفظ بأبواب خلفيّة ولا تراخيص ولا تبعيّات مخفيّة علينا.",
+        },
+        {
+          q: "هل توقّعون اتّفاقيّة سرّيّة؟",
+          a: "نعم — بكلّ سرور وفي أيّ مرحلة. يمكننا توقيع اتّفاقيّتك قبل المكالمة الأولى، أو إرسال اتّفاقيّتنا خلال ساعة. السرّيّة هي الأصل لا الاستثناء.",
+        },
+        {
+          q: "هل تعملون مع المؤسّسين في المراحل المبكّرة، أم مع الشركات القائمة فقط؟",
+          a: "كلاهما. ما نبحث عنه هو النيّة والوضوح — مؤسِّس يعرف المشكلة التي يحلّها، أو فريق مستعدّ للاستثمار في شيء يُبنى كما يجب. نعتذر عن مشاريع، مهما كانت كبيرة، حين لا يكون التوافق موجودًا.",
+        },
+        {
+          q: "ماذا يحدث بعد الإطلاق؟",
+          a: "معظم العملاء يُبقوننا على عقد دعم هادئ للتطوير والمراقبة والتحسينات الصغيرة. لا التزام مُغلَق — يمكنك تسليم الكود لفريقك في أيّ لحظة، وسندعم الانتقال.",
+        },
+      ],
+    },
     contact: {
       kicker: "— أرسل مشروعك",
       titleA: "أخبرنا بما يستحقّ",
@@ -807,6 +1132,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48 h", label: "Fenêtre de réponse personnelle" },
       { value: "Long", label: "Terme de chaque relation" },
     ],
+    caseStudies: {
+      kicker: "— Travaux choisis",
+      titleA: "Trois projets,",
+      titleB: " trois échelles différentes.",
+      lead:
+        "Un aperçu du type de travail que nous prenons en charge. Les noms sont retenus quand la confidentialité l’exige — les résultats, jamais.",
+      durationLabel: "Durée d’engagement",
+      stackLabel: "Pile technique",
+      challengeLabel: "Contexte",
+      approachLabel: "Démarche",
+      confidentialNote: "Nom du client protégé par NDA.",
+      items: [
+        {
+          tag: "iOS · Hôtellerie",
+          client: "Groupe de restauration méditerranéen",
+          title: "Une app iPhone côté client qui a remplacé quatre points de contact.",
+          summary:
+            "Réservations, commandes, fidélité et carte signée par le chef — réunis en une expérience iPhone discrète que la marque avait vraiment envie de lancer.",
+          challenge:
+            "Quatre outils éditeurs déconnectés érodaient l’expérience en salle. Le personnel contournait le logiciel au lieu de s’en servir.",
+          approach:
+            "Nous avons reconstruit le parcours client en natif Swift, autour d’un système de design petit et assumé. Les intégrations backend ont été regroupées derrière une seule API interne.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+          metrics: [
+            { value: "−61 %", label: "Tickets de support" },
+            { value: "4,8★", label: "Note App Store" },
+            { value: "1,4×", label: "Panier moyen" },
+          ],
+          duration: "11 semaines",
+        },
+        {
+          tag: "Android · Logistique",
+          client: "Opérateur de flotte régional",
+          title: "Un outil de répartition Android utilisé par 240 chauffeurs.",
+          summary:
+            "Une app conducteur taillée sur mesure et une console répartiteur, pensées autour des dix gestes qui occupent quatre-vingt-dix pour cent de la journée.",
+          challenge:
+            "Une suite logistique générique ne suffisait plus. Les répartiteurs maintenaient un tableur parallèle pour rester opérationnels.",
+          approach:
+            "Entretiens terrain dans trois dépôts, puis une app Kotlin réglée pour les appareils modestes et la connectivité instable. La console a suivi le flux du chauffeur, pas l’inverse.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34 %", label: "Tournées par poste" },
+            { value: "−2,1 min", label: "Temps moyen de répartition" },
+            { value: "0", label: "Tableurs restants" },
+          ],
+          duration: "16 semaines",
+        },
+        {
+          tag: "Web · Industriel",
+          client: "Groupe industriel européen",
+          title: "Une plateforme web reliant huit usines à une seule source de vérité.",
+          summary:
+            "Un tableau de bord production unifié, une couche d’admin par rôle et un flux d’anomalies en temps réel — à la place d’un éparpillement d’outils internes que personne n’aimait.",
+          challenge:
+            "Chaque usine pilotait ses propres tableaux. La direction ne voyait jamais l’entreprise au même endroit — et n’y croyait pas non plus quand elle la voyait.",
+          approach:
+            "Nous avons d’abord modélisé un schéma partagé propre, puis bâti par-dessus une UI web calme et dense — RBAC, traçabilité et télémétrie temps réel intégrés dès le premier jour.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
+          metrics: [
+            { value: "8 → 1", label: "Tableaux unifiés" },
+            { value: "−47 %", label: "Latence des rapports" },
+            { value: "99,98 %", label: "Disponibilité plateforme" },
+          ],
+          duration: "5 mois",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— Selon eux",
+      titleA: "Ce que les personnes",
+      titleB: " avec qui nous avons construit en disent.",
+      lead:
+        "Quelques mots de fondateurs, opérateurs et responsables produit avec qui nous avons travaillé.",
+      prev: "Précédent", next: "Suivant",
+      items: [
+        {
+          quote:
+            "Ils se sont comportés comme des partenaires, pas comme des prestataires. Les décisions étaient expliquées, les compromis nommés à voix haute, et le produit a été livré à l’heure sans un seul appel d’urgence.",
+          name: "Lina Aboul-Saoud",
+          role: "Fondatrice et CEO",
+          company: "Groupe d’hôtellerie · Beyrouth",
+          initials: "LA",
+        },
+        {
+          quote:
+            "C’était un ingénieur senior qui lisait chaque brief, pas un tunnel commercial. Le premier appel a déjà fait avancer notre réflexion — et la suite était au même niveau.",
+          name: "Marcus Hartmann",
+          role: "VP Produit",
+          company: "SaaS industriel · Munich",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Soigné, retenu, rapide. Six mois plus tard, nous utilisons toujours l’architecture posée le premier jour — et nous n’avons rien eu à redessiner.",
+          name: "Sara El-Khoury",
+          role: "Directrice de l’ingénierie",
+          company: "Plateforme fintech · Dubaï",
+          initials: "SK",
+        },
+        {
+          quote:
+            "La première chose qu’ils ont faite, c’est nous dire ce qu’il ne fallait pas construire. Cette seule conversation nous a fait gagner un trimestre — et probablement l’entreprise.",
+          name: "Jonas Berger",
+          role: "Cofondateur",
+          company: "Logistique B2B · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Questions fréquentes",
+      titleA: "Des réponses",
+      titleB: " avant même la question.",
+      lead:
+        "Les questions que l’on nous pose le plus, traitées honnêtement. Si la vôtre n’y figure pas, glissez-la dans le brief — nous y répondrons directement.",
+      stillCurious: "Une question reste en suspens ?",
+      ctaLabel: "Posez votre question",
+      items: [
+        {
+          q: "Combien coûte un projet ?",
+          a: "Cela dépend du périmètre, mais la plupart des engagements se situent entre 25 000 et 180 000 $. Nous ne donnons jamais de chiffre avant d’avoir compris votre besoin réel — une réponse en une ligne serait malhonnête. Après votre brief, vous recevez une proposition écrite avec un forfait clair.",
+        },
+        {
+          q: "Combien de temps prend un projet ?",
+          a: "Un MVP focalisé prend 6 à 12 semaines. Un produit complet — mobile, web et backend — prend généralement 3 à 5 mois. Nous livrons par paliers, vous voyez du logiciel fonctionnel dès les trois premières semaines, pas à la fin.",
+        },
+        {
+          q: "À qui appartiennent le code et la PI ?",
+          a: "À vous. Code source, fichiers de design et accès infrastructure sont transférés sur vos comptes en fin de mission. Aucune porte dérobée, aucune licence, aucune dépendance cachée à nous.",
+        },
+        {
+          q: "Signez-vous un NDA ?",
+          a: "Oui — volontiers, à toute étape. Nous pouvons contresigner le vôtre avant le premier appel, ou envoyer le nôtre dans l’heure. La confidentialité est la règle, pas l’exception.",
+        },
+        {
+          q: "Travaillez-vous avec des fondateurs en early-stage ou seulement des entreprises établies ?",
+          a: "Les deux. Ce que nous cherchons, c’est l’intention et la clarté — un fondateur qui sait quel problème il résout, ou une équipe prête à investir dans quelque chose de bien fait. Nous refusons des projets, quelle que soit la taille, quand l’adéquation n’est pas là.",
+        },
+        {
+          q: "Que se passe-t-il après la mise en ligne ?",
+          a: "La plupart des clients nous gardent sous un retainer calme pour l’évolution, le monitoring et les petites améliorations. Aucun verrouillage — vous pouvez confier le code à votre équipe à tout moment et nous accompagnons la transition.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Confier un projet",
       titleA: "Dites-nous ce qui mérite",
@@ -1102,6 +1572,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48 Std.", label: "Persönliches Antwortfenster" },
       { value: "Lange", label: "Dauer jeder Beziehung" },
     ],
+    caseStudies: {
+      kicker: "— Ausgewählte Arbeiten",
+      titleA: "Drei Projekte,",
+      titleB: " drei verschiedene Größenordnungen.",
+      lead:
+        "Ein Einblick in die Art von Arbeit, die wir übernehmen. Namen bleiben dort verschwiegen, wo Vertraulichkeit es verlangt — Ergebnisse nicht.",
+      durationLabel: "Projektdauer",
+      stackLabel: "Technologie",
+      challengeLabel: "Ausgangslage",
+      approachLabel: "Vorgehen",
+      confidentialNote: "Kundenname unter NDA geschützt.",
+      items: [
+        {
+          tag: "iOS · Hospitality",
+          client: "Mediterrane Restaurantgruppe",
+          title: "Eine Gäste-iOS-App, die vier Touchpoints ersetzt hat.",
+          summary:
+            "Reservierung, Bestellung, Loyalty und eine vom Küchenchef kuratierte Karte — gefaltet in eine ruhige iPhone-Erfahrung, die die Marke wirklich ausliefern wollte.",
+          challenge:
+            "Vier unverbundene Drittanbieter-Tools verwässerten das Gästeerlebnis. Das Personal arbeitete um die Software herum, nicht mit ihr.",
+          approach:
+            "Wir haben die Gäste-Reise nativ in Swift neu aufgebaut, getragen von einem kleinen, klaren Designsystem. Backend-Integrationen wurden hinter einer einzigen internen API zusammengeführt.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge Functions"],
+          metrics: [
+            { value: "−61 %", label: "Support-Tickets" },
+            { value: "4,8★", label: "App-Store-Bewertung" },
+            { value: "1,4×", label: "Ø Bestellwert" },
+          ],
+          duration: "11 Wochen",
+        },
+        {
+          tag: "Android · Logistik",
+          client: "Regionaler Flottenbetreiber",
+          title: "Ein Android-Dispatch-Werkzeug, das 240 Fahrer wirklich nutzen.",
+          summary:
+            "Eine zweckgebaute Fahrer-App und eine Disponenten-Konsole, gestaltet rund um die zehn Vorgänge, die neunzig Prozent des Tages ausmachen.",
+          challenge:
+            "Eine Standard-Logistik-Suite war zu generisch. Disponenten führten parallel eine Tabelle, um den Überblick zu behalten.",
+          approach:
+            "Feldinterviews in drei Depots, danach eine Kotlin-App, abgestimmt auf schwächere Geräte und unzuverlässige Verbindungen. Die Disponenten-Konsole folgte dem Fahrerfluss — nicht umgekehrt.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34 %", label: "Touren pro Schicht" },
+            { value: "−2,1 Min.", label: "Ø Dispatch-Zeit" },
+            { value: "0", label: "verbleibende Tabellen" },
+          ],
+          duration: "16 Wochen",
+        },
+        {
+          tag: "Web · Industrie",
+          client: "Europäische Industriegruppe",
+          title: "Eine Web-Plattform, die acht Werke an eine Quelle der Wahrheit bindet.",
+          summary:
+            "Ein einheitliches Produktions-Dashboard, eine rollenbewusste Admin-Schicht und ein Echtzeit-Anomalie-Stream — anstelle eines Wildwuchses interner Tools, den niemand mochte.",
+          challenge:
+            "Jedes Werk betrieb eigene Dashboards. Die Führung sah das Unternehmen nie an einer Stelle — und vertraute den Zahlen auch dann nicht.",
+          approach:
+            "Wir haben zuerst ein sauberes gemeinsames Schema modelliert, darauf eine ruhige, dichte Web-Oberfläche gebaut — RBAC, Auditierbarkeit und Live-Telemetrie vom ersten Tag an.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge Functions"],
+          metrics: [
+            { value: "8 → 1", label: "Dashboards vereint" },
+            { value: "−47 %", label: "Reporting-Verzögerung" },
+            { value: "99,98 %", label: "Plattform-Verfügbarkeit" },
+          ],
+          duration: "5 Monate",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— In ihren Worten",
+      titleA: "Was die Menschen,",
+      titleB: " mit denen wir gebaut haben, sagen.",
+      lead:
+        "Einige Stimmen von Gründerinnen, Operators und Produktverantwortlichen, an deren Seite wir entwickelt haben.",
+      prev: "Zurück", next: "Weiter",
+      items: [
+        {
+          quote:
+            "Sie haben sich wie Partner verhalten, nicht wie Lieferanten. Entscheidungen wurden erklärt, Abwägungen klar benannt, und das Produkt ging pünktlich live — ohne einen einzigen Notruf.",
+          name: "Lina Aboul-Saoud",
+          role: "Gründerin & CEO",
+          company: "Hospitality-Gruppe · Beirut",
+          initials: "LA",
+        },
+        {
+          quote:
+            "Ein erfahrener Ingenieur las jedes Briefing — kein Vertriebs-Funnel. Schon das erste Gespräch hat unser Denken vorangebracht, und die Arbeit danach hielt das Niveau.",
+          name: "Marcus Hartmann",
+          role: "VP of Product",
+          company: "Industrial SaaS · München",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Präzise, zurückhaltend, schnell. Sechs Monate später nutzen wir noch immer die Architektur des ersten Tages — und mussten nichts neu zeichnen.",
+          name: "Sara El-Khoury",
+          role: "Head of Engineering",
+          company: "Fintech-Plattform · Dubai",
+          initials: "SK",
+        },
+        {
+          quote:
+            "Das Erste, was sie taten, war uns zu sagen, was wir nicht bauen sollten. Allein dieses Gespräch hat uns ein Quartal Arbeit erspart — und vermutlich das Unternehmen.",
+          name: "Jonas Berger",
+          role: "Mitgründer",
+          company: "B2B-Logistik · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Häufige Fragen",
+      titleA: "Antworten,",
+      titleB: " bevor Sie fragen.",
+      lead:
+        "Die Fragen, die wir am häufigsten hören — ehrlich beantwortet. Steht Ihre nicht dabei, schreiben Sie sie ins Briefing — wir gehen direkt in unserer Antwort darauf ein.",
+      stillCurious: "Bleibt eine Frage offen?",
+      ctaLabel: "Frage senden",
+      items: [
+        {
+          q: "Was kostet ein Projekt?",
+          a: "Das hängt vom Umfang ab, aber die meisten Engagements liegen zwischen 25.000 und 180.000 $. Wir nennen keine Zahl, bevor wir Ihren tatsächlichen Bedarf verstanden haben — eine Einzeiler-Antwort wäre unseriös. Nach Ihrem Briefing erhalten Sie ein schriftliches Angebot mit Festpreis und klarem Umfang.",
+        },
+        {
+          q: "Wie lange dauert ein Projekt?",
+          a: "Ein fokussiertes MVP läuft 6 bis 12 Wochen. Ein vollständiges Produkt — Mobile, Web und Backend — typischerweise 3 bis 5 Monate. Wir liefern in Stufen, sodass Sie funktionierende Software schon in den ersten drei Wochen sehen, nicht erst am Ende.",
+        },
+        {
+          q: "Wem gehören Code und IP?",
+          a: "Ihnen. Quellcode, Designdateien und Infrastrukturzugänge werden zum Projektende auf Ihre Konten übertragen. Keine Hintertüren, keine Lizenzen, keine versteckten Abhängigkeiten an uns.",
+        },
+        {
+          q: "Unterzeichnen Sie eine NDA?",
+          a: "Ja — gerne und in jeder Phase. Wir gegenzeichnen Ihre NDA vor dem ersten Gespräch oder schicken unsere innerhalb einer Stunde. Vertraulichkeit ist die Regel, nicht die Ausnahme.",
+        },
+        {
+          q: "Arbeiten Sie mit Frühphasen-Gründern oder nur mit etablierten Unternehmen?",
+          a: "Mit beiden. Worauf wir achten, ist Absicht und Klarheit — eine Gründerin, die weiß, welches Problem sie löst, oder ein Team, das bereit ist, in etwas Richtiges zu investieren. Wir lehnen Projekte ab, unabhängig von der Größe, wenn die Passung nicht stimmt.",
+        },
+        {
+          q: "Was passiert nach dem Launch?",
+          a: "Die meisten Kunden behalten uns auf einem ruhigen Retainer für Weiterentwicklung, Monitoring und kleine Verbesserungen. Kein Lock-in — Sie können den Code jederzeit Ihrem Team übergeben, wir begleiten den Übergang.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Projekt einreichen",
       titleA: "Erzählen Sie uns, was",
