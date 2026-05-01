@@ -31,7 +31,7 @@ const Card = () => (
 const SubpageSkeleton = () => {
   return (
     <div
-      className="dark min-h-screen bg-background text-foreground overflow-x-hidden"
+      className="min-h-screen bg-background text-foreground overflow-x-hidden"
       aria-busy="true"
       aria-live="polite"
     >

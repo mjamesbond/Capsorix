@@ -18,7 +18,7 @@ const SubpageShell = ({ children }: { children: ReactNode }) => {
   }, [pathname]);
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <main id="main" tabIndex={-1} key={pathname} className="page-enter">
         {children}
