@@ -502,7 +502,8 @@
   .theme-switch:hover .lang-switch__btn:not(.is-active) {
     color: hsl(var(--foreground) / 0.85);
   }
-   * ======================================================*/
+
+
   .lang-switch__shell {
     position: absolute;
     inset: 0;
