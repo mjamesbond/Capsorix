@@ -252,6 +252,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48h", label: "Personal reply window" },
       { value: "Long", label: "Term of every relationship" },
     ],
+    caseStudies: {
+      kicker: "— Selected work",
+      titleA: "Three projects,",
+      titleB: " three different scales.",
+      lead:
+        "A glimpse at the kind of work we take on. Names are withheld where confidentiality applies — outcomes are not.",
+      durationLabel: "Engagement",
+      stackLabel: "Stack",
+      challengeLabel: "Brief",
+      approachLabel: "Approach",
+      confidentialNote: "Client name held under NDA.",
+      items: [
+        {
+          tag: "iOS · Hospitality",
+          client: "Mediterranean restaurant group",
+          title: "A guest-side iOS app that replaced four touchpoints.",
+          summary:
+            "Reservations, ordering, loyalty, and a chef-curated menu — folded into a single, quiet iPhone experience that the brand actually wanted to ship.",
+          challenge:
+            "Four disconnected vendor tools were eroding the in-room experience. Staff worked around the software instead of with it.",
+          approach:
+            "We rebuilt the guest journey natively in Swift, anchored on a small, opinionated design system. Backend integrations were collapsed behind a single internal API.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+          metrics: [
+            { value: "−61%", label: "Support tickets" },
+            { value: "4.8★", label: "App Store rating" },
+            { value: "1.4×", label: "Avg. order value" },
+          ],
+          duration: "11 weeks",
+        },
+        {
+          tag: "Android · Logistics",
+          client: "Regional fleet operator",
+          title: "An Android dispatch tool that 240 drivers actually use.",
+          summary:
+            "A purpose-built driver app and a dispatcher console, designed around the ten things that happen ninety percent of the day.",
+          challenge:
+            "An off-the-shelf logistics suite was too generic. Dispatchers were keeping a parallel spreadsheet to stay sane.",
+          approach:
+            "Field interviews on three depots, then a Kotlin app tuned for low-end devices and patchy connectivity. The dispatcher console followed the driver flow — not the other way around.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34%", label: "Routes per shift" },
+            { value: "−2.1m", label: "Avg. dispatch time" },
+            { value: "0", label: "Spreadsheets left" },
+          ],
+          duration: "16 weeks",
+        },
+        {
+          tag: "Web · Industrial",
+          client: "European manufacturing group",
+          title: "A web platform tying eight factories to one source of truth.",
+          summary:
+            "A unified production dashboard, a role-aware admin layer, and a real-time anomaly stream — replacing a sprawl of internal tools no one liked.",
+          challenge:
+            "Each plant ran its own dashboards. Leadership couldn’t see the company in one place — and couldn’t trust the numbers when they did.",
+          approach:
+            "We modelled a clean shared schema first, then built a calm, dense web UI on top — RBAC, auditability, and live telemetry baked in from day one.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
+          metrics: [
+            { value: "8 → 1", label: "Dashboards unified" },
+            { value: "−47%", label: "Reporting lag" },
+            { value: "99.98%", label: "Platform uptime" },
+          ],
+          duration: "5 months",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— In their words",
+      titleA: "What the people we",
+      titleB: " worked with say.",
+      lead:
+        "A few quotes from founders, operators, and product leaders we’ve built alongside.",
+      prev: "Previous", next: "Next",
+      items: [
+        {
+          quote:
+            "They behaved like partners, not vendors. Decisions were explained, trade-offs were named out loud, and the product shipped on time without a single emergency call.",
+          name: "Lina Aboul-Saoud",
+          role: "Founder & CEO",
+          company: "Hospitality group · Beirut",
+          initials: "LA",
+        },
+        {
+          quote:
+            "We had a senior engineer reading every brief, not a sales funnel. The first call already moved our thinking forward — and the work that followed matched the bar.",
+          name: "Marcus Hartmann",
+          role: "VP of Product",
+          company: "Industrial SaaS · Munich",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Polished, restrained, fast. Six months in, we’re still using the same architecture they put down on day one — and we haven’t had to redesign anything.",
+          name: "Sara El-Khoury",
+          role: "Head of Engineering",
+          company: "Fintech platform · Dubai",
+          initials: "SK",
+        },
+        {
+          quote:
+            "The first thing they did was tell us what not to build. That single conversation saved us a quarter of work and probably the company.",
+          name: "Jonas Berger",
+          role: "Co-founder",
+          company: "B2B logistics · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Common questions",
+      titleA: "Answers",
+      titleB: " before you ask.",
+      lead:
+        "The questions we hear most often, answered honestly. If yours isn’t here, write it in the brief — we’ll address it directly in our reply.",
+      stillCurious: "Still curious about something?",
+      ctaLabel: "Send your question",
+      items: [
+        {
+          q: "How much does a project cost?",
+          a: "It depends on scope, but most engagements land between $25k and $180k. We never quote a number until we understand what you actually need — a one-line answer would be a disservice. After your brief, you receive a written proposal with a fixed fee and a clear scope.",
+        },
+        {
+          q: "How long does it take to build something with you?",
+          a: "A focused MVP runs 6–12 weeks. A full product — mobile, web, and backend — typically takes 3–5 months. We stage delivery so you see working software within the first three weeks, not at the end.",
+        },
+        {
+          q: "Who owns the code and the IP?",
+          a: "You do. Full source code, design files, and infrastructure access are transferred to your accounts at the end of the engagement. We do not retain backdoors, licenses, or hidden dependencies on us.",
+        },
+        {
+          q: "Do you sign an NDA?",
+          a: "Yes — gladly, and at any stage. We can countersign your NDA before the first call, or send ours within an hour. Confidentiality is the default, not the exception.",
+        },
+        {
+          q: "Do you work with early-stage founders or only established companies?",
+          a: "Both. What we look for is intent and clarity — a founder who knows what problem they’re solving, or a team that’s ready to invest in something built right. We turn down projects, regardless of size, when the fit isn’t there.",
+        },
+        {
+          q: "What happens after launch?",
+          a: "Most clients keep us on a calm retainer for evolution, monitoring, and small improvements. There is no lock-in — you can hand the code to your own team at any point and we’ll support the transition.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Send your project",
       titleA: "Tell us what should",
