@@ -80,6 +80,11 @@ export interface Dict {
       steps: { title: string; desc: string }[];
       refLabel: string; mailLabel: string; mailCta: string;
       stepsKicker: string;
+      summaryKicker: string;
+      summaryLabels: { name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description: string };
+      summaryEmpty: string;
+      copyRef: string;
+      copiedRef: string;
     };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
     validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
