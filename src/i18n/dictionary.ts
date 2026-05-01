@@ -80,6 +80,11 @@ export interface Dict {
       steps: { title: string; desc: string }[];
       refLabel: string; mailLabel: string; mailCta: string;
       stepsKicker: string;
+      summaryKicker: string;
+      summaryLabels: { name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description: string };
+      summaryEmpty: string;
+      copyRef: string;
+      copiedRef: string;
     };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
     validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
@@ -457,6 +462,19 @@ export const dict: Record<Lang, Dict> = {
         refLabel: "Reference",
         mailLabel: "Need to add something?",
         mailCta: "Write to studio@capsorix.dev",
+        summaryKicker: "Brief summary",
+        summaryLabels: {
+          name: "Name",
+          email: "Email",
+          phone: "Phone",
+          project_type: "Project",
+          budget_range: "Budget",
+          timeline: "Timeline",
+          description: "Brief",
+        },
+        summaryEmpty: "—",
+        copyRef: "Copy reference",
+        copiedRef: "Copied",
       },
       toastErrTitle: "Please review the form",
       toastSendErr: "We couldn’t send your request",
@@ -897,6 +915,19 @@ export const dict: Record<Lang, Dict> = {
         refLabel: "رقم الطلب",
         mailLabel: "تودّ إضافة شيء؟",
         mailCta: "راسلنا على studio@capsorix.dev",
+        summaryKicker: "ملخص الطلب",
+        summaryLabels: {
+          name: "الاسم",
+          email: "البريد",
+          phone: "الهاتف",
+          project_type: "نوع المشروع",
+          budget_range: "الميزانية",
+          timeline: "الإطار الزمني",
+          description: "الوصف",
+        },
+        summaryEmpty: "—",
+        copyRef: "نسخ رقم الطلب",
+        copiedRef: "تم النسخ",
       },
       toastErrTitle: "راجع البيانات من فضلك",
       toastSendErr: "تعذّر إرسال طلبك",
@@ -1337,6 +1368,19 @@ export const dict: Record<Lang, Dict> = {
         refLabel: "Référence",
         mailLabel: "Un détail à ajouter ?",
         mailCta: "Écrivez à studio@capsorix.dev",
+        summaryKicker: "Récapitulatif",
+        summaryLabels: {
+          name: "Nom",
+          email: "E-mail",
+          phone: "Téléphone",
+          project_type: "Projet",
+          budget_range: "Budget",
+          timeline: "Échéance",
+          description: "Brief",
+        },
+        summaryEmpty: "—",
+        copyRef: "Copier la référence",
+        copiedRef: "Copié",
       },
       toastErrTitle: "Merci de vérifier le formulaire",
       toastSendErr: "Impossible d’envoyer votre demande",
@@ -1777,6 +1821,19 @@ export const dict: Record<Lang, Dict> = {
         refLabel: "Referenz",
         mailLabel: "Möchten Sie etwas ergänzen?",
         mailCta: "Schreiben Sie an studio@capsorix.dev",
+        summaryKicker: "Kurzfassung",
+        summaryLabels: {
+          name: "Name",
+          email: "E-Mail",
+          phone: "Telefon",
+          project_type: "Projekt",
+          budget_range: "Budget",
+          timeline: "Zeitrahmen",
+          description: "Brief",
+        },
+        summaryEmpty: "—",
+        copyRef: "Referenz kopieren",
+        copiedRef: "Kopiert",
       },
       toastErrTitle: "Bitte prüfen Sie das Formular",
       toastSendErr: "Ihre Anfrage konnte nicht gesendet werden",

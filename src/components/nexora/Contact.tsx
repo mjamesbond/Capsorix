@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { z } from "zod";
 import {
-  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X,
+  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X, Copy, Check,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -58,7 +58,8 @@ const Contact = () => {
   // Captured at the moment of submission so the confirmation screen can
   // greet the client by name and display a stable reference even after
   // the form state is reset.
-  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date } | null>(null);
+  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date; data: FormState } | null>(null);
+  const [copied, setCopied] = useState(false);
   // Autosave state — `restored` shows a quiet pill above the form for a
   // few seconds after a draft is brought back, and `savedAt` powers the
   // tiny "saved locally" footer hint.
@@ -186,7 +187,20 @@ const Contact = () => {
       "-" +
       Math.random().toString(36).slice(2, 6).toUpperCase();
     const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
-    setSubmittedMeta({ name: firstName, ref, at: new Date() });
+    setSubmittedMeta({
+      name: firstName,
+      ref,
+      at: new Date(),
+      data: {
+        full_name: parsed.data.full_name,
+        email: parsed.data.email,
+        phone: parsed.data.phone || "",
+        project_type: parsed.data.project_type,
+        budget_range: parsed.data.budget_range,
+        timeline: parsed.data.timeline,
+        description: parsed.data.description,
+      },
+    });
     setSubmitted(true);
     setForm(EMPTY);
     setErrors({});
@@ -199,6 +213,18 @@ const Contact = () => {
   const resetForm = () => {
     setSubmitted(false);
     setSubmittedMeta(null);
+    setCopied(false);
+  };
+
+  const copyReference = async () => {
+    if (!submittedMeta) return;
+    try {
+      await navigator.clipboard.writeText(submittedMeta.ref);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard blocked — silently ignore */
+    }
   };
 
   return (
@@ -289,22 +315,94 @@ const Contact = () => {
                     {/* Reference receipt */}
                     {submittedMeta && (
                       <div className="mt-8 mx-auto max-w-md flex items-center justify-between gap-4 rounded-xl border border-border/50 bg-input/40 px-4 py-3">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col min-w-0">
                           <span className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
                             {t.contact.success.refLabel}
                           </span>
-                          <span className="font-mono text-sm text-foreground tracking-wider" dir="ltr">
+                          <span className="font-mono text-sm text-foreground tracking-wider truncate" dir="ltr">
                             {submittedMeta.ref}
                           </span>
                         </div>
-                        <span className="text-[11px] text-muted-foreground" dir="ltr">
-                          {submittedMeta.at.toLocaleString(lang === "ar" ? "ar-EG" : lang, {
-                            dateStyle: "medium",
-                            timeStyle: "short",
-                          })}
-                        </span>
+                        <div className="flex items-center gap-3 shrink-0">
+                          <span className="hidden sm:inline text-[11px] text-muted-foreground" dir="ltr">
+                            {submittedMeta.at.toLocaleString(lang === "ar" ? "ar-EG" : lang, {
+                              dateStyle: "medium",
+                              timeStyle: "short",
+                            })}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={copyReference}
+                            aria-label={t.contact.success.copyRef}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-2.5 py-1 text-[11px] text-foreground/85 hover:text-primary-glow hover:border-primary/60 transition-all duration-300 gold-ring"
+                          >
+                            {copied ? (
+                              <>
+                                <Check className="w-3 h-3 text-primary-glow" />
+                                <span>{t.contact.success.copiedRef}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3" />
+                                <span>{t.contact.success.copyRef}</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
                       </div>
                     )}
+
+                    {/* Brief summary — short receipt of what was submitted */}
+                    {submittedMeta && (
+                      <div className="mt-6 mx-auto max-w-md rounded-2xl border border-border/50 bg-input/30 overflow-hidden">
+                        <div className="px-4 py-2.5 border-b border-border/40 bg-input/40">
+                          <span className="text-[10px] font-medium tracking-[0.3em] uppercase text-primary/90">
+                            {t.contact.success.summaryKicker}
+                          </span>
+                        </div>
+                        <dl className="divide-y divide-border/30 text-[13px]">
+                          {([
+                            ["name", submittedMeta.data.full_name],
+                            ["email", submittedMeta.data.email],
+                            ["phone", submittedMeta.data.phone],
+                            ["project_type", submittedMeta.data.project_type],
+                            ["budget_range", submittedMeta.data.budget_range],
+                            ["timeline", submittedMeta.data.timeline],
+                            ["description", submittedMeta.data.description],
+                          ] as const).map(([key, value]) => {
+                            const isLtr = key === "email" || key === "phone";
+                            const isLong = key === "description";
+                            return (
+                              <div
+                                key={key}
+                                className={`px-4 py-2.5 ${
+                                  isLong ? "flex flex-col gap-1" : "flex items-baseline justify-between gap-4"
+                                }`}
+                              >
+                                <dt className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground shrink-0">
+                                  {t.contact.success.summaryLabels[key]}
+                                </dt>
+                                <dd
+                                  className={`text-foreground/90 ${
+                                    isLong
+                                      ? "text-[12.5px] leading-relaxed text-muted-foreground whitespace-pre-wrap break-words"
+                                      : "text-right truncate max-w-[60%]"
+                                  } ${lang === "ar" && !isLong ? "text-left" : ""}`}
+                                  dir={isLtr ? "ltr" : undefined}
+                                >
+                                  {value && value.trim().length > 0
+                                    ? isLong && value.length > 220
+                                      ? value.slice(0, 220).trimEnd() + "…"
+                                      : value
+                                    : t.contact.success.summaryEmpty}
+                                </dd>
+                              </div>
+                            );
+                          })}
+                        </dl>
+                      </div>
+                    )}
+
 
                     {/* Vertical timeline of next steps */}
                     <div className="mt-10 mx-auto max-w-md">
