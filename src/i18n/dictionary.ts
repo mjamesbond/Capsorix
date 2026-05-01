@@ -63,6 +63,20 @@ export interface Dict {
     suggestionsKicker: string;
     suggestions: { label: string; href: string; desc: string }[];
   };
+  autosave: {
+    restoredTitle: string;
+    restoredDesc: string;
+    discard: string;
+    savedNote: string;
+  };
+  cookies: {
+    title: string;
+    body: string;
+    bodyStrong: string;
+    accept: string;
+    decline: string;
+    learnMore: string;
+  };
   subpages: {
     common: {
       capabilitiesKicker: string;
