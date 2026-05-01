@@ -8,10 +8,13 @@
  */
 const Bar = ({ className = "" }: { className?: string }) => (
   <div
-    className={`relative overflow-hidden rounded-md bg-input/40 ${className}`}
-  >
-    <div className="absolute inset-0 -translate-x-full animate-[shimmer_2.2s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
-  </div>
+    className={`rounded-md bg-input/40 animate-shimmer ${className}`}
+    style={{
+      backgroundImage:
+        "linear-gradient(90deg, hsl(var(--input) / 0.5) 0%, hsl(var(--primary) / 0.10) 45%, hsl(var(--primary) / 0.18) 50%, hsl(var(--primary) / 0.10) 55%, hsl(var(--input) / 0.5) 100%)",
+      backgroundSize: "200% 100%",
+    }}
+  />
 );
 
 const Card = () => (
