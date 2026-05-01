@@ -381,6 +381,32 @@ const Contact = () => {
                 >
                   <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
+                  {/* Restored-draft pill — quiet, dismissible, auto-fades */}
+                  {restored && (
+                    <div
+                      role="status"
+                      className="relative mb-6 flex items-center justify-between gap-4 rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 animate-fade-in"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="mt-0.5 w-7 h-7 shrink-0 rounded-full bg-gradient-gold-soft border border-primary/50 flex items-center justify-center gold-ring">
+                          <Save className="w-3.5 h-3.5 text-primary-glow" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-xs font-medium text-foreground">{t.autosave.restoredTitle}</p>
+                          <p className="text-[11px] text-muted-foreground leading-relaxed">{t.autosave.restoredDesc}</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={discardDraft}
+                        className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-[11px] tracking-wide text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                      >
+                        <X className="w-3 h-3" />
+                        {t.autosave.discard}
+                      </button>
+                    </div>
+                  )}
+
                   <div className="relative mb-8 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium tracking-[0.25em] uppercase text-primary mb-1">{t.contact.formKicker}</p>
@@ -473,6 +499,12 @@ const Contact = () => {
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
                     <span className="inline-flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5 text-primary-glow" />{t.contact.reviewed}</span>
                     <span className="inline-flex items-center gap-2"><Lock className="w-3.5 h-3.5 text-primary-glow" />{t.contact.confidential}</span>
+                    {savedAt && (
+                      <span className="inline-flex items-center gap-2 ms-auto opacity-70">
+                        <Save className="w-3.5 h-3.5 text-primary-glow" />
+                        {t.autosave.savedNote}
+                      </span>
+                    )}
                   </div>
                 </form>
               )}
