@@ -51,6 +51,18 @@ export interface Dict {
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
+  notFound: {
+    code: string;
+    kicker: string;
+    titleA: string;
+    titleB: string;
+    lead: string;
+    pathLabel: string;
+    primary: string;
+    secondary: string;
+    suggestionsKicker: string;
+    suggestions: { label: string; href: string; desc: string }[];
+  };
   subpages: {
     common: {
       capabilitiesKicker: string;
