@@ -51,6 +51,18 @@ export interface Dict {
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
+  notFound: {
+    code: string;
+    kicker: string;
+    titleA: string;
+    titleB: string;
+    lead: string;
+    pathLabel: string;
+    primary: string;
+    secondary: string;
+    suggestionsKicker: string;
+    suggestions: { label: string; href: string; desc: string }[];
+  };
   subpages: {
     common: {
       capabilitiesKicker: string;
@@ -282,6 +294,22 @@ export const dict: Record<Lang, Dict> = {
       tagline: "We build systems that move businesses forward. Few projects, done right.",
       rights: "All rights reserved.",
       values: "Selective · Precise · Long-term",
+    },
+    notFound: {
+      code: "404",
+      kicker: "— Off the map",
+      titleA: "This page ",
+      titleB: "doesn’t exist.",
+      lead: "The address you followed leads nowhere in our system. No harm done — let’s get you back to a meaningful surface.",
+      pathLabel: "Requested path",
+      primary: "Return home",
+      secondary: "Speak with us",
+      suggestionsKicker: "Or jump to",
+      suggestions: [
+        { label: "iOS", href: "/ios", desc: "Native iPhone & iPad engineering." },
+        { label: "Android", href: "/android", desc: "Performance-first Android builds." },
+        { label: "Web", href: "/web", desc: "Web platforms and dashboards." },
+      ],
     },
     subpages: {
       common: {
@@ -548,6 +576,22 @@ export const dict: Record<Lang, Dict> = {
       rights: "جميع الحقوق محفوظة.",
       values: "اختيار · دقّة · أفق طويل",
     },
+    notFound: {
+      code: "404",
+      kicker: "— خارج الخريطة",
+      titleA: "هذه الصفحة ",
+      titleB: "غير موجودة.",
+      lead: "العنوان الذي اتّبعته لا يقود إلى أيّ شيء في نظامنا. لا داعي للقلق — دعنا نعيدك إلى مكان ذي معنى.",
+      pathLabel: "المسار المطلوب",
+      primary: "العودة للرئيسية",
+      secondary: "تحدّث معنا",
+      suggestionsKicker: "أو انتقل إلى",
+      suggestions: [
+        { label: "iOS", href: "/ios", desc: "هندسة أصيلة لأجهزة آيفون وآيباد." },
+        { label: "Android", href: "/android", desc: "تطبيقات أندرويد بأداء مُقدَّم." },
+        { label: "Web", href: "/web", desc: "منصّات ويب ولوحات تحكّم." },
+      ],
+    },
     subpages: {
       common: {
         capabilitiesKicker: "— القدرات",
@@ -813,6 +857,22 @@ export const dict: Record<Lang, Dict> = {
       rights: "Tous droits réservés.",
       values: "Sélectif · Précis · Long terme",
     },
+    notFound: {
+      code: "404",
+      kicker: "— Hors carte",
+      titleA: "Cette page ",
+      titleB: "n’existe pas.",
+      lead: "L’adresse suivie ne mène à rien dans notre système. Rien de grave — reprenons un cap utile.",
+      pathLabel: "Chemin demandé",
+      primary: "Retour à l’accueil",
+      secondary: "Nous parler",
+      suggestionsKicker: "Ou rejoindre",
+      suggestions: [
+        { label: "iOS", href: "/ios", desc: "Ingénierie native iPhone et iPad." },
+        { label: "Android", href: "/android", desc: "Applications Android orientées performance." },
+        { label: "Web", href: "/web", desc: "Plateformes web et tableaux de bord." },
+      ],
+    },
     subpages: {
       common: {
         capabilitiesKicker: "— Compétences",
@@ -1077,6 +1137,22 @@ export const dict: Record<Lang, Dict> = {
       tagline: "Wir bauen Systeme, die Unternehmen voranbringen. Wenige Projekte, richtig gemacht.",
       rights: "Alle Rechte vorbehalten.",
       values: "Selektiv · Präzise · Langfristig",
+    },
+    notFound: {
+      code: "404",
+      kicker: "— Außerhalb der Karte",
+      titleA: "Diese Seite ",
+      titleB: "existiert nicht.",
+      lead: "Die aufgerufene Adresse führt in unserem System ins Leere. Kein Problem — wir bringen Sie zurück auf eine sinnvolle Ebene.",
+      pathLabel: "Angefragter Pfad",
+      primary: "Zur Startseite",
+      secondary: "Mit uns sprechen",
+      suggestionsKicker: "Oder direkt zu",
+      suggestions: [
+        { label: "iOS", href: "/ios", desc: "Native Entwicklung für iPhone und iPad." },
+        { label: "Android", href: "/android", desc: "Android-Apps mit Performance-Fokus." },
+        { label: "Web", href: "/web", desc: "Web-Plattformen und Dashboards." },
+      ],
     },
     subpages: {
       common: {

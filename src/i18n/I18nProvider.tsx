@@ -64,6 +64,15 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     if (meta) meta.setAttribute("content", descriptions[lang]);
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) ogTitle.setAttribute("content", titles[lang]);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", descriptions[lang]);
+    const twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute("content", titles[lang]);
+    const twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute("content", descriptions[lang]);
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    const localeMap: Record<Lang, string> = { en: "en_US", fr: "fr_FR", de: "de_DE", ar: "ar_AR" };
+    if (ogLocale) ogLocale.setAttribute("content", localeMap[lang]);
   }, [lang]);
 
   const setLang = (next: Lang) => {
