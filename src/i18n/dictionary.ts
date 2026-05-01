@@ -1572,6 +1572,151 @@ export const dict: Record<Lang, Dict> = {
       { value: "24–48 Std.", label: "Persönliches Antwortfenster" },
       { value: "Lange", label: "Dauer jeder Beziehung" },
     ],
+    caseStudies: {
+      kicker: "— Ausgewählte Arbeiten",
+      titleA: "Drei Projekte,",
+      titleB: " drei verschiedene Größenordnungen.",
+      lead:
+        "Ein Einblick in die Art von Arbeit, die wir übernehmen. Namen bleiben dort verschwiegen, wo Vertraulichkeit es verlangt — Ergebnisse nicht.",
+      durationLabel: "Projektdauer",
+      stackLabel: "Technologie",
+      challengeLabel: "Ausgangslage",
+      approachLabel: "Vorgehen",
+      confidentialNote: "Kundenname unter NDA geschützt.",
+      items: [
+        {
+          tag: "iOS · Hospitality",
+          client: "Mediterrane Restaurantgruppe",
+          title: "Eine Gäste-iOS-App, die vier Touchpoints ersetzt hat.",
+          summary:
+            "Reservierung, Bestellung, Loyalty und eine vom Küchenchef kuratierte Karte — gefaltet in eine ruhige iPhone-Erfahrung, die die Marke wirklich ausliefern wollte.",
+          challenge:
+            "Vier unverbundene Drittanbieter-Tools verwässerten das Gästeerlebnis. Das Personal arbeitete um die Software herum, nicht mit ihr.",
+          approach:
+            "Wir haben die Gäste-Reise nativ in Swift neu aufgebaut, getragen von einem kleinen, klaren Designsystem. Backend-Integrationen wurden hinter einer einzigen internen API zusammengeführt.",
+          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge Functions"],
+          metrics: [
+            { value: "−61 %", label: "Support-Tickets" },
+            { value: "4,8★", label: "App-Store-Bewertung" },
+            { value: "1,4×", label: "Ø Bestellwert" },
+          ],
+          duration: "11 Wochen",
+        },
+        {
+          tag: "Android · Logistik",
+          client: "Regionaler Flottenbetreiber",
+          title: "Ein Android-Dispatch-Werkzeug, das 240 Fahrer wirklich nutzen.",
+          summary:
+            "Eine zweckgebaute Fahrer-App und eine Disponenten-Konsole, gestaltet rund um die zehn Vorgänge, die neunzig Prozent des Tages ausmachen.",
+          challenge:
+            "Eine Standard-Logistik-Suite war zu generisch. Disponenten führten parallel eine Tabelle, um den Überblick zu behalten.",
+          approach:
+            "Feldinterviews in drei Depots, danach eine Kotlin-App, abgestimmt auf schwächere Geräte und unzuverlässige Verbindungen. Die Disponenten-Konsole folgte dem Fahrerfluss — nicht umgekehrt.",
+          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+          metrics: [
+            { value: "+34 %", label: "Touren pro Schicht" },
+            { value: "−2,1 Min.", label: "Ø Dispatch-Zeit" },
+            { value: "0", label: "verbleibende Tabellen" },
+          ],
+          duration: "16 Wochen",
+        },
+        {
+          tag: "Web · Industrie",
+          client: "Europäische Industriegruppe",
+          title: "Eine Web-Plattform, die acht Werke an eine Quelle der Wahrheit bindet.",
+          summary:
+            "Ein einheitliches Produktions-Dashboard, eine rollenbewusste Admin-Schicht und ein Echtzeit-Anomalie-Stream — anstelle eines Wildwuchses interner Tools, den niemand mochte.",
+          challenge:
+            "Jedes Werk betrieb eigene Dashboards. Die Führung sah das Unternehmen nie an einer Stelle — und vertraute den Zahlen auch dann nicht.",
+          approach:
+            "Wir haben zuerst ein sauberes gemeinsames Schema modelliert, darauf eine ruhige, dichte Web-Oberfläche gebaut — RBAC, Auditierbarkeit und Live-Telemetrie vom ersten Tag an.",
+          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge Functions"],
+          metrics: [
+            { value: "8 → 1", label: "Dashboards vereint" },
+            { value: "−47 %", label: "Reporting-Verzögerung" },
+            { value: "99,98 %", label: "Plattform-Verfügbarkeit" },
+          ],
+          duration: "5 Monate",
+        },
+      ],
+    },
+    testimonials: {
+      kicker: "— In ihren Worten",
+      titleA: "Was die Menschen,",
+      titleB: " mit denen wir gebaut haben, sagen.",
+      lead:
+        "Einige Stimmen von Gründerinnen, Operators und Produktverantwortlichen, an deren Seite wir entwickelt haben.",
+      prev: "Zurück", next: "Weiter",
+      items: [
+        {
+          quote:
+            "Sie haben sich wie Partner verhalten, nicht wie Lieferanten. Entscheidungen wurden erklärt, Abwägungen klar benannt, und das Produkt ging pünktlich live — ohne einen einzigen Notruf.",
+          name: "Lina Aboul-Saoud",
+          role: "Gründerin & CEO",
+          company: "Hospitality-Gruppe · Beirut",
+          initials: "LA",
+        },
+        {
+          quote:
+            "Ein erfahrener Ingenieur las jedes Briefing — kein Vertriebs-Funnel. Schon das erste Gespräch hat unser Denken vorangebracht, und die Arbeit danach hielt das Niveau.",
+          name: "Marcus Hartmann",
+          role: "VP of Product",
+          company: "Industrial SaaS · München",
+          initials: "MH",
+        },
+        {
+          quote:
+            "Präzise, zurückhaltend, schnell. Sechs Monate später nutzen wir noch immer die Architektur des ersten Tages — und mussten nichts neu zeichnen.",
+          name: "Sara El-Khoury",
+          role: "Head of Engineering",
+          company: "Fintech-Plattform · Dubai",
+          initials: "SK",
+        },
+        {
+          quote:
+            "Das Erste, was sie taten, war uns zu sagen, was wir nicht bauen sollten. Allein dieses Gespräch hat uns ein Quartal Arbeit erspart — und vermutlich das Unternehmen.",
+          name: "Jonas Berger",
+          role: "Mitgründer",
+          company: "B2B-Logistik · Berlin",
+          initials: "JB",
+        },
+      ],
+    },
+    faq: {
+      kicker: "— Häufige Fragen",
+      titleA: "Antworten,",
+      titleB: " bevor Sie fragen.",
+      lead:
+        "Die Fragen, die wir am häufigsten hören — ehrlich beantwortet. Steht Ihre nicht dabei, schreiben Sie sie ins Briefing — wir gehen direkt in unserer Antwort darauf ein.",
+      stillCurious: "Bleibt eine Frage offen?",
+      ctaLabel: "Frage senden",
+      items: [
+        {
+          q: "Was kostet ein Projekt?",
+          a: "Das hängt vom Umfang ab, aber die meisten Engagements liegen zwischen 25.000 und 180.000 $. Wir nennen keine Zahl, bevor wir Ihren tatsächlichen Bedarf verstanden haben — eine Einzeiler-Antwort wäre unseriös. Nach Ihrem Briefing erhalten Sie ein schriftliches Angebot mit Festpreis und klarem Umfang.",
+        },
+        {
+          q: "Wie lange dauert ein Projekt?",
+          a: "Ein fokussiertes MVP läuft 6 bis 12 Wochen. Ein vollständiges Produkt — Mobile, Web und Backend — typischerweise 3 bis 5 Monate. Wir liefern in Stufen, sodass Sie funktionierende Software schon in den ersten drei Wochen sehen, nicht erst am Ende.",
+        },
+        {
+          q: "Wem gehören Code und IP?",
+          a: "Ihnen. Quellcode, Designdateien und Infrastrukturzugänge werden zum Projektende auf Ihre Konten übertragen. Keine Hintertüren, keine Lizenzen, keine versteckten Abhängigkeiten an uns.",
+        },
+        {
+          q: "Unterzeichnen Sie eine NDA?",
+          a: "Ja — gerne und in jeder Phase. Wir gegenzeichnen Ihre NDA vor dem ersten Gespräch oder schicken unsere innerhalb einer Stunde. Vertraulichkeit ist die Regel, nicht die Ausnahme.",
+        },
+        {
+          q: "Arbeiten Sie mit Frühphasen-Gründern oder nur mit etablierten Unternehmen?",
+          a: "Mit beiden. Worauf wir achten, ist Absicht und Klarheit — eine Gründerin, die weiß, welches Problem sie löst, oder ein Team, das bereit ist, in etwas Richtiges zu investieren. Wir lehnen Projekte ab, unabhängig von der Größe, wenn die Passung nicht stimmt.",
+        },
+        {
+          q: "Was passiert nach dem Launch?",
+          a: "Die meisten Kunden behalten uns auf einem ruhigen Retainer für Weiterentwicklung, Monitoring und kleine Verbesserungen. Kein Lock-in — Sie können den Code jederzeit Ihrem Team übergeben, wir begleiten den Übergang.",
+        },
+      ],
+    },
     contact: {
       kicker: "— Projekt einreichen",
       titleA: "Erzählen Sie uns, was",
