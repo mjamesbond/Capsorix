@@ -325,6 +325,20 @@ export const dict: Record<Lang, Dict> = {
         { label: "Web", href: "/web", desc: "Web platforms and dashboards." },
       ],
     },
+    autosave: {
+      restoredTitle: "Draft restored",
+      restoredDesc: "We brought back what you were writing.",
+      discard: "Discard",
+      savedNote: "Draft saved locally",
+    },
+    cookies: {
+      title: "We respect your privacy.",
+      body: "We use a single, essential cookie to remember your language. ",
+      bodyStrong: "No tracking, no analytics, no third parties — ever.",
+      accept: "Acknowledge",
+      decline: "Essentials only",
+      learnMore: "Learn more",
+    },
     subpages: {
       common: {
         capabilitiesKicker: "— Capabilities",
@@ -605,6 +619,20 @@ export const dict: Record<Lang, Dict> = {
         { label: "Android", href: "/android", desc: "تطبيقات أندرويد بأداء مُقدَّم." },
         { label: "Web", href: "/web", desc: "منصّات ويب ولوحات تحكّم." },
       ],
+    },
+    autosave: {
+      restoredTitle: "تمّت استعادة المسودّة",
+      restoredDesc: "أعدنا لك ما كنت تكتبه قبل المغادرة.",
+      discard: "تجاهل",
+      savedNote: "تمّ حفظ المسودّة محلّيًا",
+    },
+    cookies: {
+      title: "نحترم خصوصيّتك.",
+      body: "نستخدم ملفّ تعريف ارتباط واحدًا أساسيًّا لتذكّر لغتك. ",
+      bodyStrong: "لا تتبّع، ولا تحليلات، ولا أطراف ثالثة — أبدًا.",
+      accept: "موافق",
+      decline: "الأساسيّات فقط",
+      learnMore: "اعرف المزيد",
     },
     subpages: {
       common: {
@@ -887,6 +915,20 @@ export const dict: Record<Lang, Dict> = {
         { label: "Web", href: "/web", desc: "Plateformes web et tableaux de bord." },
       ],
     },
+    autosave: {
+      restoredTitle: "Brouillon restauré",
+      restoredDesc: "Nous avons rétabli ce que vous étiez en train d’écrire.",
+      discard: "Écarter",
+      savedNote: "Brouillon enregistré localement",
+    },
+    cookies: {
+      title: "Nous respectons votre vie privée.",
+      body: "Nous utilisons un seul cookie essentiel pour mémoriser votre langue. ",
+      bodyStrong: "Aucun suivi, aucune analytique, aucun tiers — jamais.",
+      accept: "J’ai compris",
+      decline: "Essentiels uniquement",
+      learnMore: "En savoir plus",
+    },
     subpages: {
       common: {
         capabilitiesKicker: "— Compétences",
@@ -1167,6 +1209,20 @@ export const dict: Record<Lang, Dict> = {
         { label: "Android", href: "/android", desc: "Android-Apps mit Performance-Fokus." },
         { label: "Web", href: "/web", desc: "Web-Plattformen und Dashboards." },
       ],
+    },
+    autosave: {
+      restoredTitle: "Entwurf wiederhergestellt",
+      restoredDesc: "Wir haben Ihren laufenden Entwurf zurückgeholt.",
+      discard: "Verwerfen",
+      savedNote: "Entwurf lokal gespeichert",
+    },
+    cookies: {
+      title: "Wir respektieren Ihre Privatsphäre.",
+      body: "Wir verwenden einen einzigen, technisch notwendigen Cookie, um Ihre Sprache zu speichern. ",
+      bodyStrong: "Kein Tracking, keine Analytik, keine Drittanbieter — niemals.",
+      accept: "Verstanden",
+      decline: "Nur Essenzielles",
+      learnMore: "Mehr erfahren",
     },
     subpages: {
       common: {
