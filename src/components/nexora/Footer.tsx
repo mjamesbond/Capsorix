@@ -22,13 +22,13 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground max-w-sm">{t.footer.tagline}</p>
           </div>
 
-          <div className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
             {links.map((l) => (
               <a key={l.id} href={`#${l.id}`} className="text-muted-foreground hover:text-primary-glow transition-colors">
                 {l.label}
               </a>
             ))}
-          </div>
+          </nav>
         </div>
 
         <div className="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
