@@ -552,3 +552,117 @@
     -webkit-hyphens: auto;
   }
 }
+
+/* ========================================================
+ * Accessibility layer
+ * ----------------------------------------------------
+ * One coherent system for keyboard + assistive tech. Lives at the end of
+ * the stylesheet so it overrides any earlier component-level focus rules.
+ *
+ *   1. Skip link — invisible chrome that surfaces on focus, lets keyboard
+ *      users bypass the navbar straight to <main id="main">.
+ *   2. Focus-visible — a single, brand-aligned gold ring that appears ONLY
+ *      for keyboard focus (never on mouse click). Two-tone halo so it
+ *      reads on both dark glass and gold-gradient surfaces.
+ *   3. Reduced motion — honour the OS preference. Cuts every long
+ *      reveal, parallax, gradient-shift, ping, and language crossfade
+ *      down to a near-instant fade so motion-sensitive users get
+ *      a calm, static experience without losing any content.
+ * ======================================================*/
+@layer components {
+  /* ---------- Skip link ---------- */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    inset-inline-start: 0.75rem;        /* logical: LTR=left, RTL=right */
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.125rem;
+    border-radius: 9999px;
+    background: hsl(222 50% 9% / 0.92);
+    color: hsl(var(--primary-glow));
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid hsl(42 65% 58% / 0.5);
+    box-shadow:
+      0 0 0 1px hsl(42 65% 58% / 0.2),
+      0 12px 36px -12px hsl(42 70% 50% / 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    /* Visually hidden by default, kept in the accessibility tree */
+    transform: translateY(calc(-100% - 1.5rem));
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 320ms var(--transition-smooth),
+      opacity 240ms var(--transition-smooth);
+  }
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    outline: none;
+  }
+
+  /* ---------- Global focus-visible ring ----------
+   * Applies to every focusable element. Mouse clicks do NOT trigger it
+   * (browser's :focus-visible heuristic), so the visual stays crisp.
+   * The ring uses two layers: a thin inner gold band + a soft outer glow,
+   * so it reads on dark glass, gold gradients, and white form fields alike.
+   */
+  :where(a, button, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+    border-radius: inherit;
+    box-shadow:
+      0 0 0 4px hsl(var(--background)),
+      0 0 0 6px hsl(var(--primary) / 0.55),
+      0 0 22px hsl(var(--primary) / 0.35);
+    transition: box-shadow 160ms var(--transition-smooth);
+  }
+
+  /* Form fields already have a soft :focus state — keep the keyboard ring
+   * tighter on them so it doesn't double up with the existing border. */
+  :where(input, select, textarea):focus-visible {
+    outline-offset: 0;
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px hsl(var(--primary) / 0.6);
+  }
+
+  /* The two custom rounded surfaces (lang switch thumb + skip link) need
+   * the ring to hug their pill shape rather than inherit a square radius. */
+  .skip-link:focus-visible,
+  .lang-switch__btn:focus-visible {
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- Reduced-motion override ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 120ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Bring revealed content into view immediately so nothing stays hidden
+   * just because the transition was suppressed. */
+  .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .parallax-y { transform: none !important; }
+  .page-enter { animation: none !important; }
+
+  /* Long ambient loops add visual noise without information value. */
+  .bg-gold-animated,
+  .text-gradient-gold { animation: none !important; }
+}
