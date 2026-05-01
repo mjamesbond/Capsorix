@@ -480,10 +480,10 @@
     position: absolute;
     inset: 0;
     border-radius: 9999px;
-    background: hsl(222 50% 9% / 0.5);
+    background: hsl(var(--surface-glass-strong));
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid hsl(42 50% 60% / 0.18);
+    border: var(--glass-border);
     transition:
       border-color 0.7s var(--transition-smooth),
       box-shadow 0.7s var(--transition-smooth),
@@ -646,7 +646,7 @@
     align-items: center;
     padding: 0.625rem 1.125rem;
     border-radius: 9999px;
-    background: hsl(222 50% 9% / 0.92);
+    background: hsl(var(--surface-glass-strong));
     color: hsl(var(--primary-glow));
     font-size: 0.8125rem;
     font-weight: 500;
