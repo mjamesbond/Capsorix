@@ -30,6 +30,41 @@ export interface Dict {
   process: { kicker: string; titleA: string; titleB: string; lead: string; steps: Step[] };
   industries: { kicker: string; titleA: string; titleB: string; lead: string; labels: string[] };
   stats: Stat[];
+  caseStudies: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    items: {
+      tag: string;
+      client: string;
+      title: string;
+      summary: string;
+      challenge: string;
+      approach: string;
+      stack: string[];
+      metrics: { value: string; label: string }[];
+      duration: string;
+    }[];
+    durationLabel: string;
+    stackLabel: string;
+    challengeLabel: string;
+    approachLabel: string;
+    confidentialNote: string;
+  };
+  testimonials: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    items: {
+      quote: string;
+      name: string;
+      role: string;
+      company: string;
+      initials: string;
+    }[];
+    prev: string; next: string;
+  };
+  faq: {
+    kicker: string; titleA: string; titleB: string; lead: string;
+    stillCurious: string; ctaLabel: string;
+    items: { q: string; a: string }[];
+  };
   contact: {
     kicker: string; titleA: string; titleB: string; lead: string; leadStrong: string; leadTail: string;
     bullets: string[]; formKicker: string; formSub: string; replyChip: string;
