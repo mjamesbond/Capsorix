@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { z } from "zod";
 import {
-  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X,
+  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X, Copy, Check,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
