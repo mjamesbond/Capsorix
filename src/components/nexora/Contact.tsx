@@ -187,7 +187,20 @@ const Contact = () => {
       "-" +
       Math.random().toString(36).slice(2, 6).toUpperCase();
     const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
-    setSubmittedMeta({ name: firstName, ref, at: new Date() });
+    setSubmittedMeta({
+      name: firstName,
+      ref,
+      at: new Date(),
+      data: {
+        full_name: parsed.data.full_name,
+        email: parsed.data.email,
+        phone: parsed.data.phone || "",
+        project_type: parsed.data.project_type,
+        budget_range: parsed.data.budget_range,
+        timeline: parsed.data.timeline,
+        description: parsed.data.description,
+      },
+    });
     setSubmitted(true);
     setForm(EMPTY);
     setErrors({});
