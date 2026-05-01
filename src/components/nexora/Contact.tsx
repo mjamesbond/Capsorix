@@ -213,6 +213,18 @@ const Contact = () => {
   const resetForm = () => {
     setSubmitted(false);
     setSubmittedMeta(null);
+    setCopied(false);
+  };
+
+  const copyReference = async () => {
+    if (!submittedMeta) return;
+    try {
+      await navigator.clipboard.writeText(submittedMeta.ref);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard blocked — silently ignore */
+    }
   };
 
   return (
