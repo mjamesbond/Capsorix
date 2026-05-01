@@ -1,7 +1,7 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { z } from "zod";
 import {
-  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles,
+  ArrowRight, Mail, Phone, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,6 +22,9 @@ const EMPTY: FormState = {
   full_name: "", email: "", phone: "",
   project_type: "", budget_range: "", timeline: "", description: "",
 };
+
+const DRAFT_KEY = "capsorix-contact-draft";
+const DRAFT_DEBOUNCE = 600;
 
 const fieldClass =
   "w-full rounded-xl bg-input/60 border border-border/60 px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/60 focus:ring-2 focus:ring-primary/20 transition-all duration-300";
@@ -56,6 +59,67 @@ const Contact = () => {
   // greet the client by name and display a stable reference even after
   // the form state is reset.
   const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date } | null>(null);
+  // Autosave state — `restored` shows a quiet pill above the form for a
+  // few seconds after a draft is brought back, and `savedAt` powers the
+  // tiny "saved locally" footer hint.
+  const [restored, setRestored] = useState(false);
+  const [savedAt, setSavedAt] = useState<number | null>(null);
+  const debounceRef = useRef<number | null>(null);
+  const hydratedRef = useRef(false);
+
+  // Restore any previous draft on first mount. Done synchronously inside
+  // an effect so the form starts blank for SSR/hydration safety.
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY);
+      if (!raw) { hydratedRef.current = true; return; }
+      const parsed = JSON.parse(raw) as Partial<FormState>;
+      // Only restore if at least one meaningful field was filled — keeps
+      // the banner from appearing for empty drafts saved by older sessions.
+      const hasContent = Object.values(parsed).some((v) => typeof v === "string" && v.trim().length > 0);
+      if (hasContent) {
+        setForm({ ...EMPTY, ...parsed });
+        setRestored(true);
+        window.setTimeout(() => setRestored(false), 6000);
+      }
+    } catch {
+      // Corrupt JSON — ignore and move on.
+    } finally {
+      hydratedRef.current = true;
+    }
+  }, []);
+
+  // Debounced persist — never saves on the very first render so the
+  // restoration logic above doesn't immediately overwrite itself.
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    if (submitted) return;
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    debounceRef.current = window.setTimeout(() => {
+      const isEmpty = Object.values(form).every((v) => !v || !v.trim());
+      try {
+        if (isEmpty) {
+          window.localStorage.removeItem(DRAFT_KEY);
+          setSavedAt(null);
+        } else {
+          window.localStorage.setItem(DRAFT_KEY, JSON.stringify(form));
+          setSavedAt(Date.now());
+        }
+      } catch {
+        /* storage quota / privacy mode — silently ignore */
+      }
+    }, DRAFT_DEBOUNCE);
+    return () => {
+      if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    };
+  }, [form, submitted]);
+
+  const discardDraft = () => {
+    setForm(EMPTY);
+    setErrors({});
+    setRestored(false);
+    try { window.localStorage.removeItem(DRAFT_KEY); } catch { /* noop */ }
+  };
 
   // Build a localized schema each render — cheap and keeps messages in sync.
   const schema = useMemo(() => z.object({
@@ -126,6 +190,10 @@ const Contact = () => {
     setSubmitted(true);
     setForm(EMPTY);
     setErrors({});
+    // Successful submission supersedes any saved draft.
+    try { window.localStorage.removeItem(DRAFT_KEY); } catch { /* noop */ }
+    setSavedAt(null);
+    setRestored(false);
   };
 
   const resetForm = () => {
@@ -313,6 +381,32 @@ const Contact = () => {
                 >
                   <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
 
+                  {/* Restored-draft pill — quiet, dismissible, auto-fades */}
+                  {restored && (
+                    <div
+                      role="status"
+                      className="relative mb-6 flex items-center justify-between gap-4 rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 animate-fade-in"
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="mt-0.5 w-7 h-7 shrink-0 rounded-full bg-gradient-gold-soft border border-primary/50 flex items-center justify-center gold-ring">
+                          <Save className="w-3.5 h-3.5 text-primary-glow" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="text-xs font-medium text-foreground">{t.autosave.restoredTitle}</p>
+                          <p className="text-[11px] text-muted-foreground leading-relaxed">{t.autosave.restoredDesc}</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={discardDraft}
+                        className="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-[11px] tracking-wide text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                      >
+                        <X className="w-3 h-3" />
+                        {t.autosave.discard}
+                      </button>
+                    </div>
+                  )}
+
                   <div className="relative mb-8 flex items-center justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium tracking-[0.25em] uppercase text-primary mb-1">{t.contact.formKicker}</p>
@@ -405,6 +499,12 @@ const Contact = () => {
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
                     <span className="inline-flex items-center gap-2"><ShieldCheck className="w-3.5 h-3.5 text-primary-glow" />{t.contact.reviewed}</span>
                     <span className="inline-flex items-center gap-2"><Lock className="w-3.5 h-3.5 text-primary-glow" />{t.contact.confidential}</span>
+                    {savedAt && (
+                      <span className="inline-flex items-center gap-2 ms-auto opacity-70">
+                        <Save className="w-3.5 h-3.5 text-primary-glow" />
+                        {t.autosave.savedNote}
+                      </span>
+                    )}
                   </div>
                 </form>
               )}
