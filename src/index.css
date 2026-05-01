@@ -5,8 +5,81 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap');
 
 @layer base {
+  /* ============================================================
+   * CAPSORIX — Day theme (default)
+   * ----------------------------------------------------
+   * A premium, calm light surface inspired by editorial print:
+   *   • Warm ivory background (not stark white) so gold accents glow
+   *   • Deep navy ink for typography — luxury feel, max readability
+   *   • Antique-gold primary, slightly warmer & deeper than dark mode
+   *     so it reads with weight on a light field
+   *   • Soft taupe borders and muted surfaces — never grey/cold
+   * ============================================================ */
   :root {
-    /* CAPSORIX — Deep navy + gold luxury */
+    --background: 40 35% 97%;          /* warm ivory */
+    --foreground: 222 47% 10%;         /* deep navy ink */
+
+    --card: 40 30% 99%;
+    --card-foreground: 222 47% 10%;
+
+    --popover: 40 30% 99%;
+    --popover-foreground: 222 47% 10%;
+
+    --primary: 38 70% 42%;             /* antique gold — anchored on light */
+    --primary-foreground: 40 35% 97%;
+    --primary-glow: 42 80% 50%;        /* slightly brighter for accents */
+
+    --secondary: 40 25% 92%;
+    --secondary-foreground: 222 47% 10%;
+
+    --muted: 40 20% 93%;
+    --muted-foreground: 222 18% 38%;
+
+    --accent: 38 70% 42%;
+    --accent-foreground: 40 35% 97%;
+
+    --destructive: 0 65% 48%;
+    --destructive-foreground: 40 35% 97%;
+
+    --border: 40 25% 84%;              /* warm taupe hairline */
+    --input: 40 25% 96%;
+    --ring: 38 70% 42%;
+
+    --radius: 1rem;
+
+    /* Gradients — warm gold on ivory */
+    --gradient-gold: linear-gradient(135deg, hsl(38 75% 42%), hsl(42 85% 55%), hsl(36 70% 38%));
+    --gradient-gold-soft: linear-gradient(135deg, hsl(38 70% 42% / 0.10), hsl(42 80% 55% / 0.04));
+    --gradient-navy: radial-gradient(ellipse at top, hsl(40 40% 99%), hsl(40 30% 95%));
+    --gradient-text-gold: linear-gradient(135deg, hsl(36 70% 35%) 0%, hsl(42 80% 48%) 50%, hsl(38 75% 40%) 100%);
+
+    /* Shadows — softer, longer, paper-like */
+    --shadow-gold: 0 14px 50px -14px hsl(38 70% 42% / 0.30);
+    --shadow-glow: 0 0 60px hsl(42 85% 55% / 0.18);
+    --shadow-elegant: 0 20px 60px -20px hsl(222 30% 20% / 0.18);
+    --glass-border: 1px solid hsl(38 50% 55% / 0.18);
+
+    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+    /* System rhythm — every motion in the site obeys this tempo */
+    --rhythm: 140ms;
+    --tempo-fast: 0.5s;
+    --tempo-med: 0.9s;
+    --tempo-slow: 1.4s;
+    --section-pad-y: 9rem;
+
+    /* Theme-aware surfaces — referenced by .glass, .glass-strong, etc.
+       Day defaults to warm-ivory translucency. */
+    --surface-glass: 40 35% 99% / 0.65;
+    --surface-glass-strong: 40 35% 99% / 0.82;
+    --surface-grid: 38 50% 50% / 0.05;
+  }
+
+  /* ============================================================
+   * CAPSORIX — Night theme (dark mode)
+   * Same brand DNA, deeper canvas, brighter gold for legibility.
+   * ============================================================ */
+  .dark {
     --background: 222 47% 5%;
     --foreground: 40 30% 92%;
 
@@ -36,35 +109,26 @@
     --input: 222 35% 15%;
     --ring: 42 65% 58%;
 
-    --radius: 1rem;
-
-    /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(42 70% 45%), hsl(45 90% 70%), hsl(40 60% 50%));
     --gradient-gold-soft: linear-gradient(135deg, hsl(42 65% 58% / 0.15), hsl(45 90% 70% / 0.05));
     --gradient-navy: radial-gradient(ellipse at top, hsl(222 50% 12%), hsl(222 47% 5%));
     --gradient-text-gold: linear-gradient(135deg, hsl(45 90% 75%) 0%, hsl(42 70% 55%) 50%, hsl(38 60% 45%) 100%);
 
-    /* Shadows / glows */
     --shadow-gold: 0 10px 60px -10px hsl(42 70% 50% / 0.45);
     --shadow-glow: 0 0 80px hsl(45 90% 60% / 0.25);
     --shadow-elegant: 0 30px 80px -20px hsl(222 80% 2% / 0.7);
     --glass-border: 1px solid hsl(42 50% 60% / 0.18);
 
-    --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
-
-    /* System rhythm — every motion in the site obeys this tempo */
-    --rhythm: 140ms;          /* base stagger between elements */
-    --tempo-fast: 0.5s;       /* micro-interactions */
-    --tempo-med: 0.9s;        /* hovers, surface changes */
-    --tempo-slow: 1.4s;       /* reveals, scene shifts */
-    --section-pad-y: 9rem;    /* unified vertical breathing */
+    --surface-glass: 222 45% 8% / 0.5;
+    --surface-glass-strong: 222 50% 9% / 0.75;
+    --surface-grid: 42 50% 60% / 0.06;
   }
 }
 @layer components {
   /* One rhythm — every section breathes the same */
   .section { padding-top: var(--section-pad-y); padding-bottom: var(--section-pad-y); }
 
-  /* Soft, controlled icon container — replaces ad-hoc rotate/scale flourishes */
+  /* Soft, controlled icon container */
   .icon-tile {
     transition: transform var(--tempo-med) var(--transition-smooth),
                 background var(--tempo-med) var(--transition-smooth),
@@ -82,6 +146,8 @@
     @apply bg-background text-foreground font-sans antialiased;
     background: var(--gradient-navy);
     background-attachment: fixed;
+    transition: background-color 600ms var(--transition-smooth),
+                color 600ms var(--transition-smooth);
   }
   ::selection { background: hsl(var(--primary) / 0.3); color: hsl(var(--primary-glow)); }
 }
@@ -96,13 +162,13 @@
     animation: gradient-shift 16s ease-in-out infinite;
   }
   .glass {
-    background: hsl(222 45% 8% / 0.5);
+    background: hsl(var(--surface-glass));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: var(--glass-border);
   }
   .glass-strong {
-    background: hsl(222 50% 9% / 0.75);
+    background: hsl(var(--surface-glass-strong));
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
     border: var(--glass-border);
@@ -186,8 +252,8 @@
 
   .grid-bg {
     background-image:
-      linear-gradient(hsl(42 50% 60% / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(42 50% 60% / 0.06) 1px, transparent 1px);
+      linear-gradient(hsl(var(--surface-grid)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--surface-grid)) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
@@ -410,14 +476,42 @@
   /* ========================================================
    * Language switcher — bespoke control, lives in the navbar.
    * ======================================================*/
+
+  /* Theme toggle — single bespoke control sharing the lang-switch surface.
+     Two equal slots (Sun · Moon), thumb is half the rail. */
+  .theme-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
+    height: 2rem;
+    width: 4.25rem;
+    border-radius: 9999px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .theme-switch .lang-switch__btn {
+    color: hsl(var(--foreground) / 0.5);
+  }
+  .theme-switch .lang-switch__btn.is-active {
+    color: hsl(var(--primary-foreground));
+  }
+  .theme-switch:hover .lang-switch__btn:not(.is-active) {
+    color: hsl(var(--foreground) / 0.85);
+  }
+
+
   .lang-switch__shell {
     position: absolute;
     inset: 0;
     border-radius: 9999px;
-    background: hsl(222 50% 9% / 0.5);
+    background: hsl(var(--surface-glass-strong));
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid hsl(42 50% 60% / 0.18);
+    border: var(--glass-border);
     transition:
       border-color 0.7s var(--transition-smooth),
       box-shadow 0.7s var(--transition-smooth),
@@ -580,7 +674,7 @@
     align-items: center;
     padding: 0.625rem 1.125rem;
     border-radius: 9999px;
-    background: hsl(222 50% 9% / 0.92);
+    background: hsl(var(--surface-glass-strong));
     color: hsl(var(--primary-glow));
     font-size: 0.8125rem;
     font-weight: 500;

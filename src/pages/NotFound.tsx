@@ -30,7 +30,7 @@ const NotFound = () => {
   const nf = t.notFound;
 
   return (
-    <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden page-enter" data-lang={lang}>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden page-enter" data-lang={lang}>
       <Navbar />
       <main className="relative">
         {/* Ambient gold wash — single, restrained */}

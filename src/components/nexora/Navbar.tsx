@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { subscribeScroll } from "@/lib/scroll-engine";
 import { useI18n } from "@/i18n/I18nProvider";
 import LanguageToggle from "./LanguageToggle";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -86,6 +87,7 @@ const Navbar = () => {
           </ul>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <LanguageToggle />
             <a
               href={sectionHref("contact")}
