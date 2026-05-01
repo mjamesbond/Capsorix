@@ -39,6 +39,7 @@ const Navbar = () => {
     >
       <div className={`container transition-all duration-500 ${scrolled ? "max-w-6xl" : "max-w-7xl"}`}>
         <nav
+          aria-label="Primary"
           className={`flex items-center justify-between rounded-full px-6 py-3 transition-all duration-500 ${
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}

@@ -20,7 +20,7 @@ const SubpageShell = ({ children }: { children: ReactNode }) => {
   return (
     <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
-      <main key={pathname} className="page-enter">
+      <main id="main" tabIndex={-1} key={pathname} className="page-enter">
         {children}
       </main>
       <Footer />
