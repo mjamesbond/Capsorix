@@ -476,6 +476,33 @@
   /* ========================================================
    * Language switcher — bespoke control, lives in the navbar.
    * ======================================================*/
+
+  /* Theme toggle — single bespoke control sharing the lang-switch surface.
+     Two equal slots (Sun · Moon), thumb is half the rail. */
+  .theme-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: stretch;
+    height: 2rem;
+    width: 4.25rem;
+    border-radius: 9999px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .theme-switch .lang-switch__btn {
+    color: hsl(var(--foreground) / 0.5);
+  }
+  .theme-switch .lang-switch__btn.is-active {
+    color: hsl(var(--primary-foreground));
+  }
+  .theme-switch:hover .lang-switch__btn:not(.is-active) {
+    color: hsl(var(--foreground) / 0.85);
+  }
+   * ======================================================*/
   .lang-switch__shell {
     position: absolute;
     inset: 0;
