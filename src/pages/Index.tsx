@@ -17,7 +17,7 @@ const Index = () => {
   return (
     <div className="dark min-h-screen bg-background text-foreground overflow-x-hidden page-enter">
       <Navbar />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <div className="section-fade"><TrustBar /></div>
         <div className="container"><div className="section-divider" /></div>
