@@ -252,8 +252,8 @@
 
   .grid-bg {
     background-image:
-      linear-gradient(hsl(42 50% 60% / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(42 50% 60% / 0.06) 1px, transparent 1px);
+      linear-gradient(hsl(var(--surface-grid)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--surface-grid)) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
