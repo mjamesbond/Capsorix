@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NeuralLayer from "./components/nexora/NeuralLayer";
+import ScrollProgress from "./components/nexora/ScrollProgress";
+import CookieConsent from "./components/nexora/CookieConsent";
 import { I18nProvider } from "./i18n/I18nProvider";
 
 // Subpages and the 404 are deferred — the landing page stays the only
@@ -35,6 +37,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <NeuralLayer />
+          <ScrollProgress />
           <Suspense fallback={<RouteFallback />}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -45,6 +48,7 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
+          <CookieConsent />
         </BrowserRouter>
       </TooltipProvider>
     </I18nProvider>
