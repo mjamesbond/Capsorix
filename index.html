@@ -3,8 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbf8f1" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Pre-paint theme bootstrap — prevents the dreaded flash on reload.
+         Mirrors the resolution logic in src/theme/ThemeProvider.tsx. -->
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem('capsorix-theme');
+          var t = (s === 'dark' || s === 'light')
+            ? s
+            : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          var r = document.documentElement;
+          r.classList.add(t);
+          r.dataset.theme = t;
+          r.style.colorScheme = t;
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <link rel="canonical" href="https://celestial-forge-web.lovable.app/" />
 
     <!-- Primary SEO -->
