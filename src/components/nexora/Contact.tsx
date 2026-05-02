@@ -256,7 +256,6 @@ const Contact = () => {
             <ul className="space-y-4 pt-8 border-t border-border/40">
               {[
                 { icon: Mail, label: "capsorix@hotmail.com" },
-                { icon: Phone, label: "+1 (415) 555-0102" },
               ].map((c) => (
                 <li key={c.label} className="group flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl glass flex items-center justify-center icon-tile">
@@ -529,15 +528,6 @@ const Contact = () => {
                         className={`${fieldClass} ${errors.email ? errorFieldClass : ""}`}
                         value={form.email} onChange={set("email")} onBlur={() => validateField("email")}
                         maxLength={255} autoComplete="email" placeholder={t.contact.placeholders.email}
-                      />
-                    </Field>
-
-                    <Field label={t.contact.labels.phone} error={errors.phone} span>
-                      <input
-                        dir="ltr"
-                        className={`${fieldClass} ${errors.phone ? errorFieldClass : ""}`}
-                        value={form.phone} onChange={set("phone")} onBlur={() => validateField("phone")}
-                        maxLength={40} autoComplete="tel" placeholder={t.contact.placeholders.phone}
                       />
                     </Field>
 
