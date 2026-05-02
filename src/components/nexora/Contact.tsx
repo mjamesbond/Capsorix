@@ -255,7 +255,7 @@ const Contact = () => {
 
             <ul className="space-y-4 pt-8 border-t border-border/40">
               {[
-                { icon: Mail, label: "studio@capsorix.dev" },
+                { icon: Mail, label: "capsorix@hotmail.com" },
                 { icon: Phone, label: "+1 (415) 555-0102" },
               ].map((c) => (
                 <li key={c.label} className="group flex items-center gap-4">
@@ -447,7 +447,7 @@ const Contact = () => {
                     {/* Dual actions */}
                     <div className="mt-10 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
                       <a
-                        href="mailto:studio@capsorix.dev"
+                        href="mailto:capsorix@hotmail.com"
                         className="group inline-flex items-center gap-2 text-muted-foreground hover:text-primary-glow transition-colors"
                       >
                         <Mail className="w-4 h-4" />
