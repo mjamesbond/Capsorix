@@ -10,31 +10,64 @@ permissions:
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment, skip runs queued between in-progress
+# and the latest queued. Do NOT cancel in-progress runs — let production
+# deploys finish cleanly.
 concurrency:
   group: "pages"
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
+    env:
+      # Vite reads these at build time. Safe to expose: they are the public
+      # anon/publishable keys, protected server-side by RLS policies.
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL || 'https://ncayrvgdxdfboimrrkmz.supabase.co' }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jYXlydmdkeGRmYm9pbXJya216Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NzUxNDMsImV4cCI6MjA5MzE1MTE0M30.AQbXRvpubJ9EmKHjjaSJilX_RMtI9i1Zd4qRrpysm6c' }}
+      VITE_SUPABASE_PROJECT_ID: ${{ vars.VITE_SUPABASE_PROJECT_ID || 'ncayrvgdxdfboimrrkmz' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "npm"
+
       - name: Install dependencies
-        run: npm ci
+        # Use `npm ci` when the lockfile is in perfect sync; otherwise fall
+        # back to `npm install` so a minor lockfile drift never blocks deploy.
+        run: npm ci --no-audit --fund=false || npm install --no-audit --fund=false
+
       - name: Build
         run: npm run build
+
+      - name: Add SPA fallback (404.html)
+        # GitHub Pages serves 404.html for unknown paths. Mirroring index.html
+        # makes client-side routes (e.g. /ios, /android) survive direct hits
+        # and hard refreshes.
+        run: cp dist/index.html dist/404.html
+
+      - name: Ensure CNAME for custom domain
+        # Guarantee the custom domain mapping is preserved on every deploy,
+        # even if the Pages UI setting is ever cleared.
+        run: echo "capsorix.tech" > dist/CNAME
+
+      - name: Disable Jekyll processing
+        # Prevents GitHub Pages from stripping files/folders that start with `_`.
+        run: touch dist/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    name: Deploy
     needs: build
     runs-on: ubuntu-latest
     environment:
