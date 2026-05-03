@@ -333,6 +333,7 @@ const NeuralLayer = ({
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
       unsubscribeScroll();
     };
   }, [density, intensity]);
