@@ -67,6 +67,7 @@ const tick = (now: number) => {
 
 const start = () => {
   if (started || typeof window === "undefined") return;
+  if (typeof document !== "undefined" && document.hidden) return;
   started = true;
   last = performance.now();
   easedY = window.scrollY;
@@ -79,6 +80,21 @@ const stop = () => {
   cancelAnimationFrame(raf);
   started = false;
 };
+
+// Pause/resume the shared loop with tab visibility — keeps memory/CPU
+// quiet in background tabs so mobile browsers don't discard the page.
+if (typeof document !== "undefined") {
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (started) {
+        cancelAnimationFrame(raf);
+        started = false;
+      }
+    } else if (listeners.size > 0 && !started) {
+      start();
+    }
+  });
+}
 
 /** Subscribe to the shared scroll loop. Returns an unsubscribe fn. */
 export const subscribeScroll = (cb: Listener): (() => void) => {
