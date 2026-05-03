@@ -1,4 +1,5 @@
 import { useI18n } from "@/i18n/I18nProvider";
+import capsorixLogo from "@/assets/capsorix-logo.png";
 
 const Footer = () => {
   const { t } = useI18n();
@@ -13,11 +14,15 @@ const Footer = () => {
       <div className="container py-14">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3" dir="ltr">
-              <div className="w-8 h-8 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
-                <span className="font-display font-bold text-primary-foreground">N</span>
-              </div>
-              <span className="font-display text-xl font-semibold tracking-widest text-gradient-gold">CAPSORIX</span>
+            <div className="mb-4" dir="ltr">
+              <img
+                src={capsorixLogo}
+                alt="Capsorix"
+                width={620}
+                height={160}
+                className="h-10 w-auto select-none"
+                draggable={false}
+              />
             </div>
             <p className="text-sm text-muted-foreground max-w-sm">{t.footer.tagline}</p>
           </div>
