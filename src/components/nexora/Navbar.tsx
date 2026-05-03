@@ -4,6 +4,7 @@ import { subscribeScroll } from "@/lib/scroll-engine";
 import { useI18n } from "@/i18n/I18nProvider";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
+import capsorixLogo from "@/assets/capsorix-logo.png";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -45,14 +46,15 @@ const Navbar = () => {
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}
         >
-          <Link to="/" className="flex items-center gap-2 group" dir="ltr">
-            <div className="relative w-9 h-9 rounded-lg bg-gradient-gold flex items-center justify-center shadow-gold">
-              <span className="font-display font-bold text-primary-foreground text-lg">N</span>
-              <div className="absolute inset-0 rounded-lg bg-gradient-gold blur-md opacity-50 group-hover:opacity-80 transition-opacity" />
-            </div>
-            <span className="font-display text-2xl font-semibold tracking-widest text-gradient-gold">
-              CAPSORIX
-            </span>
+          <Link to="/" className="flex items-center group" dir="ltr" aria-label="Capsorix">
+            <img
+              src={capsorixLogo}
+              alt="Capsorix"
+              width={620}
+              height={160}
+              className="h-9 md:h-10 w-auto select-none transition-opacity duration-300 group-hover:opacity-90"
+              draggable={false}
+            />
           </Link>
 
           <ul className="hidden md:flex items-center gap-8">
