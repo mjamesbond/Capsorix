@@ -141,6 +141,19 @@ const NeuralLayer = ({
 
     let raf = 0;
     let last = performance.now();
+    let running = true;
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        running = false;
+        cancelAnimationFrame(raf);
+      } else if (!running) {
+        running = true;
+        last = performance.now();
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const tick = (now: number) => {
       const dt = Math.min(40, now - last) / 16.67; // normalized to 60fps frames
