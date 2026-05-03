@@ -99,8 +99,13 @@ const NeuralLayer = ({
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const area = width * height;
-      // Slightly sparser baseline — avoids overcrowding
-      const count = Math.max(16, Math.min(60, Math.round((area / 26000) * density)));
+      // Slightly sparser baseline — avoids overcrowding. On small/touch
+      // devices halve the count again so background tabs don't get killed
+      // for memory pressure (iOS Safari is aggressive here).
+      const isSmall = width < 768;
+      const cap = isSmall ? 28 : 60;
+      const divisor = isSmall ? 52000 : 26000;
+      const count = Math.max(12, Math.min(cap, Math.round((area / divisor) * density)));
       nodes = Array.from({ length: count }, () => {
         const { hue, sat } = pickHue();
         return {
