@@ -35,7 +35,7 @@ const FinalCTA = () => {
                 <ArrowRight className="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-1.5" />
               </a>
               <a
-                href="mailto:capsorix@hotmail.com"
+                href="mailto:team@capsorix.tech"
                 className="text-sm text-muted-foreground hover:text-primary-glow transition-colors"
               >
                 {t.finalCta.or}
