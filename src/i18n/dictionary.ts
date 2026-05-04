@@ -87,7 +87,7 @@ export interface Dict {
       copiedRef: string;
     };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
-    validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
+    validation: { full_name: string; email: string; phone: string; phone_required: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
