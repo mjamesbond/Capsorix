@@ -421,7 +421,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Full name",
         email: "Email",
-        phone: "Phone (optional)",
+        phone: "Phone number",
         project_type: "Project type",
         budget_range: "Budget range",
         timeline: "Timeline",
@@ -875,7 +875,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "الاسم الكامل",
         email: "البريد الإلكتروني",
-        phone: "رقم الهاتف (اختياري)",
+        phone: "رقم الهاتف",
         project_type: "نوع المشروع",
         budget_range: "نطاق الميزانية",
         timeline: "الإطار الزمني",
@@ -1329,7 +1329,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Nom complet",
         email: "E-mail",
-        phone: "Téléphone (optionnel)",
+        phone: "Téléphone",
         project_type: "Type de projet",
         budget_range: "Budget",
         timeline: "Échéance",
@@ -1783,7 +1783,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Vollständiger Name",
         email: "E-Mail",
-        phone: "Telefon (optional)",
+        phone: "Telefon",
         project_type: "Projektart",
         budget_range: "Budgetrahmen",
         timeline: "Zeitrahmen",
