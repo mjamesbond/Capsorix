@@ -386,6 +386,7 @@ const Contact = () => {
                           {([
                             ["name", submittedMeta.data.full_name],
                             ["email", submittedMeta.data.email],
+                            ["phone", submittedMeta.data.phone],
                             ["project_type", submittedMeta.data.project_type],
                             ["budget_range", submittedMeta.data.budget_range],
                             ["timeline", submittedMeta.data.timeline],
