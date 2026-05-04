@@ -552,6 +552,14 @@ const Contact = () => {
                         maxLength={255} autoComplete="email" placeholder={t.contact.placeholders.email}
                       />
                     </Field>
+                    <Field label={t.contact.labels.phone} error={errors.phone} span>
+                      <input
+                        type="tel" dir="ltr"
+                        className={`${fieldClass} ${errors.phone ? errorFieldClass : ""}`}
+                        value={form.phone} onChange={set("phone")} onBlur={() => validateField("phone")}
+                        maxLength={40} autoComplete="tel" placeholder={t.contact.placeholders.phone}
+                      />
+                    </Field>
 
                     <Field label={t.contact.labels.project_type} error={errors.project_type}>
                       <select
