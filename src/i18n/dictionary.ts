@@ -87,7 +87,7 @@ export interface Dict {
       copiedRef: string;
     };
     toastErrTitle: string; toastSendErr: string; toastSendErrDesc: string;
-    validation: { full_name: string; email: string; phone: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
+    validation: { full_name: string; email: string; phone: string; phone_required: string; project_type: string; budget_range: string; timeline: string; description_min: string; description_max: string };
   };
   finalCta: { badge: string; titleA: string; titleB: string; lead: string; cta: string; or: string; reply: string; nda: string; noObligation: string };
   footer: { tagline: string; rights: string; values: string };
@@ -421,7 +421,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Full name",
         email: "Email",
-        phone: "Phone (optional)",
+        phone: "Phone number",
         project_type: "Project type",
         budget_range: "Budget range",
         timeline: "Timeline",
@@ -461,7 +461,7 @@ export const dict: Record<Lang, Dict> = {
         ],
         refLabel: "Reference",
         mailLabel: "Need to add something?",
-        mailCta: "Write to capsorix@hotmail.com",
+        mailCta: "Write to team@capsorix.tech",
         summaryKicker: "Brief summary",
         summaryLabels: {
           name: "Name",
@@ -478,11 +478,12 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "Please review the form",
       toastSendErr: "We couldn’t send your request",
-      toastSendErrDesc: "Please try again in a moment, or write to capsorix@hotmail.com directly.",
+      toastSendErrDesc: "Please try again in a moment, or write to team@capsorix.tech directly.",
       validation: {
         full_name: "Please enter your full name",
         email: "Please enter a valid email",
         phone: "That phone number is too long",
+        phone_required: "Please enter a valid phone number",
         project_type: "Choose a project type",
         budget_range: "Choose a budget range",
         timeline: "Choose a timeline",
@@ -497,7 +498,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "Or even a feeling that something needs to be built right. We’ll read it with a builder’s mindset, not a sales one — and reply personally within 24–48 hours.",
       cta: "Send your project",
-      or: "or write to capsorix@hotmail.com",
+      or: "or write to team@capsorix.tech",
       reply: "Reply in 24–48h",
       nda: "NDA on request",
       noObligation: "No obligation",
@@ -874,7 +875,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "الاسم الكامل",
         email: "البريد الإلكتروني",
-        phone: "رقم الهاتف (اختياري)",
+        phone: "رقم الهاتف",
         project_type: "نوع المشروع",
         budget_range: "نطاق الميزانية",
         timeline: "الإطار الزمني",
@@ -914,7 +915,7 @@ export const dict: Record<Lang, Dict> = {
         ],
         refLabel: "رقم الطلب",
         mailLabel: "تودّ إضافة شيء؟",
-        mailCta: "راسلنا على capsorix@hotmail.com",
+        mailCta: "راسلنا على team@capsorix.tech",
         summaryKicker: "ملخص الطلب",
         summaryLabels: {
           name: "الاسم",
@@ -931,11 +932,12 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "راجع البيانات من فضلك",
       toastSendErr: "تعذّر إرسال طلبك",
-      toastSendErrDesc: "حاول مجددًا بعد لحظات، أو راسلنا على capsorix@hotmail.com مباشرةً.",
+      toastSendErrDesc: "حاول مجددًا بعد لحظات، أو راسلنا على team@capsorix.tech مباشرةً.",
       validation: {
         full_name: "اكتب اسمك الكامل من فضلك",
         email: "اكتب بريدًا إلكترونيًا صحيحًا",
         phone: "رقم الهاتف طويل أكثر من اللازم",
+        phone_required: "من فضلك أدخل رقم هاتف صحيح",
         project_type: "اختر نوع المشروع",
         budget_range: "اختر نطاق الميزانية",
         timeline: "اختر الإطار الزمني",
@@ -950,7 +952,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "أو حتى مجرّد إحساس بأن شيئًا ما يستحقّ أن يُبنى بشكل صحيح. نقرأها بعقلية المهندس، لا عقلية البائع — ونردّ عليك شخصيًا خلال 24 إلى 48 ساعة.",
       cta: "أرسل مشروعك",
-      or: "أو راسلنا على capsorix@hotmail.com",
+      or: "أو راسلنا على team@capsorix.tech",
       reply: "ردّ خلال 24–48 ساعة",
       nda: "اتفاقية سرّية عند الطلب",
       noObligation: "بلا أيّ التزام",
@@ -1327,7 +1329,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Nom complet",
         email: "E-mail",
-        phone: "Téléphone (optionnel)",
+        phone: "Téléphone",
         project_type: "Type de projet",
         budget_range: "Budget",
         timeline: "Échéance",
@@ -1367,7 +1369,7 @@ export const dict: Record<Lang, Dict> = {
         ],
         refLabel: "Référence",
         mailLabel: "Un détail à ajouter ?",
-        mailCta: "Écrivez à capsorix@hotmail.com",
+        mailCta: "Écrivez à team@capsorix.tech",
         summaryKicker: "Récapitulatif",
         summaryLabels: {
           name: "Nom",
@@ -1384,11 +1386,12 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "Merci de vérifier le formulaire",
       toastSendErr: "Impossible d’envoyer votre demande",
-      toastSendErrDesc: "Réessayez dans un instant, ou écrivez-nous à capsorix@hotmail.com.",
+      toastSendErrDesc: "Réessayez dans un instant, ou écrivez-nous à team@capsorix.tech.",
       validation: {
         full_name: "Veuillez saisir votre nom complet",
         email: "Veuillez saisir un e-mail valide",
         phone: "Ce numéro est trop long",
+        phone_required: "Veuillez saisir un numéro de téléphone valide",
         project_type: "Choisissez un type de projet",
         budget_range: "Choisissez un budget",
         timeline: "Choisissez une échéance",
@@ -1403,7 +1406,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "Ou simplement l’intuition que quelque chose mérite d’être bâti correctement. Nous la lirons en bâtisseurs, non en commerciaux — et répondrons personnellement sous 24 à 48 heures.",
       cta: "Envoyer le projet",
-      or: "ou écrivez à capsorix@hotmail.com",
+      or: "ou écrivez à team@capsorix.tech",
       reply: "Réponse sous 24–48 h",
       nda: "NDA sur demande",
       noObligation: "Sans engagement",
@@ -1780,7 +1783,7 @@ export const dict: Record<Lang, Dict> = {
       labels: {
         full_name: "Vollständiger Name",
         email: "E-Mail",
-        phone: "Telefon (optional)",
+        phone: "Telefon",
         project_type: "Projektart",
         budget_range: "Budgetrahmen",
         timeline: "Zeitrahmen",
@@ -1820,7 +1823,7 @@ export const dict: Record<Lang, Dict> = {
         ],
         refLabel: "Referenz",
         mailLabel: "Möchten Sie etwas ergänzen?",
-        mailCta: "Schreiben Sie an capsorix@hotmail.com",
+        mailCta: "Schreiben Sie an team@capsorix.tech",
         summaryKicker: "Kurzfassung",
         summaryLabels: {
           name: "Name",
@@ -1837,11 +1840,12 @@ export const dict: Record<Lang, Dict> = {
       },
       toastErrTitle: "Bitte prüfen Sie das Formular",
       toastSendErr: "Ihre Anfrage konnte nicht gesendet werden",
-      toastSendErrDesc: "Bitte versuchen Sie es gleich erneut oder schreiben Sie direkt an capsorix@hotmail.com.",
+      toastSendErrDesc: "Bitte versuchen Sie es gleich erneut oder schreiben Sie direkt an team@capsorix.tech.",
       validation: {
         full_name: "Bitte geben Sie Ihren vollständigen Namen ein",
         email: "Bitte geben Sie eine gültige E-Mail an",
         phone: "Diese Telefonnummer ist zu lang",
+        phone_required: "Bitte geben Sie eine gültige Telefonnummer ein",
         project_type: "Wählen Sie eine Projektart",
         budget_range: "Wählen Sie einen Budgetrahmen",
         timeline: "Wählen Sie einen Zeitrahmen",
@@ -1856,7 +1860,7 @@ export const dict: Record<Lang, Dict> = {
       lead:
         "Oder auch nur das Gefühl, dass etwas richtig gebaut werden sollte. Wir lesen es mit dem Blick eines Bauenden, nicht eines Verkäufers — und antworten persönlich innerhalb von 24 bis 48 Stunden.",
       cta: "Projekt einreichen",
-      or: "oder schreiben Sie an capsorix@hotmail.com",
+      or: "oder schreiben Sie an team@capsorix.tech",
       reply: "Antwort in 24–48 Std.",
       nda: "NDA auf Anfrage",
       noObligation: "Unverbindlich",

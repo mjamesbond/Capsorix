@@ -11,6 +11,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 type FormState = {
   full_name: string;
   email: string;
+  phone: string;
   project_type: string;
   budget_range: string;
   timeline: string;
@@ -18,7 +19,7 @@ type FormState = {
 };
 
 const EMPTY: FormState = {
-  full_name: "", email: "",
+  full_name: "", email: "", phone: "",
   project_type: "", budget_range: "", timeline: "", description: "",
 };
 
@@ -125,6 +126,8 @@ const Contact = () => {
   const schema = useMemo(() => z.object({
     full_name: z.string().trim().min(2, t.contact.validation.full_name).max(100),
     email: z.string().trim().email(t.contact.validation.email).max(255),
+    phone: z.string().trim().min(5, t.contact.validation.phone_required).max(40, t.contact.validation.phone)
+      .regex(/^[+()\d\s\-./]{5,40}$/, t.contact.validation.phone_required),
     project_type: z.string().min(1, t.contact.validation.project_type),
     budget_range: z.string().min(1, t.contact.validation.budget_range),
     timeline: z.string().min(1, t.contact.validation.timeline),
@@ -164,11 +167,34 @@ const Contact = () => {
     const { error } = await supabase.from("project_requests").insert({
       full_name: parsed.data.full_name,
       email: parsed.data.email,
+      phone: parsed.data.phone,
       project_type: parsed.data.project_type,
       budget_range: parsed.data.budget_range,
       timeline: parsed.data.timeline,
       description: parsed.data.description,
     });
+
+    // Fire-and-forget email notification — never blocks the user.
+    supabase.functions
+      .invoke("send-transactional-email", {
+        body: {
+          templateName: "project_request",
+          to: "team@capsorix.tech",
+          purpose: "transactional",
+          idempotency_key: `project-request-${Date.now()}-${parsed.data.email}`,
+          data: {
+            full_name: parsed.data.full_name,
+            email: parsed.data.email,
+            phone: parsed.data.phone,
+            project_type: parsed.data.project_type,
+            budget_range: parsed.data.budget_range,
+            timeline: parsed.data.timeline,
+            description: parsed.data.description,
+          },
+        },
+      })
+      .catch(() => { /* swallow — DB row is the source of truth */ });
+
     setSubmitting(false);
 
     if (error) {
@@ -191,6 +217,7 @@ const Contact = () => {
       data: {
         full_name: parsed.data.full_name,
         email: parsed.data.email,
+        phone: parsed.data.phone,
         project_type: parsed.data.project_type,
         budget_range: parsed.data.budget_range,
         timeline: parsed.data.timeline,
@@ -251,7 +278,7 @@ const Contact = () => {
 
             <ul className="space-y-4 pt-8 border-t border-border/40">
               {[
-                { icon: Mail, label: "capsorix@hotmail.com" },
+                { icon: Mail, label: "team@capsorix.tech" },
               ].map((c) => (
                 <li key={c.label} className="group flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl glass flex items-center justify-center icon-tile">
@@ -359,12 +386,13 @@ const Contact = () => {
                           {([
                             ["name", submittedMeta.data.full_name],
                             ["email", submittedMeta.data.email],
+                            ["phone", submittedMeta.data.phone],
                             ["project_type", submittedMeta.data.project_type],
                             ["budget_range", submittedMeta.data.budget_range],
                             ["timeline", submittedMeta.data.timeline],
                             ["description", submittedMeta.data.description],
                           ] as const).map(([key, value]) => {
-                            const isLtr = key === "email";
+                            const isLtr = key === "email" || key === "phone";
                             const isLong = key === "description";
                             return (
                               <div
@@ -441,7 +469,7 @@ const Contact = () => {
                     {/* Dual actions */}
                     <div className="mt-10 pt-8 border-t border-border/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
                       <a
-                        href="mailto:capsorix@hotmail.com"
+                        href="mailto:team@capsorix.tech"
                         className="group inline-flex items-center gap-2 text-muted-foreground hover:text-primary-glow transition-colors"
                       >
                         <Mail className="w-4 h-4" />
@@ -523,6 +551,14 @@ const Contact = () => {
                         className={`${fieldClass} ${errors.email ? errorFieldClass : ""}`}
                         value={form.email} onChange={set("email")} onBlur={() => validateField("email")}
                         maxLength={255} autoComplete="email" placeholder={t.contact.placeholders.email}
+                      />
+                    </Field>
+                    <Field label={t.contact.labels.phone} error={errors.phone} span>
+                      <input
+                        type="tel" dir="ltr"
+                        className={`${fieldClass} ${errors.phone ? errorFieldClass : ""}`}
+                        value={form.phone} onChange={set("phone")} onBlur={() => validateField("phone")}
+                        maxLength={40} autoComplete="tel" placeholder={t.contact.placeholders.phone}
                       />
                     </Field>
 
