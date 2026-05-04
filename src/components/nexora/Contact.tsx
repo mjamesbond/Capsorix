@@ -392,7 +392,7 @@ const Contact = () => {
                             ["timeline", submittedMeta.data.timeline],
                             ["description", submittedMeta.data.description],
                           ] as const).map(([key, value]) => {
-                            const isLtr = key === "email";
+                            const isLtr = key === "email" || key === "phone";
                             const isLong = key === "description";
                             return (
                               <div
