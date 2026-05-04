@@ -11,6 +11,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 type FormState = {
   full_name: string;
   email: string;
+  phone: string;
   project_type: string;
   budget_range: string;
   timeline: string;
@@ -18,7 +19,7 @@ type FormState = {
 };
 
 const EMPTY: FormState = {
-  full_name: "", email: "",
+  full_name: "", email: "", phone: "",
   project_type: "", budget_range: "", timeline: "", description: "",
 };
 
@@ -125,6 +126,8 @@ const Contact = () => {
   const schema = useMemo(() => z.object({
     full_name: z.string().trim().min(2, t.contact.validation.full_name).max(100),
     email: z.string().trim().email(t.contact.validation.email).max(255),
+    phone: z.string().trim().min(5, t.contact.validation.phone_required).max(40, t.contact.validation.phone)
+      .regex(/^[+()\d\s\-./]{5,40}$/, t.contact.validation.phone_required),
     project_type: z.string().min(1, t.contact.validation.project_type),
     budget_range: z.string().min(1, t.contact.validation.budget_range),
     timeline: z.string().min(1, t.contact.validation.timeline),
@@ -164,11 +167,34 @@ const Contact = () => {
     const { error } = await supabase.from("project_requests").insert({
       full_name: parsed.data.full_name,
       email: parsed.data.email,
+      phone: parsed.data.phone,
       project_type: parsed.data.project_type,
       budget_range: parsed.data.budget_range,
       timeline: parsed.data.timeline,
       description: parsed.data.description,
     });
+
+    // Fire-and-forget email notification — never blocks the user.
+    supabase.functions
+      .invoke("send-transactional-email", {
+        body: {
+          templateName: "project_request",
+          to: "team@capsorix.tech",
+          purpose: "transactional",
+          idempotency_key: `project-request-${Date.now()}-${parsed.data.email}`,
+          data: {
+            full_name: parsed.data.full_name,
+            email: parsed.data.email,
+            phone: parsed.data.phone,
+            project_type: parsed.data.project_type,
+            budget_range: parsed.data.budget_range,
+            timeline: parsed.data.timeline,
+            description: parsed.data.description,
+          },
+        },
+      })
+      .catch(() => { /* swallow — DB row is the source of truth */ });
+
     setSubmitting(false);
 
     if (error) {
@@ -191,6 +217,7 @@ const Contact = () => {
       data: {
         full_name: parsed.data.full_name,
         email: parsed.data.email,
+        phone: parsed.data.phone,
         project_type: parsed.data.project_type,
         budget_range: parsed.data.budget_range,
         timeline: parsed.data.timeline,
