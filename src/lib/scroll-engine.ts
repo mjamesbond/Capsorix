@@ -97,8 +97,22 @@ const start = () => {
 const stop = () => {
   if (!started) return;
   cancelAnimationFrame(raf);
+  clearTimeout(raf as unknown as number);
   started = false;
 };
+
+// Wake the loop the moment a real scroll happens — the idle throttle
+// above drops to ~15fps when nothing is moving, and this listener is
+// what restores full 60fps responsiveness on input.
+if (typeof window !== "undefined") {
+  window.addEventListener(
+    "scroll",
+    () => {
+      idleFrames = 0;
+    },
+    { passive: true },
+  );
+}
 
 // Pause/resume the shared loop with tab visibility — keeps memory/CPU
 // quiet in background tabs so mobile browsers don't discard the page.
@@ -107,6 +121,7 @@ if (typeof document !== "undefined") {
     if (document.hidden) {
       if (started) {
         cancelAnimationFrame(raf);
+        clearTimeout(raf as unknown as number);
         started = false;
       }
     } else if (listeners.size > 0 && !started) {
