@@ -52,18 +52,58 @@ export const useParallax = <T extends HTMLElement = HTMLElement>(speed = 0.2) =>
     if (!node) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // Driven by the shared scroll engine — same eased tempo as the rest
-    // of the site. No per-element rAF, no per-element scroll listener.
-    const unsubscribe = subscribeScroll(({ eased }) => {
+    // Cache layout-dependent values. Reading getBoundingClientRect() on
+    // every scroll frame forces a synchronous layout (reflow) per element
+    // — the biggest source of scroll jank. We measure once and refresh
+    // only on resize / when the element's size or position changes.
+    let elementCenter = 0;
+    let viewportH = window.innerHeight;
+    let lastY = Number.NaN;
+    let visible = true;
+
+    const measure = () => {
+      // Temporarily clear our transform so we read the *natural* position,
+      // not the previously-translated one.
+      const prev = node.style.transform;
+      node.style.transform = "";
       const rect = node.getBoundingClientRect();
-      // Recover absolute element center from current eased value
-      const elementCenter = rect.top + window.scrollY + rect.height / 2;
-      const viewportCenter = eased + window.innerHeight / 2;
+      elementCenter = rect.top + window.scrollY + rect.height / 2;
+      node.style.transform = prev;
+      viewportH = window.innerHeight;
+    };
+
+    measure();
+
+    // Re-measure if the element itself or the viewport changes.
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    window.addEventListener("resize", measure);
+
+    // Visibility gate — skip transform writes when off-screen.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) visible = e.isIntersecting;
+      },
+      { rootMargin: "20% 0px 20% 0px" },
+    );
+    io.observe(node);
+
+    const unsubscribe = subscribeScroll(({ eased }) => {
+      if (!visible) return;
+      const viewportCenter = eased + viewportH / 2;
       const offset = (elementCenter - viewportCenter) * speed;
+      // Sub-pixel changes aren't worth a style write.
+      if (Math.abs(offset - lastY) < 0.25) return;
+      lastY = offset;
       node.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
     });
 
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+      ro.disconnect();
+      io.disconnect();
+      window.removeEventListener("resize", measure);
+    };
   }, [speed]);
 
   return ref;

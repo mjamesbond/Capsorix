@@ -38,6 +38,8 @@ let easedY = typeof window !== "undefined" ? window.scrollY : 0;
 let prevEased = easedY;
 let started = false;
 
+let idleFrames = 0;
+
 const tick = (now: number) => {
   const dt = Math.min(40, now - last) / 16.67;
   last = now;
@@ -47,6 +49,16 @@ const tick = (now: number) => {
   easedY += (target - easedY) * Math.min(1, EASE * dt);
   const velocity = easedY - prevEased;
   prevEased = easedY;
+
+  // When motion has effectively stopped, throttle to ~15fps to keep
+  // the main thread quiet between scrolls. Any new scroll input wakes
+  // the loop back up to full 60fps via the scroll listener below.
+  const moving = Math.abs(velocity) > 0.05 || Math.abs(target - easedY) > 0.05;
+  if (moving) {
+    idleFrames = 0;
+  } else {
+    idleFrames++;
+  }
 
   const max = Math.max(
     1,
@@ -62,7 +74,14 @@ const tick = (now: number) => {
   const frame: ScrollFrame = { y: target, eased: easedY, velocity, dt, max, progress };
   listeners.forEach((cb) => cb(frame));
 
-  raf = requestAnimationFrame(tick);
+  // Idle throttle: after ~½ second of stillness, drop to a slower cadence.
+  if (idleFrames > 30) {
+    raf = window.setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, 66) as unknown as number;
+  } else {
+    raf = requestAnimationFrame(tick);
+  }
 };
 
 const start = () => {
@@ -78,8 +97,22 @@ const start = () => {
 const stop = () => {
   if (!started) return;
   cancelAnimationFrame(raf);
+  clearTimeout(raf as unknown as number);
   started = false;
 };
+
+// Wake the loop the moment a real scroll happens — the idle throttle
+// above drops to ~15fps when nothing is moving, and this listener is
+// what restores full 60fps responsiveness on input.
+if (typeof window !== "undefined") {
+  window.addEventListener(
+    "scroll",
+    () => {
+      idleFrames = 0;
+    },
+    { passive: true },
+  );
+}
 
 // Pause/resume the shared loop with tab visibility — keeps memory/CPU
 // quiet in background tabs so mobile browsers don't discard the page.
@@ -88,6 +121,7 @@ if (typeof document !== "undefined") {
     if (document.hidden) {
       if (started) {
         cancelAnimationFrame(raf);
+        clearTimeout(raf as unknown as number);
         started = false;
       }
     } else if (listeners.size > 0 && !started) {

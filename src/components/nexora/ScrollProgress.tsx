@@ -14,7 +14,12 @@ const ScrollProgress = () => {
   useEffect(() => {
     const node = fillRef.current;
     if (!node) return;
+    let last = -1;
     const unsubscribe = subscribeScroll(({ progress }) => {
+      // Skip writes when the change is below the visible threshold for a
+      // 2px-tall bar — keeps the compositor idle while scrolling slowly.
+      if (Math.abs(progress - last) < 0.001) return;
+      last = progress;
       node.style.transform = `scaleX(${progress.toFixed(4)})`;
     });
     return unsubscribe;
