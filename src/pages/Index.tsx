@@ -1,17 +1,26 @@
+import { lazy, Suspense } from "react";
 import Navbar from "@/components/nexora/Navbar";
 import Hero from "@/components/nexora/Hero";
-import TrustBar from "@/components/nexora/TrustBar";
-import About from "@/components/nexora/About";
-import Services from "@/components/nexora/Services";
-import Process from "@/components/nexora/Process";
-import Industries from "@/components/nexora/Industries";
-import CaseStudies from "@/components/nexora/CaseStudies";
-import Stats from "@/components/nexora/Stats";
-import Testimonials from "@/components/nexora/Testimonials";
-import Faq from "@/components/nexora/Faq";
-import Contact from "@/components/nexora/Contact";
-import FinalCTA from "@/components/nexora/FinalCTA";
 import Footer from "@/components/nexora/Footer";
+
+// Below-the-fold sections are code-split. Hero + Navbar render immediately
+// for instant first paint; everything else streams in as the user approaches.
+const TrustBar = lazy(() => import("@/components/nexora/TrustBar"));
+const About = lazy(() => import("@/components/nexora/About"));
+const Services = lazy(() => import("@/components/nexora/Services"));
+const Process = lazy(() => import("@/components/nexora/Process"));
+const Industries = lazy(() => import("@/components/nexora/Industries"));
+const CaseStudies = lazy(() => import("@/components/nexora/CaseStudies"));
+const Stats = lazy(() => import("@/components/nexora/Stats"));
+const Testimonials = lazy(() => import("@/components/nexora/Testimonials"));
+const Faq = lazy(() => import("@/components/nexora/Faq"));
+const Contact = lazy(() => import("@/components/nexora/Contact"));
+const FinalCTA = lazy(() => import("@/components/nexora/FinalCTA"));
+
+// Reserve vertical space so lazy sections don't cause layout jumps.
+const Placeholder = ({ h = "min-h-[40vh]" }: { h?: string }) => (
+  <div aria-hidden className={h} />
+);
 
 const Index = () => {
   return (
@@ -19,24 +28,26 @@ const Index = () => {
       <Navbar />
       <main id="main" tabIndex={-1}>
         <Hero />
-        <div className="section-fade"><TrustBar /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><About /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <Services />
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><Process /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><Industries /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><CaseStudies /></div>
-        <div className="section-fade"><Stats /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><Testimonials /></div>
-        <div className="container"><div className="section-divider" /></div>
-        <div className="section-fade"><Faq /></div>
-        <div className="section-fade"><Contact /></div>
-        <div className="section-fade"><FinalCTA /></div>
+        <Suspense fallback={<Placeholder h="min-h-[20vh]" />}>
+          <div className="section-fade"><TrustBar /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><About /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <Services />
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><Process /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><Industries /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><CaseStudies /></div>
+          <div className="section-fade"><Stats /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><Testimonials /></div>
+          <div className="container"><div className="section-divider" /></div>
+          <div className="section-fade"><Faq /></div>
+          <div className="section-fade"><Contact /></div>
+          <div className="section-fade"><FinalCTA /></div>
+        </Suspense>
       </main>
       <Footer />
     </div>
