@@ -9,6 +9,7 @@ import ScrollProgress from "./components/nexora/ScrollProgress";
 import CookieConsent from "./components/nexora/CookieConsent";
 import SkipLink from "./components/nexora/SkipLink";
 import SubpageSkeleton from "./components/nexora/SubpageSkeleton";
+import PerfHud from "./components/nexora/PerfHud";
 import { I18nProvider } from "./i18n/I18nProvider";
 import { ThemeProvider } from "./theme/ThemeProvider";
 
@@ -71,6 +72,7 @@ const App = () => (
               </Routes>
             </Suspense>
             <CookieConsent />
+            <PerfHud />
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
