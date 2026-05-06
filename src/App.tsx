@@ -1,11 +1,10 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
-import NeuralLayer from "./components/nexora/NeuralLayer";
 import ScrollProgress from "./components/nexora/ScrollProgress";
 import CookieConsent from "./components/nexora/CookieConsent";
 import SkipLink from "./components/nexora/SkipLink";
@@ -19,8 +18,30 @@ const IOS = lazy(() => import("./pages/IOS.tsx"));
 const Android = lazy(() => import("./pages/Android.tsx"));
 const Web = lazy(() => import("./pages/Web.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+// NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
+// it never delays first paint or blocks initial interaction.
+const NeuralLayer = lazy(() => import("./components/nexora/NeuralLayer"));
 
 const RouteFallback = () => <SubpageSkeleton />;
+
+/** Mount a child only after the browser is idle / first paint is done. */
+const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; delay?: number }) => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
+    if (typeof w.requestIdleCallback === "function") {
+      const id = w.requestIdleCallback(() => setReady(true), { timeout: 1500 });
+      return () => {
+        const cancel = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback;
+        if (cancel) cancel(id);
+      };
+    }
+    const t = window.setTimeout(() => setReady(true), delay);
+    return () => window.clearTimeout(t);
+  }, [delay]);
+  if (!ready) return null;
+  return <>{children}</>;
+};
 
 const queryClient = new QueryClient();
 
@@ -33,7 +54,11 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <SkipLink />
-            <NeuralLayer />
+            <DeferredMount>
+              <Suspense fallback={null}>
+                <NeuralLayer />
+              </Suspense>
+            </DeferredMount>
             <ScrollProgress />
             <Suspense fallback={<RouteFallback />}>
               <Routes>
