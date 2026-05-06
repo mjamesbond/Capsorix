@@ -38,6 +38,8 @@ let easedY = typeof window !== "undefined" ? window.scrollY : 0;
 let prevEased = easedY;
 let started = false;
 
+let idleFrames = 0;
+
 const tick = (now: number) => {
   const dt = Math.min(40, now - last) / 16.67;
   last = now;
@@ -47,6 +49,16 @@ const tick = (now: number) => {
   easedY += (target - easedY) * Math.min(1, EASE * dt);
   const velocity = easedY - prevEased;
   prevEased = easedY;
+
+  // When motion has effectively stopped, throttle to ~15fps to keep
+  // the main thread quiet between scrolls. Any new scroll input wakes
+  // the loop back up to full 60fps via the scroll listener below.
+  const moving = Math.abs(velocity) > 0.05 || Math.abs(target - easedY) > 0.05;
+  if (moving) {
+    idleFrames = 0;
+  } else {
+    idleFrames++;
+  }
 
   const max = Math.max(
     1,
@@ -62,7 +74,14 @@ const tick = (now: number) => {
   const frame: ScrollFrame = { y: target, eased: easedY, velocity, dt, max, progress };
   listeners.forEach((cb) => cb(frame));
 
-  raf = requestAnimationFrame(tick);
+  // Idle throttle: after ~½ second of stillness, drop to a slower cadence.
+  if (idleFrames > 30) {
+    raf = window.setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, 66) as unknown as number;
+  } else {
+    raf = requestAnimationFrame(tick);
+  }
 };
 
 const start = () => {
