@@ -52,6 +52,8 @@ const Navbar = () => {
               alt="Capsorix"
               width={620}
               height={160}
+              fetchPriority="high"
+              decoding="async"
               className="h-9 md:h-10 w-auto select-none transition-opacity duration-300 group-hover:opacity-90"
               draggable={false}
             />
