@@ -1582,9 +1582,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " was existieren sollte.",
       lead: "Eine fokussierte Auswahl an Disziplinen, alle am gleichen Maßstab gemessen. Maßgeschneidert auf das Geschäft — nie aus Vorlagen.",
       items: [
-        { title: "iOS-Apps", desc: "Native Swift-Apps, gebaut wie Apple seine eigenen baut — ruhig, schnell, bis zum letzten Frame durchdacht.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Android-Apps", desc: "Kotlin-zuerst, saubere Architektur, und jene Details, die Nutzende spüren, ohne sie benennen zu können.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Websites als Erlebnis", desc: "Keine Seiten — Räume. Oberflächen, die sofort laden, klar zu lesen sind und überzeugen, ohne die Stimme zu heben.", tags: ["Next.js", "React", "Edge"] },
+        { title: "iOS-Apps", desc: "Native Swift-Apps, gebaut wie Apple seine eigenen baut — ruhig, schnell, bis zum letzten Frame durchdacht.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Native Swift & SwiftUI", "Human Interface-Reife", "App-Store-Launch & ASO"] },
+        { title: "Android-Apps", desc: "Kotlin-zuerst, saubere Architektur, und jene Details, die Nutzende spüren, ohne sie benennen zu können.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Material-3-Feinschliff", "Play-Store-Rollout"] },
+        { title: "Websites als Erlebnis", desc: "Keine Seiten — Räume. Oberflächen, die sofort laden, klar zu lesen sind und überzeugen, ohne die Stimme zu heben.", tags: ["Next.js", "React", "Edge"], highlights: ["Höchste Performance", "Editoriales Design", "SEO & Analytik integriert"] },
         { title: "Interne Systeme", desc: "Dashboards, Betriebswerkzeuge und Plattformen, die das Geschäft hinter dem Geschäft leise am Laufen halten.", tags: ["SaaS", "ERP", "Analytik"] },
         { title: "Produkt von A bis Z", desc: "Strategie, Design, Entwicklung, Launch — von einem Team, in einem fortlaufenden Gedankengang.", tags: ["MVP", "Skalierung", "Launch"] },
       ],
