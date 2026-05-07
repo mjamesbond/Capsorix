@@ -4,7 +4,7 @@ import { subscribeScroll } from "@/lib/scroll-engine";
 import { useI18n } from "@/i18n/I18nProvider";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
-import capsorixLogo from "@/assets/capsorix-logo.png";
+import capsorixLogo from "@/assets/capsorix-logo.webp";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
