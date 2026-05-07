@@ -220,9 +220,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " only what should exist.",
       lead: "A focused set of disciplines, all held to the same bar. Tailored to the business — never templated.",
       items: [
-        { title: "iOS apps", desc: "Native Swift apps built the way Apple builds its own — quiet, fast, and considered to the last frame.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Android apps", desc: "Kotlin-first apps with clean architecture and the kind of details users feel without naming.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Websites as experiences", desc: "Not pages — environments. Interfaces that load instantly, read clearly, and convert without raising their voice.", tags: ["Next.js", "React", "Edge"] },
+        { title: "iOS apps", desc: "Native Swift apps built the way Apple builds its own — quiet, fast, and considered to the last frame.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Native Swift & SwiftUI", "Human Interface fluency", "App Store launch & ASO"] },
+        { title: "Android apps", desc: "Kotlin-first apps with clean architecture and the kind of details users feel without naming.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Material 3 polish", "Play Store rollout"] },
+        { title: "Websites as experiences", desc: "Not pages — environments. Interfaces that load instantly, read clearly, and convert without raising their voice.", tags: ["Next.js", "React", "Edge"], highlights: ["Lightning-fast performance", "Editorial-grade design", "SEO & analytics built-in"] },
         { title: "Internal systems", desc: "Dashboards, operations tools, and platforms that quietly run the business behind the business.", tags: ["SaaS", "ERP", "Analytics"] },
         { title: "Full-cycle product", desc: "Strategy, design, engineering, launch — handled by one team, in one continuous line of thought.", tags: ["MVP", "Scale", "Launch"] },
       ],
