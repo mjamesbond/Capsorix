@@ -1,4 +1,4 @@
-import { Smartphone, Globe, LayoutDashboard, Rocket, ArrowRight, Apple } from "lucide-react";
+import { Smartphone, Globe, LayoutDashboard, Rocket, ArrowRight, Apple, Check } from "lucide-react";
 import Reveal from "./Reveal";
 import { Link } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
