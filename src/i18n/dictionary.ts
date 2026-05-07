@@ -11,7 +11,7 @@ export type Lang = "en" | "ar" | "fr" | "de";
 
 type Pillar = { title: string; desc: string };
 type Principle = { k: string; t: string; d: string };
-type ServiceItem = { title: string; desc: string; tags: string[] };
+type ServiceItem = { title: string; desc: string; tags: string[]; highlights?: string[] };
 type Step = { title: string; desc: string };
 type Stat = { value: string; label: string };
 
@@ -220,9 +220,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " only what should exist.",
       lead: "A focused set of disciplines, all held to the same bar. Tailored to the business — never templated.",
       items: [
-        { title: "iOS apps", desc: "Native Swift apps built the way Apple builds its own — quiet, fast, and considered to the last frame.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Android apps", desc: "Kotlin-first apps with clean architecture and the kind of details users feel without naming.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Websites as experiences", desc: "Not pages — environments. Interfaces that load instantly, read clearly, and convert without raising their voice.", tags: ["Next.js", "React", "Edge"] },
+        { title: "iOS apps", desc: "Native Swift apps built the way Apple builds its own — quiet, fast, and considered to the last frame.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Native Swift & SwiftUI", "Human Interface fluency", "App Store launch & ASO"] },
+        { title: "Android apps", desc: "Kotlin-first apps with clean architecture and the kind of details users feel without naming.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Material 3 polish", "Play Store rollout"] },
+        { title: "Websites as experiences", desc: "Not pages — environments. Interfaces that load instantly, read clearly, and convert without raising their voice.", tags: ["Next.js", "React", "Edge"], highlights: ["Lightning-fast performance", "Editorial-grade design", "SEO & analytics built-in"] },
         { title: "Internal systems", desc: "Dashboards, operations tools, and platforms that quietly run the business behind the business.", tags: ["SaaS", "ERP", "Analytics"] },
         { title: "Full-cycle product", desc: "Strategy, design, engineering, launch — handled by one team, in one continuous line of thought.", tags: ["MVP", "Scale", "Launch"] },
       ],
@@ -674,9 +674,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " ما يستحقّ أن يُوجد.",
       lead: "تخصصات محدودة، جميعها بالمعيار نفسه. مفصّلة على قياس عملك — لا قوالب جاهزة.",
       items: [
-        { title: "تطبيقات iOS", desc: "تطبيقات Swift أصلية، بنفس الأسلوب الذي تتبعه آبل في تطبيقاتها — هادئة، سريعة، ومُتقَنة حتى آخر إطار.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "تطبيقات Android", desc: "تطبيقات Kotlin بمعمارية نظيفة، وتفاصيل يشعر بها المستخدم دون أن يعرف لماذا.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "مواقع كتجربة كاملة", desc: "ليست صفحات — بل بيئات. واجهات تفتح فورًا، تُقرأ بوضوح، وتُحوّل دون ضجيج.", tags: ["Next.js", "React", "Edge"] },
+        { title: "تطبيقات iOS", desc: "تطبيقات Swift أصلية، بنفس الأسلوب الذي تتبعه آبل في تطبيقاتها — هادئة، سريعة، ومُتقَنة حتى آخر إطار.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Swift و SwiftUI أصلي", "إتقان لإرشادات آبل", "إطلاق على App Store و ASO"] },
+        { title: "تطبيقات Android", desc: "تطبيقات Kotlin بمعمارية نظيفة، وتفاصيل يشعر بها المستخدم دون أن يعرف لماذا.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin مع Jetpack Compose", "صقل بمعايير Material 3", "نشر على Google Play"] },
+        { title: "مواقع كتجربة كاملة", desc: "ليست صفحات — بل بيئات. واجهات تفتح فورًا، تُقرأ بوضوح، وتُحوّل دون ضجيج.", tags: ["Next.js", "React", "Edge"], highlights: ["أداء فائق السرعة", "تصميم بمستوى تحريري", "SEO وتحليلات جاهزة"] },
         { title: "أنظمة داخلية", desc: "لوحات تحكّم وأدوات تشغيل ومنصّات تُدير العمل خلف الكواليس بهدوء.", tags: ["SaaS", "ERP", "تحليلات"] },
         { title: "منتج متكامل", desc: "استراتيجية، تصميم، هندسة، إطلاق — على يد فريق واحد، وبخيط فكر واحد.", tags: ["MVP", "توسّع", "إطلاق"] },
       ],
@@ -1128,9 +1128,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " que ce qui mérite d’exister.",
       lead: "Un éventail volontairement réduit, tenu au même standard. Sur mesure pour le métier — jamais en gabarit.",
       items: [
-        { title: "Applications iOS", desc: "Des apps Swift natives, dessinées comme Apple dessine les siennes — silencieuses, rapides, soignées jusqu’à la dernière image.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Applications Android", desc: "Du Kotlin, une architecture nette, et ces détails que l’utilisateur ressent sans pouvoir les nommer.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Sites comme expériences", desc: "Pas des pages — des environnements. Des interfaces qui s’ouvrent net, se lisent clair, et convertissent sans hausser le ton.", tags: ["Next.js", "React", "Edge"] },
+        { title: "Applications iOS", desc: "Des apps Swift natives, dessinées comme Apple dessine les siennes — silencieuses, rapides, soignées jusqu’à la dernière image.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Swift & SwiftUI natifs", "Maîtrise des Human Interface Guidelines", "Lancement App Store & ASO"] },
+        { title: "Applications Android", desc: "Du Kotlin, une architecture nette, et ces détails que l’utilisateur ressent sans pouvoir les nommer.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Finition Material 3", "Déploiement Play Store"] },
+        { title: "Sites comme expériences", desc: "Pas des pages — des environnements. Des interfaces qui s’ouvrent net, se lisent clair, et convertissent sans hausser le ton.", tags: ["Next.js", "React", "Edge"], highlights: ["Performance ultra-rapide", "Design éditorial", "SEO & analytique intégrés"] },
         { title: "Systèmes internes", desc: "Tableaux de bord, outils d’opération, plateformes — ce qui fait tourner l’entreprise derrière l’entreprise.", tags: ["SaaS", "ERP", "Analytique"] },
         { title: "Produit de bout en bout", desc: "Stratégie, design, ingénierie, lancement — par une seule équipe, dans une seule ligne de pensée.", tags: ["MVP", "Échelle", "Lancement"] },
       ],
@@ -1582,9 +1582,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " was existieren sollte.",
       lead: "Eine fokussierte Auswahl an Disziplinen, alle am gleichen Maßstab gemessen. Maßgeschneidert auf das Geschäft — nie aus Vorlagen.",
       items: [
-        { title: "iOS-Apps", desc: "Native Swift-Apps, gebaut wie Apple seine eigenen baut — ruhig, schnell, bis zum letzten Frame durchdacht.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Android-Apps", desc: "Kotlin-zuerst, saubere Architektur, und jene Details, die Nutzende spüren, ohne sie benennen zu können.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Websites als Erlebnis", desc: "Keine Seiten — Räume. Oberflächen, die sofort laden, klar zu lesen sind und überzeugen, ohne die Stimme zu heben.", tags: ["Next.js", "React", "Edge"] },
+        { title: "iOS-Apps", desc: "Native Swift-Apps, gebaut wie Apple seine eigenen baut — ruhig, schnell, bis zum letzten Frame durchdacht.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Native Swift & SwiftUI", "Human Interface-Reife", "App-Store-Launch & ASO"] },
+        { title: "Android-Apps", desc: "Kotlin-zuerst, saubere Architektur, und jene Details, die Nutzende spüren, ohne sie benennen zu können.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Material-3-Feinschliff", "Play-Store-Rollout"] },
+        { title: "Websites als Erlebnis", desc: "Keine Seiten — Räume. Oberflächen, die sofort laden, klar zu lesen sind und überzeugen, ohne die Stimme zu heben.", tags: ["Next.js", "React", "Edge"], highlights: ["Höchste Performance", "Editoriales Design", "SEO & Analytik integriert"] },
         { title: "Interne Systeme", desc: "Dashboards, Betriebswerkzeuge und Plattformen, die das Geschäft hinter dem Geschäft leise am Laufen halten.", tags: ["SaaS", "ERP", "Analytik"] },
         { title: "Produkt von A bis Z", desc: "Strategie, Design, Entwicklung, Launch — von einem Team, in einem fortlaufenden Gedankengang.", tags: ["MVP", "Skalierung", "Launch"] },
       ],
