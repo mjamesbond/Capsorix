@@ -11,7 +11,7 @@ export type Lang = "en" | "ar" | "fr" | "de";
 
 type Pillar = { title: string; desc: string };
 type Principle = { k: string; t: string; d: string };
-type ServiceItem = { title: string; desc: string; tags: string[] };
+type ServiceItem = { title: string; desc: string; tags: string[]; highlights?: string[] };
 type Step = { title: string; desc: string };
 type Stat = { value: string; label: string };
 
