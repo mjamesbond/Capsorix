@@ -73,6 +73,7 @@ const App = () => (
               </Routes>
             </Suspense>
             <CookieConsent />
+            <BackToTop />
             <PerfHud />
           </BrowserRouter>
         </TooltipProvider>
