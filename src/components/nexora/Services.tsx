@@ -50,6 +50,16 @@ const Services = () => {
                       {s.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed mb-6">{s.desc}</p>
+                    {s.highlights && s.highlights.length > 0 && (
+                      <ul className="mb-6 space-y-2">
+                        {s.highlights.map((h) => (
+                          <li key={h} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                            <Check className="w-4 h-4 mt-0.5 text-primary-glow shrink-0" strokeWidth={2} />
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                     <div className="flex flex-wrap gap-2">
                       {s.tags.map((tag) => (
                         <span
