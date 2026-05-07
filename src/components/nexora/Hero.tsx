@@ -1,4 +1,4 @@
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useParallax } from "@/hooks/use-reveal";
 import CodePanel from "./CodePanel";
