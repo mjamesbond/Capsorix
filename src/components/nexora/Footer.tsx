@@ -1,6 +1,6 @@
 import { Linkedin } from "lucide-react";
 import { useI18n } from "@/i18n/I18nProvider";
-import capsorixLogo from "@/assets/capsorix-logo.png";
+import capsorixLogo from "@/assets/capsorix-logo.webp";
 
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
@@ -32,6 +32,8 @@ const Footer = () => {
                 alt="Capsorix"
                 width={620}
                 height={160}
+                loading="lazy"
+                decoding="async"
                 className="h-10 w-auto select-none"
                 draggable={false}
               />

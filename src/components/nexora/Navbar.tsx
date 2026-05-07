@@ -4,7 +4,7 @@ import { subscribeScroll } from "@/lib/scroll-engine";
 import { useI18n } from "@/i18n/I18nProvider";
 import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
-import capsorixLogo from "@/assets/capsorix-logo.png";
+import capsorixLogo from "@/assets/capsorix-logo.webp";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -52,6 +52,8 @@ const Navbar = () => {
               alt="Capsorix"
               width={620}
               height={160}
+              fetchPriority="high"
+              decoding="async"
               className="h-9 md:h-10 w-auto select-none transition-opacity duration-300 group-hover:opacity-90"
               draggable={false}
             />

@@ -1,4 +1,4 @@
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useParallax } from "@/hooks/use-reveal";
 import CodePanel from "./CodePanel";
@@ -20,6 +20,8 @@ const Hero = () => {
           alt=""
           width={1920}
           height={1280}
+          fetchPriority="high"
+          decoding="async"
           className="w-full h-full object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/70 to-background" />
