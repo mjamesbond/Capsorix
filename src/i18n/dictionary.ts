@@ -1128,9 +1128,9 @@ export const dict: Record<Lang, Dict> = {
       titleB: " que ce qui mérite d’exister.",
       lead: "Un éventail volontairement réduit, tenu au même standard. Sur mesure pour le métier — jamais en gabarit.",
       items: [
-        { title: "Applications iOS", desc: "Des apps Swift natives, dessinées comme Apple dessine les siennes — silencieuses, rapides, soignées jusqu’à la dernière image.", tags: ["Swift", "SwiftUI", "App Store"] },
-        { title: "Applications Android", desc: "Du Kotlin, une architecture nette, et ces détails que l’utilisateur ressent sans pouvoir les nommer.", tags: ["Kotlin", "Compose", "Play Store"] },
-        { title: "Sites comme expériences", desc: "Pas des pages — des environnements. Des interfaces qui s’ouvrent net, se lisent clair, et convertissent sans hausser le ton.", tags: ["Next.js", "React", "Edge"] },
+        { title: "Applications iOS", desc: "Des apps Swift natives, dessinées comme Apple dessine les siennes — silencieuses, rapides, soignées jusqu’à la dernière image.", tags: ["Swift", "SwiftUI", "App Store"], highlights: ["Swift & SwiftUI natifs", "Maîtrise des Human Interface Guidelines", "Lancement App Store & ASO"] },
+        { title: "Applications Android", desc: "Du Kotlin, une architecture nette, et ces détails que l’utilisateur ressent sans pouvoir les nommer.", tags: ["Kotlin", "Compose", "Play Store"], highlights: ["Kotlin + Jetpack Compose", "Finition Material 3", "Déploiement Play Store"] },
+        { title: "Sites comme expériences", desc: "Pas des pages — des environnements. Des interfaces qui s’ouvrent net, se lisent clair, et convertissent sans hausser le ton.", tags: ["Next.js", "React", "Edge"], highlights: ["Performance ultra-rapide", "Design éditorial", "SEO & analytique intégrés"] },
         { title: "Systèmes internes", desc: "Tableaux de bord, outils d’opération, plateformes — ce qui fait tourner l’entreprise derrière l’entreprise.", tags: ["SaaS", "ERP", "Analytique"] },
         { title: "Produit de bout en bout", desc: "Stratégie, design, ingénierie, lancement — par une seule équipe, dans une seule ligne de pensée.", tags: ["MVP", "Échelle", "Lancement"] },
       ],
