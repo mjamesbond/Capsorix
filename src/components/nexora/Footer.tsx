@@ -32,6 +32,8 @@ const Footer = () => {
                 alt="Capsorix"
                 width={620}
                 height={160}
+                loading="lazy"
+                decoding="async"
                 className="h-10 w-auto select-none"
                 draggable={false}
               />
