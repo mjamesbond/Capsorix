@@ -1,5 +1,17 @@
+import { Linkedin } from "lucide-react";
 import { useI18n } from "@/i18n/I18nProvider";
 import capsorixLogo from "@/assets/capsorix-logo.png";
+
+const XIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+    <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.797l-5.32-6.61L4.3 22H1.04l8.04-9.19L1.5 2h6.93l4.81 6.04L18.244 2Zm-1.19 18h1.88L7.04 4H5.04l12.014 16Z" />
+  </svg>
+);
+
+const socials = [
+  { href: "https://x.com/capsorix", label: "X (Twitter)", Icon: XIcon },
+  { href: "https://www.linkedin.com/company/capsorix", label: "LinkedIn", Icon: Linkedin },
+];
 
 const Footer = () => {
   const { t } = useI18n();
