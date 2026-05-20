@@ -10,11 +10,11 @@ import {
   Workflow,
   Zap,
 } from "lucide-react";
-import HybridEditor from "@/components/nexora/HybridEditor";
-import CursorOrbs from "@/components/nexora/CursorOrbs";
-import CodeRain from "@/components/nexora/CodeRain";
-import Reveal from "@/components/nexora/Reveal";
-import SubpageShell from "@/components/nexora/SubpageShell";
+import HybridEditor from "@/components/capsorix/HybridEditor";
+import CursorOrbs from "@/components/capsorix/CursorOrbs";
+import CodeRain from "@/components/capsorix/CodeRain";
+import Reveal from "@/components/capsorix/Reveal";
+import SubpageShell from "@/components/capsorix/SubpageShell";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const CAPABILITY_ICONS = [Layers, Code2, Database, ShieldCheck, Gauge, Workflow] as const;

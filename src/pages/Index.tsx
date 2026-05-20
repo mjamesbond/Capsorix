@@ -1,21 +1,21 @@
 import { lazy, Suspense } from "react";
-import Navbar from "@/components/nexora/Navbar";
-import Hero from "@/components/nexora/Hero";
-import Footer from "@/components/nexora/Footer";
+import Navbar from "@/components/capsorix/Navbar";
+import Hero from "@/components/capsorix/Hero";
+import Footer from "@/components/capsorix/Footer";
 
 // Below-the-fold sections are code-split. Hero + Navbar render immediately
 // for instant first paint; everything else streams in as the user approaches.
-const TrustBar = lazy(() => import("@/components/nexora/TrustBar"));
-const About = lazy(() => import("@/components/nexora/About"));
-const Services = lazy(() => import("@/components/nexora/Services"));
-const Process = lazy(() => import("@/components/nexora/Process"));
-const Industries = lazy(() => import("@/components/nexora/Industries"));
-const CaseStudies = lazy(() => import("@/components/nexora/CaseStudies"));
-const Stats = lazy(() => import("@/components/nexora/Stats"));
-const Testimonials = lazy(() => import("@/components/nexora/Testimonials"));
-const Faq = lazy(() => import("@/components/nexora/Faq"));
-const Contact = lazy(() => import("@/components/nexora/Contact"));
-const FinalCTA = lazy(() => import("@/components/nexora/FinalCTA"));
+const TrustBar = lazy(() => import("@/components/capsorix/TrustBar"));
+const About = lazy(() => import("@/components/capsorix/About"));
+const Services = lazy(() => import("@/components/capsorix/Services"));
+const Process = lazy(() => import("@/components/capsorix/Process"));
+const Industries = lazy(() => import("@/components/capsorix/Industries"));
+const CaseStudies = lazy(() => import("@/components/capsorix/CaseStudies"));
+const Stats = lazy(() => import("@/components/capsorix/Stats"));
+const Testimonials = lazy(() => import("@/components/capsorix/Testimonials"));
+const Faq = lazy(() => import("@/components/capsorix/Faq"));
+const Contact = lazy(() => import("@/components/capsorix/Contact"));
+const FinalCTA = lazy(() => import("@/components/capsorix/FinalCTA"));
 
 // Reserve vertical space so lazy sections don't cause layout jumps.
 const Placeholder = ({ h = "min-h-[40vh]" }: { h?: string }) => (

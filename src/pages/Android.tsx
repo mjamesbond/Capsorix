@@ -13,10 +13,10 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
-import KotlinEditor from "@/components/nexora/KotlinEditor";
-import CodeRain from "@/components/nexora/CodeRain";
-import Reveal from "@/components/nexora/Reveal";
-import SubpageShell from "@/components/nexora/SubpageShell";
+import KotlinEditor from "@/components/capsorix/KotlinEditor";
+import CodeRain from "@/components/capsorix/CodeRain";
+import Reveal from "@/components/capsorix/Reveal";
+import SubpageShell from "@/components/capsorix/SubpageShell";
 import { useParallax } from "@/hooks/use-reveal";
 import { useI18n } from "@/i18n/I18nProvider";
 
