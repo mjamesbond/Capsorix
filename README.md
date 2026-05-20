@@ -1,11 +1,11 @@
-# Nexora Digital Empires
+# Capsorix Digital Empires
 
 **Website:** https://capsorix.tech
 
 A premium, dark-first, futuristic agency website built to present high-end software development services and convert qualified leads. The experience is engineered for clarity, authority, and a luxury tech feel.
 
 ## Overview
-Nexora Digital Empires is a high-end digital agency website that showcases full-cycle product development services with a sharp, elite aesthetic. The interface is built to impress within seconds, guide users through services and process, and drive project inquiries through a structured request form.
+Capsorix Digital Empires is a high-end digital agency website that showcases full-cycle product development services with a sharp, elite aesthetic. The interface is built to impress within seconds, guide users through services and process, and drive project inquiries through a structured request form.
 
 ## Key Features
 - Luxury, dark-first visual system with restrained gold accents

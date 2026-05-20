@@ -12,10 +12,10 @@ import {
   Zap,
   Apple,
 } from "lucide-react";
-import SwiftEditor from "@/components/nexora/SwiftEditor";
-import CodeRain from "@/components/nexora/CodeRain";
-import Reveal from "@/components/nexora/Reveal";
-import SubpageShell from "@/components/nexora/SubpageShell";
+import SwiftEditor from "@/components/capsorix/SwiftEditor";
+import CodeRain from "@/components/capsorix/CodeRain";
+import Reveal from "@/components/capsorix/Reveal";
+import SubpageShell from "@/components/capsorix/SubpageShell";
 import { useParallax } from "@/hooks/use-reveal";
 import { useI18n } from "@/i18n/I18nProvider";
 

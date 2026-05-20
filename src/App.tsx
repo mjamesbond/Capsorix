@@ -5,12 +5,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
-import ScrollProgress from "./components/nexora/ScrollProgress";
-import CookieConsent from "./components/nexora/CookieConsent";
-import SkipLink from "./components/nexora/SkipLink";
-import SubpageSkeleton from "./components/nexora/SubpageSkeleton";
-import PerfHud from "./components/nexora/PerfHud";
-import BackToTop from "./components/nexora/BackToTop";
+import ScrollProgress from "./components/capsorix/ScrollProgress";
+import CookieConsent from "./components/capsorix/CookieConsent";
+import SkipLink from "./components/capsorix/SkipLink";
+import SubpageSkeleton from "./components/capsorix/SubpageSkeleton";
+import PerfHud from "./components/capsorix/PerfHud";
+import BackToTop from "./components/capsorix/BackToTop";
 import { I18nProvider } from "./i18n/I18nProvider";
 import { ThemeProvider } from "./theme/ThemeProvider";
 
@@ -22,7 +22,7 @@ const Web = lazy(() => import("./pages/Web.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
 // it never delays first paint or blocks initial interaction.
-const NeuralLayer = lazy(() => import("./components/nexora/NeuralLayer"));
+const NeuralLayer = lazy(() => import("./components/capsorix/NeuralLayer"));
 
 const RouteFallback = () => <SubpageSkeleton />;
 

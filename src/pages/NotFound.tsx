@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Compass, Home, Mail } from "lucide-react";
-import Navbar from "@/components/nexora/Navbar";
-import Footer from "@/components/nexora/Footer";
+import Navbar from "@/components/capsorix/Navbar";
+import Footer from "@/components/capsorix/Footer";
 import { useI18n } from "@/i18n/I18nProvider";
 
 /**
