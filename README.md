@@ -90,16 +90,19 @@ npm run preview
 Used by `src/integrations/supabase/client.ts`:
 
 ```bash
+# Replace with your actual Supabase project values
 VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-VITE_SUPABASE_PROJECT_ID=your_project_id
+VITE_SUPABASE_PUBLISHABLE_KEY=your_value_here
+VITE_SUPABASE_PROJECT_ID=your_value_here
 ```
+
+Replace these example values with your real Supabase project settings from the Supabase dashboard.
 
 > Keep secrets out of git history. Use `.env.local` for local development and CI/CD variables for deployments.
 
 #### Hosting notes
 - **GitHub Pages:** already configured in this repository.
-- **Vercel (optional):** deploy as a **Vite static app** (not Next.js in current codebase), run `npm run build`, output directory `dist`.
+- **Vercel (optional):** deploy as a **Vite static site**, using `npm run build` and output directory `dist`.
 
 ### Roadmap
 - Expand case studies with measurable business outcomes.
@@ -194,16 +197,19 @@ npm run preview
 المتغيرات المستخدمة داخل `src/integrations/supabase/client.ts`:
 
 ```bash
+# استبدلها بقيم مشروع Supabase الفعلية
 VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-VITE_SUPABASE_PROJECT_ID=your_project_id
+VITE_SUPABASE_PUBLISHABLE_KEY=your_value_here
+VITE_SUPABASE_PROJECT_ID=your_value_here
 ```
+
+استبدل هذه القيم التجريبية بإعدادات مشروع Supabase الفعلية من لوحة Supabase.
 
 > لا تضع أي أسرار داخل المستودع. استخدم `.env.local` محليًا ومتغيرات CI/CD في النشر.
 
 #### ملاحظات النشر
 - **GitHub Pages:** مُجهّز بالفعل داخل المستودع.
-- **Vercel (اختياري):** نشر كتطبيق Vite ثابت (المشروع الحالي ليس Next.js)، أمر البناء `npm run build` ومجلد الخرج `dist`.
+- **Vercel (اختياري):** نشر كموقع ثابت مبني بـ Vite باستخدام `npm run build` ومجلد خرج `dist`.
 
 ### Roadmap
 - توسيع دراسات الحالة بنتائج أعمال قابلة للقياس.
@@ -298,16 +304,19 @@ npm run preview
 Variables utilisées par `src/integrations/supabase/client.ts` :
 
 ```bash
+# Remplacez par les valeurs réelles de votre projet Supabase
 VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
-VITE_SUPABASE_PROJECT_ID=your_project_id
+VITE_SUPABASE_PUBLISHABLE_KEY=your_value_here
+VITE_SUPABASE_PROJECT_ID=your_value_here
 ```
+
+Remplacez ces valeurs d’exemple par les paramètres réels de votre projet Supabase (dashboard Supabase).
 
 > Ne versionnez aucun secret. Utilisez `.env.local` en local et des variables CI/CD en production.
 
 #### Notes de déploiement
 - **GitHub Pages :** déjà configuré dans le repo.
-- **Vercel (optionnel) :** déployer comme app Vite statique (ce codebase n’est pas Next.js), build command `npm run build`, output `dist`.
+- **Vercel (optionnel) :** déployer comme site statique Vite avec `npm run build` et `dist` en dossier de sortie.
 
 ### Roadmap
 - Enrichir les case studies avec des indicateurs business mesurables.
