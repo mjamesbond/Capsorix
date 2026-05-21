@@ -10,8 +10,15 @@ const DEFAULT_ALLOWED_ORIGINS = [
 ];
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const MAX_REQUESTS_PER_WINDOW = 5;
+const MAX_EMAIL_SEND_ATTEMPTS = 2;
 
-const env = (globalThis as { Deno?: { env: { get: (key: string) => string | undefined } } }).Deno?.env;
+type DenoRuntimeLike = {
+  env: { get: (key: string) => string | undefined };
+  serve: (handler: (request: Request) => Promise<Response> | Response) => void;
+};
+
+const denoRuntime = (globalThis as { Deno?: DenoRuntimeLike }).Deno;
+const env = denoRuntime?.env;
 const throttleCache = new Map<string, number[]>();
 
 const getAllowedOrigins = () => {
@@ -46,6 +53,7 @@ const escapeHtml = (value: string) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+const sanitizeHeaderValue = (value: string) => value.replace(/[\r\n]+/g, " ").trim();
 
 const getClientIp = (headers: Headers) => {
   const forwarded = headers.get("x-forwarded-for");
@@ -69,7 +77,7 @@ const isRateLimited = (ip: string) => {
 };
 
 const sendViaResend = async (apiKey: string, from: string, submission: ContactSubmission, requestId: string) => {
-  const subject = submission.subject || `New contact request from ${submission.full_name}`;
+  const subject = sanitizeHeaderValue(submission.subject || `New contact request from ${submission.full_name}`).slice(0, 140);
   const messageText = [
     `Reference: ${requestId}`,
     `Name: ${submission.full_name}`,
@@ -98,7 +106,7 @@ const sendViaResend = async (apiKey: string, from: string, submission: ContactSu
     </div>
   `;
 
-  for (let attempt = 1; attempt <= 2; attempt += 1) {
+  for (let attempt = 1; attempt <= MAX_EMAIL_SEND_ATTEMPTS; attempt += 1) {
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -116,11 +124,13 @@ const sendViaResend = async (apiKey: string, from: string, submission: ContactSu
     });
 
     if (emailResponse.ok) return true;
-    if (attempt === 2) {
+    if (attempt === MAX_EMAIL_SEND_ATTEMPTS) {
       const providerError = await emailResponse.text();
       console.error("contact-email provider error", { requestId, status: emailResponse.status, providerError });
       return false;
     }
+    console.warn("contact-email retrying provider request", { requestId, attempt });
+    await new Promise((resolve) => setTimeout(resolve, 200 * attempt));
   }
   return false;
 };
@@ -128,7 +138,6 @@ const sendViaResend = async (apiKey: string, from: string, submission: ContactSu
 const json = (status: number, body: Record<string, unknown>, origin: string | null) =>
   new Response(JSON.stringify(body), { status, headers: corsHeaders(origin) });
 
-const denoRuntime = (globalThis as { Deno?: { serve: (handler: (request: Request) => Promise<Response> | Response) => void } }).Deno;
 if (!denoRuntime) throw new Error("Deno runtime is required for this function.");
 
 denoRuntime.serve(async (req) => {

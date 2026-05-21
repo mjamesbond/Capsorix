@@ -36,10 +36,12 @@ export const sanitizeContactPayload = (payload: unknown): ContactValidationResul
     subject: cleanText(body.subject, 120),
     honeypot: cleanText(body.honeypot, 255),
   };
+  const phoneDigits = data.phone.replace(/\D/g, "").length;
 
   if (data.full_name.length < 2) return { ok: false, message: "Please provide your full name." };
   if (!EMAIL_REGEX.test(data.email)) return { ok: false, message: "Please provide a valid email address." };
   if (!PHONE_REGEX.test(data.phone)) return { ok: false, message: "Please provide a valid phone number." };
+  if (phoneDigits < 5) return { ok: false, message: "Please provide a valid phone number." };
   if (!data.project_type) return { ok: false, message: "Please select a project type." };
   if (!data.budget_range) return { ok: false, message: "Please select a budget range." };
   if (!data.timeline) return { ok: false, message: "Please select a timeline." };
@@ -49,4 +51,3 @@ export const sanitizeContactPayload = (payload: unknown): ContactValidationResul
 };
 
 export const isHoneypotTriggered = (value: string | undefined) => Boolean(value && value.trim().length > 0);
-

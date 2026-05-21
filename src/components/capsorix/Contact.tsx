@@ -15,12 +15,12 @@ type FormState = {
   budget_range: string;
   timeline: string;
   description: string;
-  website: string;
+  company_url: string;
 };
 
 const EMPTY: FormState = {
   full_name: "", email: "", phone: "",
-  project_type: "", budget_range: "", timeline: "", description: "", website: "",
+  project_type: "", budget_range: "", timeline: "", description: "", company_url: "",
 };
 
 const DRAFT_KEY = "capsorix-contact-draft";
@@ -164,7 +164,6 @@ const Contact = () => {
     }
 
     setSubmitting(true);
-    let status = 500;
     try {
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-email`, {
         method: "POST",
@@ -175,32 +174,30 @@ const Contact = () => {
         },
         body: JSON.stringify({
           ...parsed.data,
-          honeypot: form.website,
+          honeypot: form.company_url,
         }),
       });
-      status = response.status;
       if (!response.ok) {
-        throw new Error("contact-email-failed");
+        if (response.status === 429) {
+          toast({
+            title: t.contact.toastSendErr,
+            description: "Too many attempts. Please wait a minute and try again.",
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
+        }
+        return;
       }
     } catch {
-      if (status === 429) {
-        toast({
-          title: t.contact.toastSendErr,
-          description: "Too many attempts. Please wait a minute and try again.",
-          variant: "destructive",
-        });
-      } else {
-        toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
-      }
-      setSubmitting(false);
+      toast({
+        title: t.contact.toastSendErr,
+        description: "Network issue detected. Please check your connection and try again.",
+        variant: "destructive",
+      });
       return;
     } finally {
       setSubmitting(false);
-    }
-
-    if (status >= 400) {
-      toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
-      return;
     }
 
     // Build a short, human-readable reference (e.g. CPX-7F3K-2A91) so the
@@ -223,7 +220,7 @@ const Contact = () => {
         budget_range: parsed.data.budget_range,
         timeline: parsed.data.timeline,
         description: parsed.data.description,
-        website: "",
+        company_url: "",
       },
     });
     setSubmitted(true);
@@ -542,12 +539,13 @@ const Contact = () => {
                   <div className="relative grid sm:grid-cols-2 gap-5">
                     <input
                       type="text"
+                      name="company_url"
                       tabIndex={-1}
                       autoComplete="off"
                       aria-hidden="true"
                       className="absolute -left-[9999px] opacity-0 pointer-events-none"
-                      value={form.website}
-                      onChange={set("website")}
+                      value={form.company_url}
+                      onChange={set("company_url")}
                     />
                     <Field label={t.contact.labels.full_name} error={errors.full_name}>
                       <input

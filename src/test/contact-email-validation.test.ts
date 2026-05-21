@@ -38,7 +38,26 @@ describe("contact-email validation", () => {
 
   it("flags honeypot values", () => {
     expect(isHoneypotTriggered("")).toBe(false);
+    expect(isHoneypotTriggered("   ")).toBe(false);
     expect(isHoneypotTriggered("https://spam.example")).toBe(true);
   });
-});
 
+  it("supports boundary-valid values and trims oversized input", () => {
+    const result = sanitizeContactPayload({
+      full_name: "A".repeat(140),
+      email: "ok@example.com",
+      phone: "12345",
+      project_type: "Web",
+      budget_range: "Low",
+      timeline: "Soon",
+      description: "1234567890",
+      subject: "S".repeat(300),
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.data.full_name.length).toBe(100);
+    expect(result.data.subject?.length).toBe(120);
+    expect(result.data.description).toBe("1234567890");
+  });
+});
