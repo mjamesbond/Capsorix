@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -47,6 +47,23 @@ const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; d
 
 const queryClient = new QueryClient();
 
+const RouteSeo = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
+    const canonicalUrl = `${window.location.origin}${path}`;
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute("href", canonicalUrl);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <I18nProvider>
@@ -55,6 +72,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <RouteSeo />
             <SkipLink />
             <DeferredMount>
               <Suspense fallback={null}>
