@@ -144,6 +144,12 @@ Manual verification:
 - **GitHub Pages:** already configured in this repository.
 - **Vercel (optional):** deploy as a **Vite static site**, using `npm run build` and output directory `dist`.
 
+### SEO essentials (static)
+- `public/robots.txt` allows crawling and points search engines to `https://capsorix.tech/sitemap.xml`.
+- `public/sitemap.xml` is a static sitemap served at `/sitemap.xml`.
+- Keep sitemap URLs aligned with route definitions in `src/App.tsx` (currently: `/`, `/ios`, `/android`, `/web`).
+- When adding/removing first-class routes, update `public/sitemap.xml` in the same PR.
+
 ### Roadmap
 - Expand case studies with measurable business outcomes.
 - Strengthen multilingual content consistency (EN/AR/FR).
