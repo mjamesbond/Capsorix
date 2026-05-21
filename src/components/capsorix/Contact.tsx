@@ -4,7 +4,6 @@ import {
   ArrowRight, Mail, Clock, ShieldCheck, Lock, CheckCircle2, Send, Sparkles, Save, X, Copy, Check,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
 
@@ -16,11 +15,12 @@ type FormState = {
   budget_range: string;
   timeline: string;
   description: string;
+  company_url: string;
 };
 
 const EMPTY: FormState = {
   full_name: "", email: "", phone: "",
-  project_type: "", budget_range: "", timeline: "", description: "",
+  project_type: "", budget_range: "", timeline: "", description: "", company_url: "",
 };
 
 const DRAFT_KEY = "capsorix-contact-draft";
@@ -164,42 +164,40 @@ const Contact = () => {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from("project_requests").insert({
-      full_name: parsed.data.full_name,
-      email: parsed.data.email,
-      phone: parsed.data.phone,
-      project_type: parsed.data.project_type,
-      budget_range: parsed.data.budget_range,
-      timeline: parsed.data.timeline,
-      description: parsed.data.description,
-    });
-
-    // Fire-and-forget email notification — never blocks the user.
-    supabase.functions
-      .invoke("send-transactional-email", {
-        body: {
-          templateName: "project_request",
-          to: "team@capsorix.tech",
-          purpose: "transactional",
-          idempotency_key: `project-request-${Date.now()}-${parsed.data.email}`,
-          data: {
-            full_name: parsed.data.full_name,
-            email: parsed.data.email,
-            phone: parsed.data.phone,
-            project_type: parsed.data.project_type,
-            budget_range: parsed.data.budget_range,
-            timeline: parsed.data.timeline,
-            description: parsed.data.description,
-          },
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-      })
-      .catch(() => { /* swallow — DB row is the source of truth */ });
-
-    setSubmitting(false);
-
-    if (error) {
-      toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
+        body: JSON.stringify({
+          ...parsed.data,
+          honeypot: form.company_url,
+        }),
+      });
+      if (!response.ok) {
+        if (response.status === 429) {
+          toast({
+            title: t.contact.toastSendErr,
+            description: "Too many attempts. Please wait a minute and try again.",
+            variant: "destructive",
+          });
+        } else {
+          toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
+        }
+        return;
+      }
+    } catch {
+      toast({
+        title: t.contact.toastSendErr,
+        description: "Network issue detected. Please check your connection and try again.",
+        variant: "destructive",
+      });
       return;
+    } finally {
+      setSubmitting(false);
     }
 
     // Build a short, human-readable reference (e.g. CPX-7F3K-2A91) so the
@@ -222,6 +220,7 @@ const Contact = () => {
         budget_range: parsed.data.budget_range,
         timeline: parsed.data.timeline,
         description: parsed.data.description,
+        company_url: "",
       },
     });
     setSubmitted(true);
@@ -538,6 +537,16 @@ const Contact = () => {
                   </div>
 
                   <div className="relative grid sm:grid-cols-2 gap-5">
+                    <input
+                      type="text"
+                      name="company_url"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] opacity-0 pointer-events-none"
+                      value={form.company_url}
+                      onChange={set("company_url")}
+                    />
                     <Field label={t.contact.labels.full_name} error={errors.full_name}>
                       <input
                         className={`${fieldClass} ${errors.full_name ? errorFieldClass : ""}`}

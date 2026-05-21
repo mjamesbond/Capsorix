@@ -100,6 +100,46 @@ Replace these example values with your real Supabase project settings from the S
 
 > Keep secrets out of git history. Use `.env.local` for local development and CI/CD variables for deployments.
 
+#### Contact form email delivery (production)
+The contact form posts to a Supabase Edge Function: `contact-email`.
+
+- Recipient is fixed to: `team@capsorix.tech`
+- Payload is validated/sanitized server-side
+- Anti-spam: honeypot + IP throttling
+- Origin allowlist check is enforced
+- Email is sent via **Resend** from the server only (no provider secret in frontend)
+- `reply_to` is set to the visitor email
+
+Required Supabase Edge Function secrets:
+
+```bash
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+RESEND_API_KEY=re_xxxxxxxxx
+CONTACT_FROM_EMAIL="Capsorix Contact <noreply@capsorix.tech>"
+# Optional override (comma-separated); defaults include capsorix.tech + localhost
+CONTACT_ALLOWED_ORIGINS=https://capsorix.tech,https://www.capsorix.tech,http://localhost:5173
+```
+
+Deploy function:
+
+```bash
+supabase functions deploy contact-email --project-ref <your-project-ref>
+supabase secrets set --project-ref <your-project-ref> \
+  SUPABASE_URL=... \
+  SUPABASE_SERVICE_ROLE_KEY=... \
+  RESEND_API_KEY=... \
+  CONTACT_FROM_EMAIL="Capsorix Contact <noreply@capsorix.tech>" \
+  CONTACT_ALLOWED_ORIGINS="https://capsorix.tech,https://www.capsorix.tech,http://localhost:5173"
+```
+
+Manual verification:
+1. Run the site locally and submit the contact form with valid data.
+2. Confirm success UI appears and a row is added in `public.project_requests`.
+3. Confirm delivery to `team@capsorix.tech` and `Reply-To` matches the sender email.
+4. Submit repeatedly (>5 requests/minute from same IP) and confirm rate-limit behavior.
+5. Fill honeypot field in dev tools and confirm request is silently ignored.
+
 #### Hosting notes
 - **GitHub Pages:** already configured in this repository.
 - **Vercel (optional):** deploy as a **Vite static site**, using `npm run build` and output directory `dist`.
