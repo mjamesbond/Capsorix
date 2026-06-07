@@ -1,16 +1,22 @@
 import { useState } from "react";
-import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers } from "lucide-react";
+import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers, ExternalLink, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
+import haqakLogo from "@/assets/haqak-logo.png.asset.json";
+import elbakreyLogo from "@/assets/elbakrey-logo.png.asset.json";
 
 /**
- * CaseStudies — three numbered, expandable showcases.
+ * CaseStudies — flagship, expandable showcases.
  *
  * Each item collapses into a clean summary card; opening one reveals the
- * brief, our approach, the tech stack, and three quantified outcomes.
+ * brief, our approach, the tech stack, and quantified outcomes.
  * Single source of truth — content lives in the localized dictionary.
  */
 const ICONS = [Smartphone, Tablet, MonitorSmartphone];
+const LOGOS: Record<string, { url: string }> = {
+  haqak: haqakLogo,
+  elbakrey: elbakreyLogo,
+};
 
 const CaseStudies = () => {
   const { t, lang } = useI18n();
@@ -68,10 +74,23 @@ const CaseStudies = () => {
                       <span className="hidden md:block w-12 h-px bg-gradient-to-r from-primary/40 to-transparent" />
                     </div>
 
-                    {/* Icon tile */}
-                    <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
-                      <Icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
-                    </div>
+                    {/* Icon / Logo tile */}
+                    {item.logo && LOGOS[item.logo] ? (
+                      <div className="shrink-0 w-14 h-14 rounded-xl bg-background/60 border border-primary/30 flex items-center justify-center overflow-hidden p-2 icon-tile">
+                        <img
+                          src={LOGOS[item.logo].url}
+                          alt={item.client}
+                          loading="lazy"
+                          decoding="async"
+                          className="max-w-full max-h-full object-contain"
+                          draggable={false}
+                        />
+                      </div>
+                    ) : (
+                      <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
+                        <Icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
+                      </div>
+                    )}
 
                     {/* Title block */}
                     <div className="flex-1 min-w-0">
@@ -79,8 +98,8 @@ const CaseStudies = () => {
                         <span className="text-[11px] font-medium tracking-[0.25em] uppercase text-primary">
                           {item.tag}
                         </span>
-                        <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
-                          <Lock className="w-3 h-3" />
+                        <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/80" dir="ltr">
+                          {item.href ? <ExternalLink className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
                           {item.client}
                         </span>
                       </div>
@@ -179,10 +198,33 @@ const CaseStudies = () => {
                               ))}
                             </ul>
 
-                            <p className="text-[11px] text-muted-foreground/70 inline-flex items-center gap-2">
-                              <Lock className="w-3 h-3 text-primary-glow" />
-                              {t.caseStudies.confidentialNote}
-                            </p>
+                            {item.status && (
+                              <div className="rounded-xl border border-primary/25 bg-primary/5 p-4">
+                                <p className="text-[10px] tracking-[0.3em] uppercase text-primary/90 mb-1.5 inline-flex items-center gap-1.5">
+                                  <ShieldCheck className="w-3 h-3" />
+                                  {t.caseStudies.statusLabel ?? "Status"}
+                                </p>
+                                <p className="text-sm text-foreground/90 leading-relaxed">{item.status}</p>
+                              </div>
+                            )}
+
+                            {item.href ? (
+                              <a
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group/link inline-flex items-center gap-2 text-sm font-medium text-primary-glow hover:text-primary transition-colors"
+                                dir="ltr"
+                              >
+                                {item.visitLabel ?? "Visit live site"}
+                                <ExternalLink className="w-3.5 h-3.5 transition-transform duration-500 group-hover/link:translate-x-0.5" />
+                              </a>
+                            ) : (
+                              <p className="text-[11px] text-muted-foreground/70 inline-flex items-center gap-2">
+                                <Lock className="w-3 h-3 text-primary-glow" />
+                                {t.caseStudies.confidentialNote}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>

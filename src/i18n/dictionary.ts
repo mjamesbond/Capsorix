@@ -42,12 +42,17 @@ export interface Dict {
       stack: string[];
       metrics: { value: string; label: string }[];
       duration: string;
+      logo?: string;
+      href?: string;
+      status?: string;
+      visitLabel?: string;
     }[];
     durationLabel: string;
     stackLabel: string;
     challengeLabel: string;
     approachLabel: string;
     confidentialNote: string;
+    statusLabel?: string;
   };
   testimonials: {
     kicker: string; titleA: string; titleB: string; lead: string;
@@ -258,70 +263,61 @@ export const dict: Record<Lang, Dict> = {
       { value: "Long", label: "Term of every relationship" },
     ],
     caseStudies: {
-      kicker: "— Selected work",
-      titleA: "Three projects,",
-      titleB: " three different scales.",
+      kicker: "— Flagship work",
+      titleA: "Two flagship platforms,",
+      titleB: " engineered end-to-end.",
       lead:
-        "A glimpse at the kind of work we take on. Names are withheld where confidentiality applies — outcomes are not.",
+        "A closer look at recent work shipped from our studio — national-scale civic infrastructure and a bespoke intellectual platform with global reach.",
       durationLabel: "Engagement",
       stackLabel: "Stack",
       challengeLabel: "Brief",
       approachLabel: "Approach",
-      confidentialNote: "Client name held under NDA.",
+      confidentialNote: "Built and maintained by Capsorix Studio.",
+      statusLabel: "Status",
       items: [
         {
-          tag: "iOS · Hospitality",
-          client: "Mediterranean restaurant group",
-          title: "A guest-side iOS app that replaced four touchpoints.",
+          tag: "Civic Tech · National Platform",
+          client: "Haqak — haqak.org",
+          title: "Haqak — Egypt's first civil communication platform.",
           summary:
-            "Reservations, ordering, loyalty, and a chef-curated menu — folded into a single, quiet iPhone experience that the brand actually wanted to ship.",
+            "An end-to-end digital ecosystem that bridges the gap between Egyptian citizens and their parliamentary representatives — designed for national-scale civic engagement.",
           challenge:
-            "Four disconnected vendor tools were eroding the in-room experience. Staff worked around the software instead of with it.",
+            "Citizens had no secure, structured channel to reach MPs and national figures. Existing tools could not handle sensitive submissions, multi-role workflows, or legal-grade traceability at country scale.",
           approach:
-            "We rebuilt the guest journey natively in Swift, anchored on a small, opinionated design system. Backend integrations were collapsed behind a single internal API.",
-          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+            "We engineered a secure multi-role architecture with custom dashboards for Citizens, MPs, and National Figures; layered end-to-end encryption with automatic EXIF removal; and built a legal-grade tracker that re-drafts complaints into actionable formats — plus a community action engine for local projects.",
+          stack: ["Multi-role dashboards", "End-to-end encryption", "EXIF stripping", "Legal-grade tracker", "Community engine"],
           metrics: [
-            { value: "−61%", label: "Support tickets" },
-            { value: "4.8★", label: "App Store rating" },
-            { value: "1.4×", label: "Avg. order value" },
+            { value: "3", label: "Role-aware dashboards" },
+            { value: "E2E", label: "Encrypted submissions" },
+            { value: "National", label: "Deployment scope" },
           ],
-          duration: "11 weeks",
+          duration: "Multi-phase build",
+          status: "Launched & validated — final security approvals for nationwide rollout.",
+          href: "https://haqak.org",
+          visitLabel: "Visit haqak.org",
+          logo: "haqak",
         },
         {
-          tag: "Android · Logistics",
-          client: "Regional fleet operator",
-          title: "An Android dispatch tool that 240 drivers actually use.",
+          tag: "Editorial · Intellectual Identity",
+          client: "Mohamed Elbakrey — elbakrey.works",
+          title: "Mohamed Elbakrey — political thinker & diplomatic writer.",
           summary:
-            "A purpose-built driver app and a dispatcher console, designed around the ten things that happen ninety percent of the day.",
+            "A bespoke digital platform serving as Mohamed Elbakrey's global intellectual identity — a connected body of work on political philosophy, the architecture of influence, and diplomatic thought.",
           challenge:
-            "An off-the-shelf logistics suite was too generic. Dispatchers were keeping a parallel spreadsheet to stay sane.",
+            "A serious body of writing needed an interface with equal gravitas: authoritative, multilingual, fast, and quietly elegant — without compromising readability or SEO.",
           approach:
-            "Field interviews on three depots, then a Kotlin app tuned for low-end devices and patchy connectivity. The dispatcher console followed the driver flow — not the other way around.",
-          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+            "We crafted a sophisticated content architecture for books, essays, and insights; engineered multilingual publishing tuned for global SEO; and held the interface to a minimalist, high-contrast standard where every typographic decision serves the reader.",
+          stack: ["Editorial CMS", "Multilingual publishing", "SEO architecture", "Performance-first delivery", "Minimalist UI"],
           metrics: [
-            { value: "+34%", label: "Routes per shift" },
-            { value: "−2.1m", label: "Avg. dispatch time" },
-            { value: "0", label: "Spreadsheets left" },
+            { value: "Multi", label: "Languages supported" },
+            { value: "SEO", label: "Optimized delivery" },
+            { value: "A+", label: "Readability standard" },
           ],
-          duration: "16 weeks",
-        },
-        {
-          tag: "Web · Industrial",
-          client: "European manufacturing group",
-          title: "A web platform tying eight factories to one source of truth.",
-          summary:
-            "A unified production dashboard, a role-aware admin layer, and a real-time anomaly stream — replacing a sprawl of internal tools no one liked.",
-          challenge:
-            "Each plant ran its own dashboards. Leadership couldn’t see the company in one place — and couldn’t trust the numbers when they did.",
-          approach:
-            "We modelled a clean shared schema first, then built a calm, dense web UI on top — RBAC, auditability, and live telemetry baked in from day one.",
-          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
-          metrics: [
-            { value: "8 → 1", label: "Dashboards unified" },
-            { value: "−47%", label: "Reporting lag" },
-            { value: "99.98%", label: "Platform uptime" },
-          ],
-          duration: "5 months",
+          duration: "Bespoke build",
+          status: "Live — serving a global readership.",
+          href: "https://elbakrey.works",
+          visitLabel: "Visit elbakrey.works",
+          logo: "elbakrey",
         },
       ],
     },
@@ -712,70 +708,61 @@ export const dict: Record<Lang, Dict> = {
       { value: "طويلة", label: "مدّة كل علاقة عمل" },
     ],
     caseStudies: {
-      kicker: "— أعمال مختارة",
-      titleA: "ثلاثة مشاريع،",
-      titleB: " وثلاثة مقاييس مختلفة.",
+      kicker: "— أعمال رائدة",
+      titleA: "منصّتان رائدتان،",
+      titleB: " بُنيتا من الفكرة حتى الإطلاق.",
       lead:
-        "لمحة عن نوع العمل الذي نتولّاه. نُخفي الأسماء حين تقتضي السرّيّة ذلك — أمّا النتائج فلا.",
+        "نظرة قريبة على أعمال حديثة أطلقناها من الاستوديو — بنية تحتيّة مدنيّة بمقياس وطني، ومنصّة فكريّة مُفصَّلة بحضور عالمي.",
       durationLabel: "مدّة المشروع",
       stackLabel: "التقنيات",
       challengeLabel: "السياق",
       approachLabel: "المنهج",
-      confidentialNote: "اسم العميل محفوظ بموجب اتفاقيّة سرّيّة.",
+      confidentialNote: "بُنيت وتُدار بواسطة Capsorix Studio.",
+      statusLabel: "الحالة",
       items: [
         {
-          tag: "iOS · ضيافة",
-          client: "مجموعة مطاعم متوسّطيّة",
-          title: "تطبيق iPhone للضيف يستبدل أربع نقاط تَماسّ بنقطة واحدة.",
+          tag: "تك مدني · منصّة وطنيّة",
+          client: "حقّك — haqak.org",
+          title: "حقّك — أوّل منصّة تواصل مدني في مصر.",
           summary:
-            "حجوزات وطلبات وولاء وقائمة طعام يختارها الشيف — في تجربة هاتف هادئة أرادت العلامة فعلًا أن تُطلقها.",
+            "منظومة رقميّة متكاملة تَجسر الفجوة بين المواطن المصري ونوّابه في البرلمان — مصمَّمة لمشاركة مدنيّة بمقياس وطني.",
           challenge:
-            "أربع أدوات منفصلة من موردين مختلفين كانت تُفسد تجربة الغرفة، والموظّفون يلتفّون حول البرنامج بدل العمل به.",
+            "لم تكن لدى المواطنين قناة آمنة ومُنظَّمة للوصول إلى النوّاب والشخصيّات الوطنيّة. الأدوات القائمة لم تستوعب الطلبات الحسّاسة، ولا التدفّقات متعدّدة الأدوار، ولا التتبّع القانوني الموثَّق بمقياس دولة.",
           approach:
-            "أعدنا بناء رحلة الضيف أصيلة بـ Swift فوق نظام تصميم صغير ومُحكَم، وجمعنا تكاملات الـ backend خلف واجهة داخليّة واحدة.",
-          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+            "هندسنا بنية متعدّدة الأدوار بلوحات مخصّصة للمواطن والنائب والشخصيّات الوطنيّة، وطبقة تشفير من طرف إلى طرف مع إزالة EXIF تلقائيًّا، ومتتبّع قانوني يُعيد صياغة الشكاوى في صيغ قابلة للتنفيذ — إلى جانب محرّك عمل مجتمعي للمشاريع المحلّيّة.",
+          stack: ["لوحات متعدّدة الأدوار", "تشفير E2E", "إزالة EXIF", "متتبّع قانوني", "محرّك مجتمعي"],
           metrics: [
-            { value: "−61%", label: "تذاكر الدعم" },
-            { value: "4.8★", label: "تقييم App Store" },
-            { value: "1.4×", label: "متوسّط قيمة الطلب" },
+            { value: "3", label: "لوحات مُدركة للأدوار" },
+            { value: "E2E", label: "تشفير الطلبات" },
+            { value: "وطني", label: "نطاق النشر" },
           ],
-          duration: "11 أسبوعًا",
+          duration: "بناء متعدّد المراحل",
+          status: "أُطلقت ومُحقَّقة — في مرحلة الموافقات الأمنيّة النهائيّة للنشر القومي.",
+          href: "https://haqak.org",
+          visitLabel: "زيارة haqak.org",
+          logo: "haqak",
         },
         {
-          tag: "Android · لوجستيّات",
-          client: "مُشغّل أسطول إقليمي",
-          title: "أداة Android للسائقين يستخدمها 240 سائقًا فعلًا.",
+          tag: "تحريري · هويّة فكريّة",
+          client: "محمد البكري — elbakrey.works",
+          title: "محمد البكري — مفكّر سياسي وكاتب دبلوماسي.",
           summary:
-            "تطبيق سائق مبنيّ لغرضه، ولوحة تحكّم للموزّع — مصمّمة حول العشر مهامّ التي تتكرّر تسعين بالمئة من اليوم.",
+            "منصّة رقميّة مفصَّلة تُجسّد الهويّة الفكريّة العالميّة لمحمد البكري — جسد متّصل من الكتابات في الفلسفة السياسيّة وهندسة التأثير والفكر الدبلوماسي.",
           challenge:
-            "حلّ لوجستيّ جاهز كان عامًّا أكثر من اللازم، حتّى صار الموزّعون يحتفظون بجدول بيانات موازٍ ليُبقوا أعصابهم.",
+            "جسد كتابي جادّ كان يحتاج واجهة بنفس الجدّيّة: مرجعيّة، متعدّدة اللغات، سريعة، وأنيقة بهدوء — دون أي تنازل عن سهولة القراءة أو SEO.",
           approach:
-            "مقابلات ميدانيّة في ثلاث محطّات، ثمّ تطبيق Kotlin مُحكَم لأجهزة محدودة الموارد واتّصال متذبذب. لوحة الموزّع تَبِعَت تدفّق السائق، لا العكس.",
-          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+            "صنعنا بنية محتوى راقية للكتب والمقالات والرؤى، وهندسنا نشرًا متعدّد اللغات مُحسَّنًا لمحرّكات البحث عالميًّا، وحافظنا على واجهة بالحدّ الأدنى من العناصر وبتباين عالٍ، حيث كلّ قرار طباعي يخدم القارئ.",
+          stack: ["نظام محتوى تحريري", "نشر متعدّد اللغات", "بنية SEO", "تسليم يُعطي الأداء أوّلًا", "واجهة مينيماليّة"],
           metrics: [
-            { value: "+34%", label: "مسارات لكل وردية" },
-            { value: "−2.1د", label: "متوسّط زمن التوزيع" },
-            { value: "0", label: "جداول متبقّية" },
+            { value: "متعدّد", label: "اللغات المدعومة" },
+            { value: "SEO", label: "تسليم مُحسَّن" },
+            { value: "A+", label: "معيار سهولة القراءة" },
           ],
-          duration: "16 أسبوعًا",
-        },
-        {
-          tag: "Web · صناعي",
-          client: "مجموعة تصنيع أوروبيّة",
-          title: "منصّة ويب تربط ثمانية مصانع بمصدر حقيقة واحد.",
-          summary:
-            "لوحة إنتاج موحَّدة، وطبقة إدارة تعرف الأدوار، وتدفّق مباشر للأخطاء — بدل تشتُّت أدوات داخليّة لم يُحبّها أحد.",
-          challenge:
-            "كلّ مصنع يدير لوحاته الخاصّة، فلا الإدارة ترى الشركة في مكان واحد، ولا تثق بالأرقام حين تراها.",
-          approach:
-            "نمذجنا أوّلًا مخطّطًا مشتركًا نظيفًا، ثمّ بنينا فوقه واجهة ويب هادئة كثيفة المعنى — صلاحيّات وتدقيق وتيليمتري حيّ منذ اليوم الأوّل.",
-          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
-          metrics: [
-            { value: "8 → 1", label: "لوحات تمّ توحيدها" },
-            { value: "−47%", label: "تأخير التقارير" },
-            { value: "99.98%", label: "جاهزيّة المنصّة" },
-          ],
-          duration: "5 أشهر",
+          duration: "بناء مُفصَّل",
+          status: "حيّ — يخدم جمهور قراءة عالمي.",
+          href: "https://elbakrey.works",
+          visitLabel: "زيارة elbakrey.works",
+          logo: "elbakrey",
         },
       ],
     },
@@ -1166,70 +1153,61 @@ export const dict: Record<Lang, Dict> = {
       { value: "Long", label: "Terme de chaque relation" },
     ],
     caseStudies: {
-      kicker: "— Travaux choisis",
-      titleA: "Trois projets,",
-      titleB: " trois échelles différentes.",
+      kicker: "— Travaux phares",
+      titleA: "Deux plateformes phares,",
+      titleB: " conçues de bout en bout.",
       lead:
-        "Un aperçu du type de travail que nous prenons en charge. Les noms sont retenus quand la confidentialité l’exige — les résultats, jamais.",
+        "Un regard rapproché sur des projets récents livrés depuis notre studio — une infrastructure civique à l’échelle nationale et une plateforme intellectuelle sur mesure à portée mondiale.",
       durationLabel: "Durée d’engagement",
       stackLabel: "Pile technique",
       challengeLabel: "Contexte",
       approachLabel: "Démarche",
-      confidentialNote: "Nom du client protégé par NDA.",
+      confidentialNote: "Conçu et maintenu par Capsorix Studio.",
+      statusLabel: "Statut",
       items: [
         {
-          tag: "iOS · Hôtellerie",
-          client: "Groupe de restauration méditerranéen",
-          title: "Une app iPhone côté client qui a remplacé quatre points de contact.",
+          tag: "Civic Tech · Plateforme nationale",
+          client: "Haqak — haqak.org",
+          title: "Haqak — la première plateforme de communication civile d’Égypte.",
           summary:
-            "Réservations, commandes, fidélité et carte signée par le chef — réunis en une expérience iPhone discrète que la marque avait vraiment envie de lancer.",
+            "Un écosystème numérique de bout en bout qui relie directement les citoyens égyptiens à leurs représentants parlementaires — pensé pour un engagement civique à l’échelle nationale.",
           challenge:
-            "Quatre outils éditeurs déconnectés érodaient l’expérience en salle. Le personnel contournait le logiciel au lieu de s’en servir.",
+            "Les citoyens n’avaient aucun canal sûr et structuré pour atteindre députés et figures nationales. Les outils existants ne géraient ni les soumissions sensibles, ni les flux multi-rôles, ni la traçabilité juridique à l’échelle d’un pays.",
           approach:
-            "Nous avons reconstruit le parcours client en natif Swift, autour d’un système de design petit et assumé. Les intégrations backend ont été regroupées derrière une seule API interne.",
-          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge functions"],
+            "Nous avons conçu une architecture multi-rôle avec des tableaux de bord dédiés aux Citoyens, Députés et Figures nationales ; un chiffrement de bout en bout avec retrait automatique des métadonnées EXIF ; un suivi de qualité juridique qui reformule les plaintes en formats actionnables ; ainsi qu’un moteur d’action communautaire pour les projets locaux.",
+          stack: ["Tableaux multi-rôles", "Chiffrement E2E", "Retrait EXIF", "Suivi juridique", "Moteur communautaire"],
           metrics: [
-            { value: "−61 %", label: "Tickets de support" },
-            { value: "4,8★", label: "Note App Store" },
-            { value: "1,4×", label: "Panier moyen" },
+            { value: "3", label: "Tableaux par rôle" },
+            { value: "E2E", label: "Soumissions chiffrées" },
+            { value: "National", label: "Portée du déploiement" },
           ],
-          duration: "11 semaines",
+          duration: "Construction par phases",
+          status: "Lancée et validée — approbations de sécurité finales avant déploiement national.",
+          href: "https://haqak.org",
+          visitLabel: "Voir haqak.org",
+          logo: "haqak",
         },
         {
-          tag: "Android · Logistique",
-          client: "Opérateur de flotte régional",
-          title: "Un outil de répartition Android utilisé par 240 chauffeurs.",
+          tag: "Éditorial · Identité intellectuelle",
+          client: "Mohamed Elbakrey — elbakrey.works",
+          title: "Mohamed Elbakrey — penseur politique et écrivain diplomatique.",
           summary:
-            "Une app conducteur taillée sur mesure et une console répartiteur, pensées autour des dix gestes qui occupent quatre-vingt-dix pour cent de la journée.",
+            "Une plateforme numérique sur mesure qui incarne l’identité intellectuelle mondiale de Mohamed Elbakrey — un corpus cohérent sur la philosophie politique, l’architecture de l’influence et la pensée diplomatique.",
           challenge:
-            "Une suite logistique générique ne suffisait plus. Les répartiteurs maintenaient un tableur parallèle pour rester opérationnels.",
+            "Une œuvre écrite sérieuse exigeait une interface à la même hauteur : faisant autorité, multilingue, rapide et discrètement élégante — sans concession sur la lisibilité ou le SEO.",
           approach:
-            "Entretiens terrain dans trois dépôts, puis une app Kotlin réglée pour les appareils modestes et la connectivité instable. La console a suivi le flux du chauffeur, pas l’inverse.",
-          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+            "Nous avons façonné une architecture de contenu raffinée pour livres, essais et réflexions ; bâti un système de publication multilingue optimisé pour le SEO mondial ; et tenu l’interface à un standard minimaliste et fortement contrasté, où chaque choix typographique sert le lecteur.",
+          stack: ["CMS éditorial", "Publication multilingue", "Architecture SEO", "Livraison axée performance", "UI minimaliste"],
           metrics: [
-            { value: "+34 %", label: "Tournées par poste" },
-            { value: "−2,1 min", label: "Temps moyen de répartition" },
-            { value: "0", label: "Tableurs restants" },
+            { value: "Multi", label: "Langues prises en charge" },
+            { value: "SEO", label: "Livraison optimisée" },
+            { value: "A+", label: "Standard de lisibilité" },
           ],
-          duration: "16 semaines",
-        },
-        {
-          tag: "Web · Industriel",
-          client: "Groupe industriel européen",
-          title: "Une plateforme web reliant huit usines à une seule source de vérité.",
-          summary:
-            "Un tableau de bord production unifié, une couche d’admin par rôle et un flux d’anomalies en temps réel — à la place d’un éparpillement d’outils internes que personne n’aimait.",
-          challenge:
-            "Chaque usine pilotait ses propres tableaux. La direction ne voyait jamais l’entreprise au même endroit — et n’y croyait pas non plus quand elle la voyait.",
-          approach:
-            "Nous avons d’abord modélisé un schéma partagé propre, puis bâti par-dessus une UI web calme et dense — RBAC, traçabilité et télémétrie temps réel intégrés dès le premier jour.",
-          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge functions"],
-          metrics: [
-            { value: "8 → 1", label: "Tableaux unifiés" },
-            { value: "−47 %", label: "Latence des rapports" },
-            { value: "99,98 %", label: "Disponibilité plateforme" },
-          ],
-          duration: "5 mois",
+          duration: "Construction sur mesure",
+          status: "En ligne — au service d’un lectorat mondial.",
+          href: "https://elbakrey.works",
+          visitLabel: "Voir elbakrey.works",
+          logo: "elbakrey",
         },
       ],
     },
@@ -1620,70 +1598,61 @@ export const dict: Record<Lang, Dict> = {
       { value: "Lange", label: "Dauer jeder Beziehung" },
     ],
     caseStudies: {
-      kicker: "— Ausgewählte Arbeiten",
-      titleA: "Drei Projekte,",
-      titleB: " drei verschiedene Größenordnungen.",
+      kicker: "— Leitprojekte",
+      titleA: "Zwei Leitplattformen,",
+      titleB: " durchgängig konstruiert.",
       lead:
-        "Ein Einblick in die Art von Arbeit, die wir übernehmen. Namen bleiben dort verschwiegen, wo Vertraulichkeit es verlangt — Ergebnisse nicht.",
+        "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab und eine maßgefertigte intellektuelle Plattform mit globaler Reichweite.",
       durationLabel: "Projektdauer",
       stackLabel: "Technologie",
       challengeLabel: "Ausgangslage",
       approachLabel: "Vorgehen",
-      confidentialNote: "Kundenname unter NDA geschützt.",
+      confidentialNote: "Entwickelt und betreut von Capsorix Studio.",
+      statusLabel: "Status",
       items: [
         {
-          tag: "iOS · Hospitality",
-          client: "Mediterrane Restaurantgruppe",
-          title: "Eine Gäste-iOS-App, die vier Touchpoints ersetzt hat.",
+          tag: "Civic Tech · Nationale Plattform",
+          client: "Haqak — haqak.org",
+          title: "Haqak — Ägyptens erste zivile Kommunikationsplattform.",
           summary:
-            "Reservierung, Bestellung, Loyalty und eine vom Küchenchef kuratierte Karte — gefaltet in eine ruhige iPhone-Erfahrung, die die Marke wirklich ausliefern wollte.",
+            "Ein durchgängiges digitales Ökosystem, das eine direkte Brücke zwischen ägyptischen Bürgerinnen, Bürgern und ihren Parlamentsvertretern schlägt — ausgelegt für zivilgesellschaftliches Engagement im nationalen Maßstab.",
           challenge:
-            "Vier unverbundene Drittanbieter-Tools verwässerten das Gästeerlebnis. Das Personal arbeitete um die Software herum, nicht mit ihr.",
+            "Es gab keinen sicheren, strukturierten Kanal, um Abgeordnete und nationale Persönlichkeiten zu erreichen. Bestehende Werkzeuge bewältigten weder sensible Eingaben noch mehrrollenfähige Abläufe noch rechtssichere Nachvollziehbarkeit auf Landesebene.",
           approach:
-            "Wir haben die Gäste-Reise nativ in Swift neu aufgebaut, getragen von einem kleinen, klaren Designsystem. Backend-Integrationen wurden hinter einer einzigen internen API zusammengeführt.",
-          stack: ["Swift", "SwiftUI", "Combine", "Postgres", "Edge Functions"],
+            "Wir haben eine mehrrollenfähige Architektur mit eigenen Dashboards für Bürger, Abgeordnete und nationale Persönlichkeiten konstruiert, eine Ende-zu-Ende-Verschlüsselung mit automatischer EXIF-Entfernung verlegt, einen rechtssicheren Tracker gebaut, der Beschwerden in handhabbare Formate überführt — sowie ein Community-Modul für lokale Projekte.",
+          stack: ["Mehrrollen-Dashboards", "Ende-zu-Ende-Verschlüsselung", "EXIF-Entfernung", "Rechtssicherer Tracker", "Community-Modul"],
           metrics: [
-            { value: "−61 %", label: "Support-Tickets" },
-            { value: "4,8★", label: "App-Store-Bewertung" },
-            { value: "1,4×", label: "Ø Bestellwert" },
+            { value: "3", label: "rollenbewusste Dashboards" },
+            { value: "E2E", label: "verschlüsselte Eingaben" },
+            { value: "national", label: "Einsatzbereich" },
           ],
-          duration: "11 Wochen",
+          duration: "Mehrphasiger Aufbau",
+          status: "Live und validiert — finale Sicherheitsfreigaben für die landesweite Ausrollung.",
+          href: "https://haqak.org",
+          visitLabel: "haqak.org besuchen",
+          logo: "haqak",
         },
         {
-          tag: "Android · Logistik",
-          client: "Regionaler Flottenbetreiber",
-          title: "Ein Android-Dispatch-Werkzeug, das 240 Fahrer wirklich nutzen.",
+          tag: "Editorial · Intellektuelle Identität",
+          client: "Mohamed Elbakrey — elbakrey.works",
+          title: "Mohamed Elbakrey — politischer Denker und diplomatischer Autor.",
           summary:
-            "Eine zweckgebaute Fahrer-App und eine Disponenten-Konsole, gestaltet rund um die zehn Vorgänge, die neunzig Prozent des Tages ausmachen.",
+            "Eine maßgefertigte digitale Plattform als globale intellektuelle Identität für Mohamed Elbakrey — ein zusammenhängendes Werk zu politischer Philosophie, der Architektur von Einfluss und diplomatischem Denken.",
           challenge:
-            "Eine Standard-Logistik-Suite war zu generisch. Disponenten führten parallel eine Tabelle, um den Überblick zu behalten.",
+            "Ein ernsthaftes schriftstellerisches Werk verlangte eine ebenso ernsthafte Oberfläche: autoritativ, mehrsprachig, schnell und leise elegant — ohne Kompromisse bei Lesbarkeit oder SEO.",
           approach:
-            "Feldinterviews in drei Depots, danach eine Kotlin-App, abgestimmt auf schwächere Geräte und unzuverlässige Verbindungen. Die Disponenten-Konsole folgte dem Fahrerfluss — nicht umgekehrt.",
-          stack: ["Kotlin", "Jetpack Compose", "Room", "Ktor", "WebSockets"],
+            "Wir haben eine anspruchsvolle Content-Architektur für Bücher, Essays und Gedanken aufgebaut, eine mehrsprachige Publikation mit globaler SEO-Optimierung konstruiert und die Oberfläche auf einen minimalistischen, kontrastreichen Standard verpflichtet — jede typografische Entscheidung im Dienst des Lesers.",
+          stack: ["Editorial-CMS", "Mehrsprachige Publikation", "SEO-Architektur", "Performance-First-Auslieferung", "Minimalistische UI"],
           metrics: [
-            { value: "+34 %", label: "Touren pro Schicht" },
-            { value: "−2,1 Min.", label: "Ø Dispatch-Zeit" },
-            { value: "0", label: "verbleibende Tabellen" },
+            { value: "Multi", label: "unterstützte Sprachen" },
+            { value: "SEO", label: "optimierte Auslieferung" },
+            { value: "A+", label: "Lesbarkeitsstandard" },
           ],
-          duration: "16 Wochen",
-        },
-        {
-          tag: "Web · Industrie",
-          client: "Europäische Industriegruppe",
-          title: "Eine Web-Plattform, die acht Werke an eine Quelle der Wahrheit bindet.",
-          summary:
-            "Ein einheitliches Produktions-Dashboard, eine rollenbewusste Admin-Schicht und ein Echtzeit-Anomalie-Stream — anstelle eines Wildwuchses interner Tools, den niemand mochte.",
-          challenge:
-            "Jedes Werk betrieb eigene Dashboards. Die Führung sah das Unternehmen nie an einer Stelle — und vertraute den Zahlen auch dann nicht.",
-          approach:
-            "Wir haben zuerst ein sauberes gemeinsames Schema modelliert, darauf eine ruhige, dichte Web-Oberfläche gebaut — RBAC, Auditierbarkeit und Live-Telemetrie vom ersten Tag an.",
-          stack: ["TypeScript", "React", "Postgres", "TimescaleDB", "Edge Functions"],
-          metrics: [
-            { value: "8 → 1", label: "Dashboards vereint" },
-            { value: "−47 %", label: "Reporting-Verzögerung" },
-            { value: "99,98 %", label: "Plattform-Verfügbarkeit" },
-          ],
-          duration: "5 Monate",
+          duration: "Maßanfertigung",
+          status: "Live — im Dienst einer globalen Leserschaft.",
+          href: "https://elbakrey.works",
+          visitLabel: "elbakrey.works besuchen",
+          logo: "elbakrey",
         },
       ],
     },
