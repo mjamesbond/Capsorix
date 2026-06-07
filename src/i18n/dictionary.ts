@@ -42,12 +42,17 @@ export interface Dict {
       stack: string[];
       metrics: { value: string; label: string }[];
       duration: string;
+      logo?: string;
+      href?: string;
+      status?: string;
+      visitLabel?: string;
     }[];
     durationLabel: string;
     stackLabel: string;
     challengeLabel: string;
     approachLabel: string;
     confidentialNote: string;
+    statusLabel?: string;
   };
   testimonials: {
     kicker: string; titleA: string; titleB: string; lead: string;
