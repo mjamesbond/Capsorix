@@ -74,10 +74,23 @@ const CaseStudies = () => {
                       <span className="hidden md:block w-12 h-px bg-gradient-to-r from-primary/40 to-transparent" />
                     </div>
 
-                    {/* Icon tile */}
-                    <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
-                      <Icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
-                    </div>
+                    {/* Icon / Logo tile */}
+                    {item.logo && LOGOS[item.logo] ? (
+                      <div className="shrink-0 w-14 h-14 rounded-xl bg-background/60 border border-primary/30 flex items-center justify-center overflow-hidden p-2 icon-tile">
+                        <img
+                          src={LOGOS[item.logo].url}
+                          alt={item.client}
+                          loading="lazy"
+                          decoding="async"
+                          className="max-w-full max-h-full object-contain"
+                          draggable={false}
+                        />
+                      </div>
+                    ) : (
+                      <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
+                        <Icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
+                      </div>
+                    )}
 
                     {/* Title block */}
                     <div className="flex-1 min-w-0">
@@ -85,8 +98,8 @@ const CaseStudies = () => {
                         <span className="text-[11px] font-medium tracking-[0.25em] uppercase text-primary">
                           {item.tag}
                         </span>
-                        <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
-                          <Lock className="w-3 h-3" />
+                        <span className="hidden md:inline-flex items-center gap-1.5 text-[11px] text-muted-foreground/80" dir="ltr">
+                          {item.href ? <ExternalLink className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
                           {item.client}
                         </span>
                       </div>
