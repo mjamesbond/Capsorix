@@ -74,15 +74,23 @@ const CaseStudies = () => {
                       <span className="hidden md:block w-12 h-px bg-gradient-to-r from-primary/40 to-transparent" />
                     </div>
 
-                    {/* Icon / Logo tile */}
+                    {/* Icon / Logo plate */}
                     {item.logo && LOGOS[item.logo] ? (
-                      <div className="shrink-0 w-14 h-14 rounded-xl bg-background/60 border border-primary/30 flex items-center justify-center overflow-hidden p-2 icon-tile">
+                      <div
+                        className={`shrink-0 relative w-44 md:w-56 h-20 md:h-24 rounded-2xl border border-primary/30 flex items-center justify-center overflow-hidden px-4 py-3 icon-tile shadow-elegant transition-all duration-700 ${
+                          item.logo === "haqak"
+                            ? "bg-white"
+                            : "bg-[#0a0a0a]"
+                        }`}
+                      >
+                        <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/20" />
+                        <span className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                         <img
                           src={LOGOS[item.logo].url}
                           alt={item.client}
                           loading="lazy"
                           decoding="async"
-                          className="max-w-full max-h-full object-contain"
+                          className="relative max-w-full max-h-full object-contain"
                           draggable={false}
                         />
                       </div>
