@@ -1,16 +1,22 @@
 import { useState } from "react";
-import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers } from "lucide-react";
+import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers, ExternalLink, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
+import haqakLogo from "@/assets/haqak-logo.png.asset.json";
+import elbakreyLogo from "@/assets/elbakrey-logo.png.asset.json";
 
 /**
- * CaseStudies — three numbered, expandable showcases.
+ * CaseStudies — flagship, expandable showcases.
  *
  * Each item collapses into a clean summary card; opening one reveals the
- * brief, our approach, the tech stack, and three quantified outcomes.
+ * brief, our approach, the tech stack, and quantified outcomes.
  * Single source of truth — content lives in the localized dictionary.
  */
 const ICONS = [Smartphone, Tablet, MonitorSmartphone];
+const LOGOS: Record<string, { url: string }> = {
+  haqak: haqakLogo,
+  elbakrey: elbakreyLogo,
+};
 
 const CaseStudies = () => {
   const { t, lang } = useI18n();
