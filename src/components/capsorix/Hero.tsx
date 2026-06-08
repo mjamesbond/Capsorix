@@ -17,7 +17,7 @@ const Hero = () => {
       <div ref={bgRef} className="absolute inset-0 -z-10 will-parallax scale-110">
         <img
           src={heroBg}
-          alt=""
+          alt="Abstract futuristic network visualization in gold and dark navy — Capsorix premium software systems"
           width={1920}
           height={1280}
           fetchPriority="high"

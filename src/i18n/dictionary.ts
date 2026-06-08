@@ -532,7 +532,7 @@ export const dict: Record<Lang, Dict> = {
       bodyStrong: "No tracking, no analytics, no third parties — ever.",
       accept: "Acknowledge",
       decline: "Essentials only",
-      learnMore: "Learn more",
+      learnMore: "Read our cookie policy",
     },
     subpages: {
       common: {
@@ -977,7 +977,7 @@ export const dict: Record<Lang, Dict> = {
       bodyStrong: "لا تتبّع، ولا تحليلات، ولا أطراف ثالثة — أبدًا.",
       accept: "موافق",
       decline: "الأساسيّات فقط",
-      learnMore: "اعرف المزيد",
+      learnMore: "اقرأ سياسة ملفات تعريف الارتباط",
     },
     subpages: {
       common: {
@@ -1422,7 +1422,7 @@ export const dict: Record<Lang, Dict> = {
       bodyStrong: "Aucun suivi, aucune analytique, aucun tiers — jamais.",
       accept: "J’ai compris",
       decline: "Essentiels uniquement",
-      learnMore: "En savoir plus",
+      learnMore: "Lire notre politique de cookies",
     },
     subpages: {
       common: {
@@ -1867,7 +1867,7 @@ export const dict: Record<Lang, Dict> = {
       bodyStrong: "Kein Tracking, keine Analytik, keine Drittanbieter — niemals.",
       accept: "Verstanden",
       decline: "Nur Essenzielles",
-      learnMore: "Mehr erfahren",
+      learnMore: "Unsere Cookie-Richtlinie lesen",
     },
     subpages: {
       common: {

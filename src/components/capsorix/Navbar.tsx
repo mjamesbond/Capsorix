@@ -46,10 +46,10 @@ const Navbar = () => {
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}
         >
-          <Link to="/" className="flex items-center group" dir="ltr" aria-label="Capsorix">
+          <Link to="/" className="flex items-center group" dir="ltr" aria-label="Capsorix — Premium Software Systems, home">
             <img
               src={capsorixLogo}
-              alt="Capsorix"
+              alt="Capsorix — Premium Software Systems"
               width={620}
               height={160}
               fetchPriority="high"
