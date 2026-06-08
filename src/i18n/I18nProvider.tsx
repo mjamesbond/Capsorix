@@ -37,7 +37,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Lang>(getInitial);
   const [transitioning, setTransitioning] = useState(false);
 
-  // Apply <html lang/dir>, document title, meta description + persist
+  // Apply <html lang/dir> + persist. Per-route <title>, meta description,
+  // and og:* are owned by RouteSeo in App.tsx so each route can publish
+  // its own metadata while still respecting the active language.
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("lang", lang);
@@ -45,35 +47,11 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     root.dataset.lang = lang;
     window.localStorage.setItem(STORAGE_KEY, lang);
 
-    // Localized <title> + meta description so the browser tab and SEO
-    // reflect the active language. Title is intentionally short.
-    const titles: Record<Lang, string> = {
-      en: "Capsorix — We Build Digital Empires",
-      fr: "Capsorix — Nous bâtissons des empires numériques",
-      ar: "كابسوريكس — نبني إمبراطوريات رقميّة",
-      de: "Capsorix — Wir bauen digitale Imperien",
-    };
-    const descriptions: Record<Lang, string> = {
-      en: "Capsorix crafts elite mobile apps, web platforms, and custom systems. Full-cycle product development from idea to launch.",
-      fr: "Capsorix conçoit des applications mobiles, plateformes web et systèmes sur mesure d’élite. Développement produit de bout en bout, de l’idée au lancement.",
-      ar: "تصنع كابسوريكس تطبيقات موبايل ومنصّات ويب وأنظمة مخصّصة من الطراز الرفيع. تطوير منتجات متكامل من الفكرة إلى الإطلاق.",
-      de: "Capsorix entwickelt erstklassige Mobile-Apps, Web-Plattformen und maßgeschneiderte Systeme. Produktentwicklung von der Idee bis zum Launch — aus einer Hand.",
-    };
-    document.title = titles[lang];
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", descriptions[lang]);
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) ogTitle.setAttribute("content", titles[lang]);
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) ogDesc.setAttribute("content", descriptions[lang]);
-    const twTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twTitle) twTitle.setAttribute("content", titles[lang]);
-    const twDesc = document.querySelector('meta[name="twitter:description"]');
-    if (twDesc) twDesc.setAttribute("content", descriptions[lang]);
     const ogLocale = document.querySelector('meta[property="og:locale"]');
     const localeMap: Record<Lang, string> = { en: "en_US", fr: "fr_FR", de: "de_DE", ar: "ar_AR" };
     if (ogLocale) ogLocale.setAttribute("content", localeMap[lang]);
   }, [lang]);
+
 
   const setLang = (next: Lang) => {
     if (next === lang) return;
