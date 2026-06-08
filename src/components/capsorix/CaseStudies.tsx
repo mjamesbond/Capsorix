@@ -60,48 +60,74 @@ const CaseStudies = () => {
                   )}
 
                   {/* Header row — always visible */}
-                  <button
-                    type="button"
-                    onClick={() => setOpen(isOpen ? -1 : i)}
-                    aria-expanded={isOpen}
-                    className="relative w-full text-start p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-8"
+                  <div
+                    className="group relative w-full p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-8"
                   >
-                    {/* Numeral */}
-                    <div className="shrink-0 flex items-center gap-5">
+                    {/* Numeral — clickable to toggle */}
+                    <button
+                      type="button"
+                      onClick={() => setOpen(isOpen ? -1 : i)}
+                      aria-expanded={isOpen}
+                      aria-label={isOpen ? "Collapse" : "Expand"}
+                      className="shrink-0 flex items-center gap-5 text-start"
+                    >
                       <span className="font-display text-3xl md:text-4xl text-gradient-gold tabular-nums leading-none">
                         0{i + 1}
                       </span>
                       <span className="hidden md:block w-12 h-px bg-gradient-to-r from-primary/40 to-transparent" />
-                    </div>
+                    </button>
 
-                    {/* Icon / Logo plate */}
+                    {/* Logo — large, premium, frameless */}
                     {item.logo && LOGOS[item.logo] ? (
-                      <div
-                        className={`shrink-0 relative w-44 md:w-56 h-20 md:h-24 rounded-2xl border border-primary/30 flex items-center justify-center overflow-hidden px-4 py-3 icon-tile shadow-elegant transition-all duration-700 ${
-                          item.logo === "haqak"
-                            ? "bg-white"
-                            : "bg-[#0a0a0a]"
-                        }`}
+                      <button
+                        type="button"
+                        onClick={() => setOpen(isOpen ? -1 : i)}
+                        className="shrink-0 relative flex items-center justify-center group/logo"
+                        aria-label={item.client}
                       >
-                        <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-primary/20" />
-                        <span className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        {/* Soft radial backlight — gives the mark presence without a frame */}
+                        <span
+                          aria-hidden
+                          className={`pointer-events-none absolute inset-0 -m-6 rounded-full blur-3xl opacity-60 group-hover/logo:opacity-90 transition-opacity duration-700 ${
+                            item.logo === "haqak"
+                              ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.35),transparent_70%)]"
+                              : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.30),transparent_70%)]"
+                          }`}
+                        />
                         <img
                           src={LOGOS[item.logo].url}
                           alt={item.client}
                           loading="lazy"
                           decoding="async"
-                          className="relative max-w-full max-h-full object-contain"
                           draggable={false}
+                          className={`relative object-contain transition-transform duration-700 group-hover/logo:scale-[1.03] ${
+                            item.logo === "haqak"
+                              ? "h-16 md:h-20 w-auto"
+                              : "h-10 md:h-14 w-auto"
+                          }`}
+                          style={
+                            item.logo === "haqak"
+                              ? { filter: "drop-shadow(0 6px 24px rgba(255,140,40,0.25))" }
+                              : { filter: "drop-shadow(0 6px 24px rgba(201,168,76,0.25)) brightness(1.05)" }
+                          }
                         />
-                      </div>
+                      </button>
                     ) : (
-                      <div className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile">
+                      <button
+                        type="button"
+                        onClick={() => setOpen(isOpen ? -1 : i)}
+                        className="shrink-0 w-12 h-12 rounded-xl bg-gradient-gold-soft border border-primary/30 flex items-center justify-center icon-tile"
+                      >
                         <Icon className="w-5 h-5 text-primary-glow" strokeWidth={1.5} />
-                      </div>
+                      </button>
                     )}
 
-                    {/* Title block */}
-                    <div className="flex-1 min-w-0">
+                    {/* Title block — clickable */}
+                    <button
+                      type="button"
+                      onClick={() => setOpen(isOpen ? -1 : i)}
+                      className="flex-1 min-w-0 text-start"
+                    >
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                         <span className="text-[11px] font-medium tracking-[0.25em] uppercase text-primary">
                           {item.tag}
@@ -114,19 +140,37 @@ const CaseStudies = () => {
                       <h3 className="font-display text-2xl md:text-3xl font-medium text-foreground leading-tight">
                         {item.title}
                       </h3>
-                    </div>
+                    </button>
 
-                    {/* Toggle indicator */}
-                    <div className="shrink-0 self-start md:self-center">
-                      <span
+                    {/* Actions — visit + toggle, always visible, always clickable */}
+                    <div className="shrink-0 self-start md:self-center flex items-center gap-3">
+                      {item.href && (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="hidden sm:inline-flex items-center gap-2 px-4 h-10 rounded-full border border-primary/40 bg-primary/5 text-primary-glow hover:bg-primary/15 hover:border-primary/70 hover:text-primary transition-all duration-500 text-xs font-medium tracking-wide shadow-[0_0_0_0_rgba(201,168,76,0)] hover:shadow-[0_8px_24px_-8px_rgba(201,168,76,0.5)]"
+                          dir="ltr"
+                          aria-label={`${item.visitLabel ?? "Visit"} — ${item.client}`}
+                        >
+                          {item.visitLabel ?? "Visit"}
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setOpen(isOpen ? -1 : i)}
+                        aria-expanded={isOpen}
+                        aria-label={isOpen ? "Collapse" : "Expand"}
                         className={`inline-flex items-center justify-center w-10 h-10 rounded-full border border-border/60 text-muted-foreground transition-all duration-500 ${
-                          isOpen ? "rotate-90 border-primary/50 text-primary-glow bg-primary/5" : ""
+                          isOpen ? "rotate-90 border-primary/50 text-primary-glow bg-primary/5" : "hover:border-primary/40 hover:text-primary-glow"
                         }`}
                       >
                         <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                      </span>
+                      </button>
                     </div>
-                  </button>
+                  </div>
 
                   {/* Expanded content */}
                   <div
