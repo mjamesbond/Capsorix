@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://capsorix.tech/sitemap.xml
+Sitemap: https://nexora-digital-empires.lovable.app/sitemap.xml
