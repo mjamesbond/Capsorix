@@ -28,6 +28,7 @@ const Index = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden page-enter">
       <Navbar />
       <main id="main" tabIndex={-1}>
+        <FaqJsonLd />
         <Hero />
         <Suspense fallback={<Placeholder h="min-h-[20vh]" />}>
           <div className="section-fade"><TrustBar /></div>
