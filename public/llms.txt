@@ -1,0 +1,25 @@
+# Capsorix
+
+> A premium digital product studio that builds elite iOS apps, Android apps, and web platforms — full-cycle, from idea to launch.
+
+Capsorix is a senior-led software studio specializing in high-end mobile and web product development. We partner with startups, enterprises, and individuals to design, engineer, and ship considered digital products that feel expensive and perform flawlessly.
+
+## Pages
+
+- [Home](/): Overview of services, process, industries served, case studies, and contact.
+- [iOS Development](/ios): Native iOS apps with Swift and SwiftUI — App Store launch included.
+- [Android Development](/android): Kotlin and Jetpack Compose apps with clean architecture and Material 3 design.
+- [Web Platforms](/web): Production-grade websites, dashboards, and web applications engineered for speed and conversion.
+
+## Services
+
+- iOS App Development: Native Swift/SwiftUI apps engineered to Apple's standards.
+- Android App Development: Kotlin + Jetpack Compose with clean architecture.
+- Web Platform Engineering: Fast, conversion-focused websites, dashboards, and SaaS platforms.
+- UI/UX Design: Interface design and product consulting.
+- Full-Cycle Product Development: From concept and prototyping to launch and iteration.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Structured URLs for search engines.
+- [Robots](/robots.txt): Crawler directives.
