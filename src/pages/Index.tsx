@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import Navbar from "@/components/capsorix/Navbar";
 import Hero from "@/components/capsorix/Hero";
 import Footer from "@/components/capsorix/Footer";
+import FaqJsonLd from "@/components/capsorix/FaqJsonLd";
 
 // Below-the-fold sections are code-split. Hero + Navbar render immediately
 // for instant first paint; everything else streams in as the user approaches.
