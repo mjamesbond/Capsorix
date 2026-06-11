@@ -61,7 +61,7 @@ const CaseStudies = () => {
 
                   {/* Header row — always visible */}
                   <div
-                    className="group relative w-full p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-8"
+                    className="group relative w-full p-5 sm:p-6 md:p-8 flex flex-col items-center md:flex-row md:items-center gap-5 sm:gap-6 md:gap-8"
                   >
                     {/* Numeral — clickable to toggle */}
                     <button
@@ -97,7 +97,7 @@ const CaseStudies = () => {
                         {/* Dark contrast plate — keeps the mark legible on any card background */}
                         <span
                           aria-hidden
-                          className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-5 py-3 md:px-6 md:py-4 transition-transform duration-700 group-hover/logo:scale-[1.03]"
+                          className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-3 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5 transition-transform duration-700 group-hover/logo:scale-[1.03]"
                         >
                           <img
                             src={LOGOS[item.logo]}
@@ -124,8 +124,8 @@ const CaseStudies = () => {
                             }}
                             className={`relative object-contain ${
                               item.logo === "haqak"
-                                ? "h-20 md:h-28 w-auto"
-                                : "h-12 md:h-16 w-auto"
+                                ? "h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
+                                : "h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto"
                             }`}
                             style={
                               item.logo === "haqak"
@@ -149,7 +149,7 @@ const CaseStudies = () => {
                     <button
                       type="button"
                       onClick={() => setOpen(isOpen ? -1 : i)}
-                      className="flex-1 min-w-0 text-start"
+                      className="flex-1 min-w-0 text-center md:text-start"
                     >
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                         <span className="text-[11px] font-medium tracking-[0.25em] uppercase text-primary">
