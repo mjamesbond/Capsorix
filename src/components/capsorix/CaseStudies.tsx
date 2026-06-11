@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers, ExternalLink, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
-import haqakLogo from "@/assets/haqak-logo.png.asset.json";
-import elbakreyLogo from "@/assets/elbakrey-logo.png.asset.json";
+import haqakLogo from "@/assets/haqak-logo.png";
+import elbakreyLogo from "@/assets/elbakrey-logo.png";
 
 /**
  * CaseStudies — flagship, expandable showcases.
@@ -13,7 +13,7 @@ import elbakreyLogo from "@/assets/elbakrey-logo.png.asset.json";
  * Single source of truth — content lives in the localized dictionary.
  */
 const ICONS = [Smartphone, Tablet, MonitorSmartphone];
-const LOGOS: Record<string, { url: string }> = {
+const LOGOS: Record<string, string> = {
   haqak: haqakLogo,
   elbakrey: elbakreyLogo,
 };
@@ -100,7 +100,7 @@ const CaseStudies = () => {
                           className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-5 py-3 md:px-6 md:py-4 transition-transform duration-700 group-hover/logo:scale-[1.03]"
                         >
                           <img
-                            src={LOGOS[item.logo].url}
+                            src={LOGOS[item.logo]}
                             alt={item.client}
                             loading="eager"
                             decoding="async"
