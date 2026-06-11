@@ -124,8 +124,8 @@ const CaseStudies = () => {
                             }}
                             className={`relative object-contain ${
                               item.logo === "haqak"
-                                ? "h-20 md:h-28 w-auto"
-                                : "h-12 md:h-16 w-auto"
+                                ? "h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
+                                : "h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto"
                             }`}
                             style={
                               item.logo === "haqak"
