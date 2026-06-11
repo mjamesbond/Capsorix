@@ -77,7 +77,7 @@ const CaseStudies = () => {
                       <span className="hidden md:block w-12 h-px bg-gradient-to-r from-primary/40 to-transparent" />
                     </button>
 
-                    {/* Logo — large, premium, frameless */}
+                    {/* Logo — large, premium, on dark contrast plate for guaranteed legibility */}
                     {item.logo && LOGOS[item.logo] ? (
                       <button
                         type="button"
@@ -85,32 +85,55 @@ const CaseStudies = () => {
                         className="shrink-0 relative flex items-center justify-center group/logo"
                         aria-label={item.client}
                       >
-                        {/* Soft radial backlight — gives the mark presence without a frame */}
+                        {/* Soft radial backlight */}
                         <span
                           aria-hidden
                           className={`pointer-events-none absolute inset-0 -m-6 rounded-full blur-3xl opacity-60 group-hover/logo:opacity-90 transition-opacity duration-700 ${
                             item.logo === "haqak"
-                              ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.35),transparent_70%)]"
-                              : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.30),transparent_70%)]"
+                              ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.45),transparent_70%)]"
+                              : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.35),transparent_70%)]"
                           }`}
                         />
-                        <img
-                          src={LOGOS[item.logo].url}
-                          alt={item.client}
-                          loading="lazy"
-                          decoding="async"
-                          draggable={false}
-                          className={`relative object-contain transition-transform duration-700 group-hover/logo:scale-[1.03] ${
-                            item.logo === "haqak"
-                              ? "h-16 md:h-20 w-auto"
-                              : "h-10 md:h-14 w-auto"
-                          }`}
-                          style={
-                            item.logo === "haqak"
-                              ? { filter: "drop-shadow(0 6px 24px rgba(255,140,40,0.25))" }
-                              : { filter: "drop-shadow(0 6px 24px rgba(201,168,76,0.25)) brightness(1.05)" }
-                          }
-                        />
+                        {/* Dark contrast plate — keeps the mark legible on any card background */}
+                        <span
+                          aria-hidden
+                          className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-5 py-3 md:px-6 md:py-4 transition-transform duration-700 group-hover/logo:scale-[1.03]"
+                        >
+                          <img
+                            src={LOGOS[item.logo].url}
+                            alt={item.client}
+                            loading="eager"
+                            decoding="async"
+                            draggable={false}
+                            referrerPolicy="no-referrer"
+                            onError={(e) => {
+                              // Hard fallback: if the CDN image fails to load (network/CORS/cache),
+                              // swap to a styled text mark so the brand is never invisible.
+                              const img = e.currentTarget;
+                              const parent = img.parentElement;
+                              if (!parent) return;
+                              img.style.display = "none";
+                              if (!parent.querySelector("[data-logo-fallback]")) {
+                                const span = document.createElement("span");
+                                span.dataset.logoFallback = "true";
+                                span.textContent = item.client;
+                                span.className =
+                                  "font-display text-base md:text-lg tracking-[0.18em] uppercase text-gradient-gold whitespace-nowrap";
+                                parent.appendChild(span);
+                              }
+                            }}
+                            className={`relative object-contain ${
+                              item.logo === "haqak"
+                                ? "h-20 md:h-28 w-auto"
+                                : "h-12 md:h-16 w-auto"
+                            }`}
+                            style={
+                              item.logo === "haqak"
+                                ? { filter: "drop-shadow(0 4px 18px rgba(255,140,40,0.35))" }
+                                : { filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.35)) brightness(1.05)" }
+                            }
+                          />
+                        </span>
                       </button>
                     ) : (
                       <button
