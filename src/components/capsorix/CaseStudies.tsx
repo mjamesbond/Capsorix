@@ -149,7 +149,7 @@ const CaseStudies = () => {
                     <button
                       type="button"
                       onClick={() => setOpen(isOpen ? -1 : i)}
-                      className="flex-1 min-w-0 text-start"
+                      className="flex-1 min-w-0 text-center md:text-start"
                     >
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
                         <span className="text-[11px] font-medium tracking-[0.25em] uppercase text-primary">
