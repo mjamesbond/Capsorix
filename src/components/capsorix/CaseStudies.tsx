@@ -97,7 +97,7 @@ const CaseStudies = () => {
                         {/* Dark contrast plate — keeps the mark legible on any card background */}
                         <span
                           aria-hidden
-                          className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-5 py-3 md:px-6 md:py-4 transition-transform duration-700 group-hover/logo:scale-[1.03]"
+                          className="relative flex items-center justify-center rounded-2xl bg-[#0a0e1a]/95 border border-primary/30 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] px-3 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 lg:px-8 lg:py-5 transition-transform duration-700 group-hover/logo:scale-[1.03]"
                         >
                           <img
                             src={LOGOS[item.logo]}
