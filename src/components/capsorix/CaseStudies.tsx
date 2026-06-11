@@ -61,7 +61,7 @@ const CaseStudies = () => {
 
                   {/* Header row — always visible */}
                   <div
-                    className="group relative w-full p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6 md:gap-8"
+                    className="group relative w-full p-5 sm:p-6 md:p-8 flex flex-col items-center md:flex-row md:items-center gap-5 sm:gap-6 md:gap-8"
                   >
                     {/* Numeral — clickable to toggle */}
                     <button
