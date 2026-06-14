@@ -354,13 +354,15 @@ const NeuralLayer = ({
 
       ctx.restore();
 
+      if (!running || !onScreen) return;
       raf = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame(tick);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
+      io.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
