@@ -39,6 +39,7 @@ let prevEased = easedY;
 let started = false;
 
 let idleFrames = 0;
+let lastWrittenY = Number.NaN;
 
 const tick = (now: number) => {
   const dt = Math.min(40, now - last) / 16.67;
@@ -50,8 +51,8 @@ const tick = (now: number) => {
   const velocity = easedY - prevEased;
   prevEased = easedY;
 
-  // When motion has effectively stopped, throttle to ~15fps to keep
-  // the main thread quiet between scrolls. Any new scroll input wakes
+  // When motion has effectively stopped, throttle hard so the shared loop
+  // costs essentially nothing between scrolls. Any new scroll input wakes
   // the loop back up to full 60fps via the scroll listener below.
   const moving = Math.abs(velocity) > 0.05 || Math.abs(target - easedY) > 0.05;
   if (moving) {
@@ -60,28 +61,34 @@ const tick = (now: number) => {
     idleFrames++;
   }
 
-  const max = Math.max(
-    1,
-    document.documentElement.scrollHeight - window.innerHeight,
-  );
-  const progress = Math.min(1, Math.max(0, easedY / max));
-
-  // Expose eased values to CSS for transform-only parallax (cheap)
-  const root = document.documentElement;
-  root.style.setProperty("--scroll-y", `${easedY.toFixed(2)}px`);
-  root.style.setProperty("--scroll-progress", progress.toFixed(4));
-
-  const frame: ScrollFrame = { y: target, eased: easedY, velocity, dt, max, progress };
-  listeners.forEach((cb) => cb(frame));
-
-  // Idle throttle: after ~½ second of stillness, drop to a slower cadence.
-  if (idleFrames > 30) {
-    raf = window.setTimeout(() => {
-      raf = requestAnimationFrame(tick);
-    }, 66) as unknown as number;
-  } else {
-    raf = requestAnimationFrame(tick);
+  // Expose eased scroll to CSS only when the value has actually moved by
+  // a perceptible amount — avoids a global style invalidation every frame
+  // (which previously dominated Style Recalc cost). `--scroll-progress`
+  // was removed: no rule consumed it, so the write was pure waste.
+  if (Math.abs(easedY - lastWrittenY) >= 0.5) {
+    document.documentElement.style.setProperty("--scroll-y", `${easedY.toFixed(1)}px`);
+    lastWrittenY = easedY;
   }
+
+  // Only build the frame object / run listeners when subscribers exist.
+  if (listeners.size > 0) {
+    const max = Math.max(
+      1,
+      document.documentElement.scrollHeight - window.innerHeight,
+    );
+    const progress = Math.min(1, Math.max(0, easedY / max));
+    const frame: ScrollFrame = { y: target, eased: easedY, velocity, dt, max, progress };
+    listeners.forEach((cb) => cb(frame));
+  }
+
+  // Idle bail-out: after ~⅓ second of stillness, suspend the rAF loop
+  // entirely. The passive scroll listener restarts it the instant a real
+  // scroll input arrives, so responsiveness is preserved.
+  if (idleFrames > 20) {
+    started = false;
+    return;
+  }
+  raf = requestAnimationFrame(tick);
 };
 
 const start = () => {
@@ -109,6 +116,8 @@ if (typeof window !== "undefined") {
     "scroll",
     () => {
       idleFrames = 0;
+      // Wake the loop if it bailed out during stillness.
+      if (!started && listeners.size > 0) start();
     },
     { passive: true },
   );

@@ -147,18 +147,44 @@ const NeuralLayer = ({
     let raf = 0;
     let last = performance.now();
     let running = true;
+    let onScreen = true;
+
+    const startLoop = () => {
+      if (!running || !onScreen) return;
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+    const stopLoop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+    };
 
     const onVisibility = () => {
       if (document.hidden) {
         running = false;
-        cancelAnimationFrame(raf);
+        stopLoop();
       } else if (!running) {
         running = true;
-        last = performance.now();
-        raf = requestAnimationFrame(tick);
+        startLoop();
       }
     };
     document.addEventListener("visibilitychange", onVisibility);
+
+    // Pause the network when scrolled past — the layer is fixed but it only
+    // visually matters while the hero/upper viewport is in view. This alone
+    // cuts steady-state CPU significantly on long scrolls.
+    const sentinel = canvas;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const next = entry.isIntersecting;
+        if (next === onScreen) return;
+        onScreen = next;
+        if (next) startLoop();
+        else stopLoop();
+      },
+      { threshold: 0 },
+    );
+    io.observe(sentinel);
 
     const tick = (now: number) => {
       const dt = Math.min(40, now - last) / 16.67; // normalized to 60fps frames
@@ -328,13 +354,15 @@ const NeuralLayer = ({
 
       ctx.restore();
 
+      if (!running || !onScreen) return;
       raf = requestAnimationFrame(tick);
     };
 
-    raf = requestAnimationFrame(tick);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
+      io.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);

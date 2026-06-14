@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
-import { dict, type Dict, type Lang } from "./dictionary";
+import { createContext, useContext, useEffect, useMemo, useRef, useState, ReactNode } from "react";
+import { loadDict, peekDict, type Dict, type Lang } from "./dictionary";
 
 interface I18nCtx {
   lang: Lang;
@@ -33,9 +33,25 @@ const getInitial = (): Lang => {
   return "en";
 };
 
+const INITIAL_LANG = getInitial();
+// Kick the active locale chunk off the wire as soon as the module evaluates,
+// well before React mounts — the dict is usually ready before first paint.
+const initialDictPromise = loadDict(INITIAL_LANG);
+
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLangState] = useState<Lang>(getInitial);
-  const [transitioning, setTransitioning] = useState(false);
+  const [lang, setLangState] = useState<Lang>(INITIAL_LANG);
+  const [dict, setDict] = useState<Dict | null>(() => peekDict(INITIAL_LANG) ?? null);
+  const pendingLang = useRef<Lang | null>(null);
+
+  // Resolve the initial dict (it was kicked off at module load).
+  useEffect(() => {
+    if (dict) return;
+    let cancelled = false;
+    initialDictPromise.then((d) => {
+      if (!cancelled) setDict(d);
+    });
+    return () => { cancelled = true; };
+  }, [dict]);
 
   // Apply <html lang/dir> + persist. Per-route <title>, meta description,
   // and og:* are owned by RouteSeo in App.tsx so each route can publish
@@ -52,40 +68,49 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     if (ogLocale) ogLocale.setAttribute("content", localeMap[lang]);
   }, [lang]);
 
-
   const setLang = (next: Lang) => {
     if (next === lang) return;
-    // Brief, controlled crossfade — handled via a body class.
-    setTransitioning(true);
+    pendingLang.current = next;
+    // Brief, controlled crossfade — handled via a body class. We hold the
+    // visible swap until the next locale's chunk is loaded so the UI never
+    // shows half-translated text.
     document.body.classList.add("lang-switching");
-    window.setTimeout(() => {
-      setLangState(next);
-      window.requestAnimationFrame(() => {
-        window.setTimeout(() => {
-          document.body.classList.remove("lang-switching");
-          setTransitioning(false);
-        }, 320);
-      });
-    }, 220);
+    loadDict(next).then((d) => {
+      if (pendingLang.current !== next) return;
+      window.setTimeout(() => {
+        setDict(d);
+        setLangState(next);
+        window.requestAnimationFrame(() => {
+          window.setTimeout(() => {
+            document.body.classList.remove("lang-switching");
+          }, 320);
+        });
+      }, 220);
+    });
   };
 
-  const value = useMemo<I18nCtx>(
-    () => ({
-      lang,
-      dir: lang === "ar" ? "rtl" : "ltr",
-      t: dict[lang],
-      setLang,
-      toggle: () => {
-        const order: Lang[] = ["en", "fr", "de", "ar"];
-        const idx = order.indexOf(lang);
-        setLang(order[(idx + 1) % order.length]);
-      },
-    }),
-    [lang],
+  const value = useMemo<I18nCtx | null>(
+    () => {
+      if (!dict) return null;
+      return {
+        lang,
+        dir: lang === "ar" ? "rtl" : "ltr",
+        t: dict,
+        setLang,
+        toggle: () => {
+          const order: Lang[] = ["en", "fr", "de", "ar"];
+          const idx = order.indexOf(lang);
+          setLang(order[(idx + 1) % order.length]);
+        },
+      };
+    },
+    [lang, dict],
   );
 
-  // Suppress lint: transitioning intentionally unused outside body class.
-  void transitioning;
+  // Hold the first paint of children until the initial locale is ready.
+  // This is a single ~25KB chunk that downloads in parallel with everything
+  // else, so the wait is typically zero on warm caches.
+  if (!value) return null;
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 };
