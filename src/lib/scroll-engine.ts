@@ -116,6 +116,8 @@ if (typeof window !== "undefined") {
     "scroll",
     () => {
       idleFrames = 0;
+      // Wake the loop if it bailed out during stillness.
+      if (!started && listeners.size > 0) start();
     },
     { passive: true },
   );
