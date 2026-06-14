@@ -385,6 +385,13 @@
   .font-arabic { font-family: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif; }
   .will-parallax { will-change: transform; }
 
+  /* Defer offscreen section rendering to slash style recalc + paint cost.
+     Falls back gracefully on browsers that ignore content-visibility. */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 720px;
+  }
+
   /* ========================================================
    * Arabic typography system
    * ----------------------------------------------------
