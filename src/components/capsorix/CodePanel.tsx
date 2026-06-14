@@ -276,7 +276,7 @@ interface CodePanelProps {
   speed?: number; // ms per character
 }
 
-const CodePanel = ({ className = "", speed = 32 }: CodePanelProps) => {
+const CodePanel = ({ className = "", speed = 55 }: CodePanelProps) => {
   const { lang } = useI18n();
   const LINES =
     lang === "ar" ? LINES_AR :

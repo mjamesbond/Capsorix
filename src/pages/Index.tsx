@@ -31,24 +31,24 @@ const Index = () => {
         <FaqJsonLd />
         <Hero />
         <Suspense fallback={<Placeholder h="min-h-[20vh]" />}>
-          <div className="section-fade"><TrustBar /></div>
+          <div className="section-fade cv-auto"><TrustBar /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><About /></div>
+          <div className="section-fade cv-auto"><About /></div>
           <div className="container"><div className="section-divider" /></div>
-          <Services />
+          <div className="cv-auto"><Services /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><Process /></div>
+          <div className="section-fade cv-auto"><Process /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><Industries /></div>
+          <div className="section-fade cv-auto"><Industries /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><CaseStudies /></div>
-          <div className="section-fade"><Stats /></div>
+          <div className="section-fade cv-auto"><CaseStudies /></div>
+          <div className="section-fade cv-auto"><Stats /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><Testimonials /></div>
+          <div className="section-fade cv-auto"><Testimonials /></div>
           <div className="container"><div className="section-divider" /></div>
-          <div className="section-fade"><Faq /></div>
-          <div className="section-fade"><Contact /></div>
-          <div className="section-fade"><FinalCTA /></div>
+          <div className="section-fade cv-auto"><Faq /></div>
+          <div className="section-fade cv-auto"><Contact /></div>
+          <div className="section-fade cv-auto"><FinalCTA /></div>
         </Suspense>
       </main>
       <Footer />
