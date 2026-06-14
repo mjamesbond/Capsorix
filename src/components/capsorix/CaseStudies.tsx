@@ -102,7 +102,9 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            loading="eager"
+                            width={item.logo === "haqak" ? 640 : 640}
+                            height={item.logo === "haqak" ? 512 : 231}
+                            loading="lazy"
                             decoding="async"
                             draggable={false}
                             referrerPolicy="no-referrer"
