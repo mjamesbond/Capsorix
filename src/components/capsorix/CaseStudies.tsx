@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ArrowRight, Lock, Smartphone, Tablet, MonitorSmartphone, Layers, ExternalLink, ShieldCheck } from "lucide-react";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
-import haqakLogo from "@/assets/haqak-logo.png";
-import elbakreyLogo from "@/assets/elbakrey-logo.png";
+import haqakLogo from "@/assets/haqak-logo.webp";
+import elbakreyLogo from "@/assets/elbakrey-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
