@@ -70,6 +70,18 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   const setLang = (next: Lang) => {
     if (next === lang) return;
+    // Lazy-inject Arabic webfont stack the first time the user switches to AR.
+    // index.html only ships Latin fonts by default — this keeps en/fr/de fast
+    // without breaking AR typography when the toggle is used at runtime.
+    if (next === "ar" && typeof document !== "undefined" && !document.getElementById("capsorix-ar-fonts")) {
+      const link = document.createElement("link");
+      link.id = "capsorix-ar-fonts";
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap";
+      document.head.appendChild(link);
+    }
+
+    if (next === lang) return;
     pendingLang.current = next;
     // Brief, controlled crossfade — handled via a body class. We hold the
     // visible swap until the next locale's chunk is loaded so the UI never
