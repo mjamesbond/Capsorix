@@ -70,17 +70,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://eqfiaizvcqxslbarstah.supabase.co" />
 
-    <!-- Fonts — non-blocking: download in parallel, applied as soon as ready.
-         display=swap keeps text visible during font load. -->
+    <!-- Fonts — split by script.
+         Latin set (always) — Cormorant Garamond + Inter.
+         Arabic set (Tajawal + IBM Plex Sans Arabic + Readex Pro) — loaded only when
+         the active language is Arabic, by the bootstrap script below. This avoids
+         shipping ~90 KB of Arabic woff2 to en/fr/de users without changing the look. -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" />
     </noscript>
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem('capsorix-lang');
+          var lang = (s === 'ar' || s === 'en' || s === 'fr' || s === 'de')
+            ? s
+            : (((navigator.language || '') + '').toLowerCase().slice(0, 2));
+          if (lang === 'ar') {
+            var l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap';
+            l.media = 'print';
+            l.onload = function () { this.media = 'all'; };
+            document.head.appendChild(l);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600&display=swap" />
+    </noscript>
+
 
     <!-- Structured data: Organization + ProfessionalService -->
     <script type="application/ld+json">
