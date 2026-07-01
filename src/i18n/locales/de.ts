@@ -92,10 +92,10 @@ const de: Dict = {
     ],
     caseStudies: {
       kicker: "— Leitprojekte",
-      titleA: "Zwei Leitplattformen,",
+      titleA: "Drei Leitplattformen,",
       titleB: " durchgängig konstruiert.",
       lead:
-        "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab und eine maßgefertigte intellektuelle Plattform mit globaler Reichweite.",
+        "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab, eine maßgefertigte intellektuelle Plattform mit globaler Reichweite und ein vollständiges Enterprise-Betriebssystem für Unternehmen.",
       durationLabel: "Projektdauer",
       stackLabel: "Technologie",
       challengeLabel: "Ausgangslage",
@@ -146,6 +146,26 @@ const de: Dict = {
           href: "https://elbakrey.works",
           visitLabel: "elbakrey.works besuchen",
           logo: "elbakrey",
+        },
+        {
+          tag: "Enterprise-Software · KI-gestützte SaaS-Plattform",
+          client: "FlowPilot AI",
+          title: "FlowPilot AI — Enterprise-Betriebssystem für Unternehmen.",
+          summary:
+            "Eine Premium-Enterprise-Betriebsplattform, die CRM, Projekte, Finanzen, HR, Analytik, KI und Enterprise-Administration in einem intelligenten, mandantenfähigen Workspace vereint — gebaut für moderne Organisationen.",
+          challenge:
+            "Moderne Unternehmen setzen häufig auf getrennte Werkzeuge für Vertrieb, Betrieb, Finanzen, HR, Reporting und Zusammenarbeit. Diese Fragmentierung führt zu doppelter Arbeit, mangelnder Übersicht, inkonsistenten Daten und langsameren Entscheidungen.",
+          approach:
+            "FlowPilot AI wurde als einheitliches Business-Betriebssystem konzipiert — mit skalierbarer mandantenfähiger Architektur, granularen rollenbasierten Berechtigungen, Executive-Dashboards, Audit-Logging, Business-Intelligence-Analytik, KI-gestützten Workflows und Enterprise-Administration — und führt jeden zentralen Geschäftsvorgang in einer einzigen, kohärenten Plattform zusammen.",
+          stack: ["React", "TypeScript", "Supabase", "TanStack", "Tailwind CSS"],
+          metrics: [
+            { value: "Multi", label: "Workspace-Architektur" },
+            { value: "KI", label: "Business-Assistent" },
+            { value: "Enterprise", label: "Produktionsreif" },
+          ],
+          duration: "Vollständiges Produkt",
+          status: "Abgeschlossen — Enterprise-taugliche Flagship-SaaS-Plattform, gebaut als Premium-Demonstration eines Business-Betriebssystems.",
+          logo: "flowpilot",
         },
       ],
     },

@@ -92,10 +92,10 @@ const en: Dict = {
     ],
     caseStudies: {
       kicker: "— Flagship work",
-      titleA: "Two flagship platforms,",
+      titleA: "Three flagship platforms,",
       titleB: " engineered end-to-end.",
       lead:
-        "A closer look at recent work shipped from our studio — national-scale civic infrastructure and a bespoke intellectual platform with global reach.",
+        "A closer look at recent work shipped from our studio — national-scale civic infrastructure, a bespoke intellectual platform with global reach, and a full enterprise business operating system.",
       durationLabel: "Engagement",
       stackLabel: "Stack",
       challengeLabel: "Brief",
@@ -146,6 +146,26 @@ const en: Dict = {
           href: "https://elbakrey.works",
           visitLabel: "Visit elbakrey.works",
           logo: "elbakrey",
+        },
+        {
+          tag: "Enterprise Software · AI-Powered SaaS Platform",
+          client: "FlowPilot AI",
+          title: "FlowPilot AI — Enterprise Business Operating System.",
+          summary:
+            "A premium enterprise operating platform that unifies CRM, Projects, Finance, HR, Analytics, AI, and Enterprise Administration into one intelligent multi-tenant workspace built for modern organizations.",
+          challenge:
+            "Modern businesses often rely on disconnected tools for sales, operations, finance, HR, reporting, and collaboration. This fragmentation creates duplicated work, poor visibility, inconsistent data, and slower decision-making.",
+          approach:
+            "FlowPilot AI was engineered as a unified business operating system with a scalable multi-tenant architecture, granular role-based permissions, executive dashboards, audit logging, business intelligence analytics, AI-assisted workflows, and enterprise-grade administration — bringing every core business operation into a single, cohesive platform.",
+          stack: ["React", "TypeScript", "Supabase", "TanStack", "Tailwind CSS"],
+          metrics: [
+            { value: "Multi", label: "Workspace architecture" },
+            { value: "AI", label: "Business assistant" },
+            { value: "Enterprise", label: "Production-ready" },
+          ],
+          duration: "Full Product",
+          status: "Completed — Enterprise-grade flagship SaaS platform built as a premium business operating system demonstration.",
+          logo: "flowpilot",
         },
       ],
     },
