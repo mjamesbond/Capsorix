@@ -4,6 +4,7 @@ import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
 import haqakLogo from "@/assets/haqak-logo.webp";
 import elbakreyLogo from "@/assets/elbakrey-logo.webp";
+import flowpilotLogo from "@/assets/flowpilot-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
@@ -16,6 +17,7 @@ const ICONS = [Smartphone, Tablet, MonitorSmartphone];
 const LOGOS: Record<string, string> = {
   haqak: haqakLogo,
   elbakrey: elbakreyLogo,
+  flowpilot: flowpilotLogo,
 };
 
 const CaseStudies = () => {
