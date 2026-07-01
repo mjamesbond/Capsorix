@@ -93,6 +93,8 @@ const CaseStudies = () => {
                           className={`pointer-events-none absolute inset-0 -m-6 rounded-full blur-3xl opacity-60 group-hover/logo:opacity-90 transition-opacity duration-700 ${
                             item.logo === "haqak"
                               ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.45),transparent_70%)]"
+                              : item.logo === "flowpilot"
+                              ? "bg-[radial-gradient(closest-side,rgba(120,150,255,0.35),transparent_70%)]"
                               : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.35),transparent_70%)]"
                           }`}
                         />
@@ -104,8 +106,8 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            width={item.logo === "haqak" ? 640 : 640}
-                            height={item.logo === "haqak" ? 512 : 231}
+                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : 640}
+                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : 231}
                             loading="lazy"
                             decoding="async"
                             draggable={false}
@@ -134,6 +136,8 @@ const CaseStudies = () => {
                             style={
                               item.logo === "haqak"
                                 ? { filter: "drop-shadow(0 4px 18px rgba(255,140,40,0.35))" }
+                                : item.logo === "flowpilot"
+                                ? { filter: "drop-shadow(0 4px 18px rgba(120,150,255,0.35)) brightness(1.02)" }
                                 : { filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.35)) brightness(1.05)" }
                             }
                           />
