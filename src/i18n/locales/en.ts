@@ -92,10 +92,10 @@ const en: Dict = {
     ],
     caseStudies: {
       kicker: "— Flagship work",
-      titleA: "Two flagship platforms,",
+      titleA: "Three flagship platforms,",
       titleB: " engineered end-to-end.",
       lead:
-        "A closer look at recent work shipped from our studio — national-scale civic infrastructure and a bespoke intellectual platform with global reach.",
+        "A closer look at recent work shipped from our studio — national-scale civic infrastructure, a bespoke intellectual platform with global reach, and a full enterprise business operating system.",
       durationLabel: "Engagement",
       stackLabel: "Stack",
       challengeLabel: "Brief",
