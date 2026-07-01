@@ -92,10 +92,10 @@ const de: Dict = {
     ],
     caseStudies: {
       kicker: "— Leitprojekte",
-      titleA: "Zwei Leitplattformen,",
+      titleA: "Drei Leitplattformen,",
       titleB: " durchgängig konstruiert.",
       lead:
-        "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab und eine maßgefertigte intellektuelle Plattform mit globaler Reichweite.",
+        "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab, eine maßgefertigte intellektuelle Plattform mit globaler Reichweite und ein vollständiges Enterprise-Betriebssystem für Unternehmen.",
       durationLabel: "Projektdauer",
       stackLabel: "Technologie",
       challengeLabel: "Ausgangslage",
