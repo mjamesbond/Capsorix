@@ -147,6 +147,26 @@ const fr: Dict = {
           visitLabel: "Voir elbakrey.works",
           logo: "elbakrey",
         },
+        {
+          tag: "Logiciel d’entreprise · Plateforme SaaS pilotée par l’IA",
+          client: "FlowPilot AI",
+          title: "FlowPilot AI — Système d’exploitation d’entreprise.",
+          summary:
+            "Une plateforme d’exploitation d’entreprise premium qui unifie CRM, projets, finance, RH, analytique, IA et administration dans un espace de travail multi-locataire intelligent, conçu pour les organisations modernes.",
+          challenge:
+            "Les entreprises modernes s’appuient souvent sur des outils déconnectés pour les ventes, les opérations, la finance, les RH, le reporting et la collaboration. Cette fragmentation entraîne des doublons, un manque de visibilité, des données incohérentes et des décisions ralenties.",
+          approach:
+            "FlowPilot AI a été conçue comme un système d’exploitation d’entreprise unifié avec une architecture multi-locataire évolutive, des permissions granulaires basées sur les rôles, des tableaux de bord exécutifs, une journalisation d’audit, des analyses BI, des workflows assistés par IA et une administration de niveau entreprise — rassemblant chaque opération métier essentielle dans une plateforme unique et cohérente.",
+          stack: ["React", "TypeScript", "Supabase", "TanStack", "Tailwind CSS"],
+          metrics: [
+            { value: "Multi", label: "Architecture d’espaces" },
+            { value: "IA", label: "Assistant métier" },
+            { value: "Entreprise", label: "Prêt pour la production" },
+          ],
+          duration: "Produit complet",
+          status: "Terminé — Plateforme SaaS phare de niveau entreprise, conçue comme une démonstration premium d’un système d’exploitation métier.",
+          logo: "flowpilot",
+        },
       ],
     },
     testimonials: {
