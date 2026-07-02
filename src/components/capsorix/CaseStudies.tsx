@@ -108,8 +108,8 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : 640}
-                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : 231}
+                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 329 : 640}
+                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 107 : 231}
                             loading="lazy"
                             decoding="async"
                             draggable={false}
