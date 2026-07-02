@@ -92,7 +92,7 @@ const fr: Dict = {
     ],
     caseStudies: {
       kicker: "— Travaux phares",
-      titleA: "Trois plateformes phares,",
+      titleA: "Quatre plateformes phares,",
       titleB: " conçues de bout en bout.",
       lead:
         "Un regard rapproché sur des projets récents livrés depuis notre studio — une infrastructure civique à l’échelle nationale, une plateforme intellectuelle sur mesure à portée mondiale, et un système d’exploitation d’entreprise complet.",
@@ -166,6 +166,26 @@ const fr: Dict = {
           duration: "Produit complet",
           status: "Terminé — Plateforme SaaS phare de niveau entreprise, conçue comme une démonstration premium d’un système d’exploitation métier.",
           logo: "flowpilot",
+        },
+        {
+          tag: "PropTech de luxe · Plateforme immobilière premium",
+          client: "Veloria Estates",
+          title: "Veloria Estates — Plateforme immobilière de luxe.",
+          summary:
+            "Une plateforme immobilière numérique premium conçue pour les agences de luxe, les acheteurs à haut patrimoine et les conseillers modernes — alliant présentation cinématographique, découverte intelligente des biens, cartes interactives et expériences client de niveau entreprise.",
+          challenge:
+            "L’immobilier de luxe mérite bien plus que de simples sites d’annonces. L’objectif était de créer une expérience numérique immersive qui reflète le prestige des biens exceptionnels tout en soutenant des parcours clients sophistiqués, les workflows des conseillers et un positionnement de marque premium.",
+          approach:
+            "Conçue et développée comme une expérience PropTech phare avec une architecture évolutive, une recherche avancée, une cartographie interactive, des tableaux de bord clients privés, la gestion des agents, des analyses de marché, un design responsive et une esthétique de luxe raffinée dans chaque interaction.",
+          stack: ["UX de luxe", "Recherche immobilière", "Cartes interactives", "Tableau client", "Portail agent", "Supabase", "React", "TypeScript"],
+          metrics: [
+            { value: "Luxe", label: "Expérience premium" },
+            { value: "Interactif", label: "Découverte des biens" },
+            { value: "Entreprise", label: "Architecture évolutive" },
+          ],
+          duration: "Produit phare",
+          status: "Terminé — Plateforme PropTech phare démontrant les expériences immobilières de luxe modernes et une ingénierie produit de niveau entreprise.",
+          logo: "veloria",
         },
       ],
     },

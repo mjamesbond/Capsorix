@@ -5,6 +5,7 @@ import { useI18n } from "@/i18n/I18nProvider";
 import haqakLogo from "@/assets/haqak-logo.webp";
 import elbakreyLogo from "@/assets/elbakrey-logo.webp";
 import flowpilotLogo from "@/assets/flowpilot-logo.webp";
+import veloriaLogo from "@/assets/veloria-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
@@ -18,6 +19,7 @@ const LOGOS: Record<string, string> = {
   haqak: haqakLogo,
   elbakrey: elbakreyLogo,
   flowpilot: flowpilotLogo,
+  veloria: veloriaLogo,
 };
 
 const CaseStudies = () => {
@@ -106,8 +108,8 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : 640}
-                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : 231}
+                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 329 : 640}
+                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 107 : 231}
                             loading="lazy"
                             decoding="async"
                             draggable={false}
