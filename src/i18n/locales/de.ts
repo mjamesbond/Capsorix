@@ -92,7 +92,7 @@ const de: Dict = {
     ],
     caseStudies: {
       kicker: "— Leitprojekte",
-      titleA: "Drei Leitplattformen,",
+      titleA: "Vier Leitplattformen,",
       titleB: " durchgängig konstruiert.",
       lead:
         "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab, eine maßgefertigte intellektuelle Plattform mit globaler Reichweite und ein vollständiges Enterprise-Betriebssystem für Unternehmen.",
@@ -166,6 +166,26 @@ const de: Dict = {
           duration: "Vollständiges Produkt",
           status: "Abgeschlossen — Enterprise-taugliche Flagship-SaaS-Plattform, gebaut als Premium-Demonstration eines Business-Betriebssystems.",
           logo: "flowpilot",
+        },
+        {
+          tag: "Luxus-PropTech · Premium-Immobilienplattform",
+          client: "Veloria Estates",
+          title: "Veloria Estates — Luxus-Immobilienplattform.",
+          summary:
+            "Eine Premium-Immobilienplattform, konzipiert für Luxusmakler, vermögende Käufer und moderne Immobilienberater — mit kinematografischer Präsentation, intelligenter Objektsuche, interaktiven Karten und Kundenerlebnissen auf Enterprise-Niveau.",
+          challenge:
+            "Luxusimmobilien verdienen mehr als reine Angebotsseiten. Ziel war eine immersive digitale Erfahrung, die das Prestige außergewöhnlicher Objekte widerspiegelt und zugleich anspruchsvolle Kundenreisen, Berater-Workflows und eine Premium-Markenpositionierung unterstützt.",
+          approach:
+            "Als Flagship-PropTech-Erlebnis konzipiert und entwickelt — mit skalierbarer Architektur, erweiterter Suche, interaktivem Mapping, privaten Kunden-Dashboards, Agentenverwaltung, Marktinsights, responsivem Design und einer durchweg verfeinerten Luxusästhetik.",
+          stack: ["Luxus-UX", "Immobiliensuche", "Interaktive Karten", "Kunden-Dashboard", "Agenten-Portal", "Supabase", "React", "TypeScript"],
+          metrics: [
+            { value: "Luxus", label: "Premium-Erlebnis" },
+            { value: "Interaktiv", label: "Objektsuche" },
+            { value: "Enterprise", label: "Skalierbare Architektur" },
+          ],
+          duration: "Flagship-Produkt" ,
+          status: "Abgeschlossen — Flagship-PropTech-Plattform, die moderne Luxus-Immobilienerlebnisse und Produktentwicklung auf Enterprise-Niveau demonstriert.",
+          logo: "veloria",
         },
       ],
     },

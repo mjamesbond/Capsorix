@@ -92,7 +92,7 @@ const en: Dict = {
     ],
     caseStudies: {
       kicker: "— Flagship work",
-      titleA: "Three flagship platforms,",
+      titleA: "Four flagship platforms,",
       titleB: " engineered end-to-end.",
       lead:
         "A closer look at recent work shipped from our studio — national-scale civic infrastructure, a bespoke intellectual platform with global reach, and a full enterprise business operating system.",
@@ -166,6 +166,26 @@ const en: Dict = {
           duration: "Full Product",
           status: "Completed — Enterprise-grade flagship SaaS platform built as a premium business operating system demonstration.",
           logo: "flowpilot",
+        },
+        {
+          tag: "Luxury PropTech · Premium Real Estate Platform",
+          client: "Veloria Estates",
+          title: "Veloria Estates — Luxury Real Estate Platform.",
+          summary:
+            "A premium digital real estate platform crafted for luxury brokerages, high-net-worth buyers, and modern property advisors — combining cinematic presentation, intelligent property discovery, interactive maps, and enterprise-grade client experiences.",
+          challenge:
+            "Luxury real estate deserves more than listing websites. The objective was to create an immersive digital experience that reflects the prestige of exceptional properties while supporting sophisticated client journeys, advisor workflows, and premium brand positioning.",
+          approach:
+            "Designed and engineered as a flagship PropTech experience with a scalable architecture, advanced search, interactive mapping, private client dashboards, agent management, market insights, responsive design, and refined luxury aesthetics throughout every interaction.",
+          stack: ["Luxury UX", "Property Search", "Interactive Maps", "Client Dashboard", "Agent Portal", "Supabase", "React", "TypeScript"],
+          metrics: [
+            { value: "Luxury", label: "Premium experience" },
+            { value: "Interactive", label: "Property discovery" },
+            { value: "Enterprise", label: "Scalable architecture" },
+          ],
+          duration: "Flagship Product",
+          status: "Completed — Premium flagship PropTech platform demonstrating modern luxury real estate experiences and enterprise-grade product engineering.",
+          logo: "veloria",
         },
       ],
     },
