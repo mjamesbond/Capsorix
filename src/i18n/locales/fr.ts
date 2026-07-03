@@ -92,7 +92,7 @@ const fr: Dict = {
     ],
     caseStudies: {
       kicker: "— Travaux phares",
-      titleA: "Quatre plateformes phares,",
+      titleA: "Cinq plateformes phares,",
       titleB: " conçues de bout en bout.",
       lead:
         "Un regard rapproché sur des projets récents livrés depuis notre studio — une infrastructure civique à l’échelle nationale, une plateforme intellectuelle sur mesure à portée mondiale, et un système d’exploitation d’entreprise complet.",
