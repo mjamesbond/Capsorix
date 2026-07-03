@@ -92,7 +92,7 @@ const fr: Dict = {
     ],
     caseStudies: {
       kicker: "— Travaux phares",
-      titleA: "Quatre plateformes phares,",
+      titleA: "Cinq plateformes phares,",
       titleB: " conçues de bout en bout.",
       lead:
         "Un regard rapproché sur des projets récents livrés depuis notre studio — une infrastructure civique à l’échelle nationale, une plateforme intellectuelle sur mesure à portée mondiale, et un système d’exploitation d’entreprise complet.",
@@ -186,6 +186,26 @@ const fr: Dict = {
           duration: "Produit phare",
           status: "Terminé — Plateforme PropTech phare démontrant les expériences immobilières de luxe modernes et une ingénierie produit de niveau entreprise.",
           logo: "veloria",
+        },
+        {
+          tag: "Expérience numérique industrielle · Fabrication textile · Plateforme corporate",
+          client: "Elhelaly Threads",
+          title: "Elhelaly Threads — Réinventer un héritage textile de 30 ans.",
+          summary:
+            "Une plateforme numérique bilingue premium conçue pour l'un des fabricants de textile égyptiens les plus établis, transformant plus de trois décennies d'expertise industrielle en une expérience corporate raffinée à travers une image de marque haut de gamme, une architecture produit structurée, une communication multilingue et un storytelling manufacturier moderne.",
+          challenge:
+            "Avec un héritage manufacturier remontant à 1993, Elhelaly Threads avait besoin de bien plus qu'un site corporate conventionnel. L'objectif était de traduire des décennies d'expertise en production, de fiabilité opérationnelle et de crédibilité industrielle en une présence numérique premium capable de servir des usines de confection, des acheteurs en gros, des partenaires commerciaux et de futurs marchés internationaux — en transmettant la confiance avant les spécifications.",
+          approach:
+            "Conçue et développée comme une plateforme manufacturière bilingue premium combinant storytelling éditorial, typographie sophistiquée, direction visuelle d'inspiration industrielle, présentation produit structurée, workflows de devis, ingénierie responsive, architecture SEO-first et usabilité de niveau entreprise — modernisant l'identité numérique de l'entreprise tout en préservant l'authenticité de son héritage manufacturier.",
+          stack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "Bilingue", "SEO", "Site corporate", "Fabrication", "Branding industriel", "Design responsive", "UX premium"],
+          metrics: [
+            { value: "30+", label: "Années d'héritage" },
+            { value: "Bilingue", label: "Arabe · Anglais" },
+            { value: "Industriel", label: "Branding premium" },
+          ],
+          duration: "Expérience corporate",
+          status: "Terminé — Plateforme manufacturière bilingue premium livrée avec succès pour moderniser une marque industrielle de trois décennies grâce à un storytelling raffiné, une présentation produit structurée et une expérience corporate de niveau entreprise.",
+          logo: "elhelaly",
         },
       ],
     },

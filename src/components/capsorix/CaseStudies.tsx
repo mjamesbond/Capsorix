@@ -6,6 +6,7 @@ import haqakLogo from "@/assets/haqak-logo.webp";
 import elbakreyLogo from "@/assets/elbakrey-logo.webp";
 import flowpilotLogo from "@/assets/flowpilot-logo.webp";
 import veloriaLogo from "@/assets/veloria-logo.webp";
+import elhelalyLogo from "@/assets/elhelaly-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
@@ -20,6 +21,7 @@ const LOGOS: Record<string, string> = {
   elbakrey: elbakreyLogo,
   flowpilot: flowpilotLogo,
   veloria: veloriaLogo,
+  elhelaly: elhelalyLogo,
 };
 
 const CaseStudies = () => {
@@ -97,6 +99,8 @@ const CaseStudies = () => {
                               ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.45),transparent_70%)]"
                               : item.logo === "flowpilot"
                               ? "bg-[radial-gradient(closest-side,rgba(120,150,255,0.35),transparent_70%)]"
+                              : item.logo === "elhelaly"
+                              ? "bg-[radial-gradient(closest-side,rgba(212,175,95,0.40),transparent_70%)]"
                               : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.35),transparent_70%)]"
                           }`}
                         />
@@ -108,8 +112,8 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 329 : 640}
-                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 107 : 231}
+                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 329 : item.logo === "elhelaly" ? 492 : 640}
+                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 107 : item.logo === "elhelaly" ? 450 : 231}
                             loading="lazy"
                             decoding="async"
                             draggable={false}
@@ -131,7 +135,7 @@ const CaseStudies = () => {
                               }
                             }}
                             className={`relative object-contain ${
-                              item.logo === "haqak"
+                              item.logo === "haqak" || item.logo === "elhelaly"
                                 ? "h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
                                 : "h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto"
                             }`}
@@ -140,6 +144,8 @@ const CaseStudies = () => {
                                 ? { filter: "drop-shadow(0 4px 18px rgba(255,140,40,0.35))" }
                                 : item.logo === "flowpilot"
                                 ? { filter: "drop-shadow(0 4px 18px rgba(120,150,255,0.35)) brightness(1.02)" }
+                                : item.logo === "elhelaly"
+                                ? { filter: "drop-shadow(0 4px 18px rgba(212,175,95,0.40)) brightness(1.03)" }
                                 : { filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.35)) brightness(1.05)" }
                             }
                           />
