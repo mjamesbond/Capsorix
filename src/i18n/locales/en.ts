@@ -187,6 +187,26 @@ const en: Dict = {
           status: "Completed — Premium flagship PropTech platform demonstrating modern luxury real estate experiences and enterprise-grade product engineering.",
           logo: "veloria",
         },
+        {
+          tag: "Industrial Digital Experience · Textile Manufacturing · Corporate Platform",
+          client: "Elhelaly Threads",
+          title: "Elhelaly Threads — Reimagining a 30-Year Textile Legacy.",
+          summary:
+            "A premium bilingual digital platform designed for one of Egypt's established textile manufacturers, transforming more than three decades of industrial expertise into a refined corporate experience through premium branding, structured product architecture, multilingual communication, and modern manufacturing storytelling.",
+          challenge:
+            "With a manufacturing legacy dating back to 1993, Elhelaly Threads required more than a conventional corporate website. The objective was to translate decades of production expertise, operational reliability, and industrial credibility into a premium digital presence capable of serving garment factories, wholesale buyers, business partners, and future international markets — communicating trust before specifications.",
+          approach:
+            "Designed and engineered as a premium bilingual manufacturing platform that combines editorial storytelling, sophisticated typography, industrial-inspired visual direction, structured product presentation, quotation workflows, responsive engineering, SEO-first architecture, and enterprise-level usability — modernizing the company's digital identity while preserving the authenticity of its manufacturing heritage.",
+          stack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "Bilingual", "SEO", "Corporate Website", "Manufacturing", "Industrial Branding", "Responsive Design", "Premium UX"],
+          metrics: [
+            { value: "30+", label: "Years of heritage" },
+            { value: "Bilingual", label: "Arabic · English" },
+            { value: "Industrial", label: "Premium branding" },
+          ],
+          duration: "Corporate Experience",
+          status: "Completed — Premium bilingual manufacturing platform successfully delivered to modernize a three-decade industrial brand through refined storytelling, structured product presentation, and enterprise-grade corporate experience.",
+          logo: "elhelaly",
+        },
       ],
     },
     testimonials: {
