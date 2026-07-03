@@ -99,6 +99,8 @@ const CaseStudies = () => {
                               ? "bg-[radial-gradient(closest-side,rgba(255,180,80,0.45),transparent_70%)]"
                               : item.logo === "flowpilot"
                               ? "bg-[radial-gradient(closest-side,rgba(120,150,255,0.35),transparent_70%)]"
+                              : item.logo === "elhelaly"
+                              ? "bg-[radial-gradient(closest-side,rgba(212,175,95,0.40),transparent_70%)]"
                               : "bg-[radial-gradient(closest-side,rgba(201,168,76,0.35),transparent_70%)]"
                           }`}
                         />
