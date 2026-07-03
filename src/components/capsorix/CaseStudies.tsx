@@ -135,7 +135,7 @@ const CaseStudies = () => {
                               }
                             }}
                             className={`relative object-contain ${
-                              item.logo === "haqak"
+                              item.logo === "haqak" || item.logo === "elhelaly"
                                 ? "h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto"
                                 : "h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto"
                             }`}
@@ -144,6 +144,8 @@ const CaseStudies = () => {
                                 ? { filter: "drop-shadow(0 4px 18px rgba(255,140,40,0.35))" }
                                 : item.logo === "flowpilot"
                                 ? { filter: "drop-shadow(0 4px 18px rgba(120,150,255,0.35)) brightness(1.02)" }
+                                : item.logo === "elhelaly"
+                                ? { filter: "drop-shadow(0 4px 18px rgba(212,175,95,0.40)) brightness(1.03)" }
                                 : { filter: "drop-shadow(0 4px 18px rgba(201,168,76,0.35)) brightness(1.05)" }
                             }
                           />
