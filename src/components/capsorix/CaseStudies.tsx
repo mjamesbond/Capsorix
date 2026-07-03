@@ -21,6 +21,7 @@ const LOGOS: Record<string, string> = {
   elbakrey: elbakreyLogo,
   flowpilot: flowpilotLogo,
   veloria: veloriaLogo,
+  elhelaly: elhelalyLogo,
 };
 
 const CaseStudies = () => {
