@@ -6,6 +6,7 @@ import haqakLogo from "@/assets/haqak-logo.webp";
 import elbakreyLogo from "@/assets/elbakrey-logo.webp";
 import flowpilotLogo from "@/assets/flowpilot-logo.webp";
 import veloriaLogo from "@/assets/veloria-logo.webp";
+import elhelalyLogo from "@/assets/elhelaly-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
