@@ -112,8 +112,8 @@ const CaseStudies = () => {
                           <img
                             src={LOGOS[item.logo]}
                             alt={item.client}
-                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 329 : item.logo === "elhelaly" ? 492 : 640}
-                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 107 : item.logo === "elhelaly" ? 450 : 231}
+                            width={item.logo === "haqak" ? 640 : item.logo === "flowpilot" ? 617 : item.logo === "veloria" ? 1000 : item.logo === "elhelaly" ? 492 : 640}
+                            height={item.logo === "haqak" ? 512 : item.logo === "flowpilot" ? 154 : item.logo === "veloria" ? 395 : item.logo === "elhelaly" ? 450 : 231}
                             loading="lazy"
                             decoding="async"
                             draggable={false}
