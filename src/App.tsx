@@ -55,7 +55,7 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     en: { title: "Capsorix — Premium Software Studio for iOS, Android & Web", description: "Capsorix builds elite iOS, Android, and web platforms end-to-end. Senior-led product engineering, designed and shipped with care." },
     fr: { title: "Capsorix — Studio logiciel premium iOS, Android & Web", description: "Capsorix conçoit des applications iOS, Android et plateformes web haut de gamme, de bout en bout. Ingénierie produit par une équipe senior." },
     de: { title: "Capsorix — Premium-Softwarestudio für iOS, Android & Web", description: "Capsorix entwickelt erstklassige iOS-, Android- und Web-Plattformen end-to-end. Produkt-Engineering aus einer Hand von Senior-Ingenieuren." },
-    ar: { title: "كابسوريكس — استوديو برمجيات احترافي لتطبيقات iOS وأندرويد والويب", description: "تبني كابسوريكس تطبيقات iOS وأندرويد ومنصات ويب من الطراز الرفيع، بقيادة مهندسين كبار من الفكرة إلى الإطلاق." },
+    ar: { title: "كابسوريكس — استوديو برمجيات iOS وأندرويد والويب", description: "تبني كابسوريكس تطبيقات iOS وأندرويد ومنصات ويب من الطراز الرفيع، بقيادة مهندسين كبار من الفكرة إلى الإطلاق." },
   },
   ios: {
     en: { title: "iOS App Development — Capsorix", description: "Native Swift and SwiftUI apps engineered to Apple's bar. Capsorix ships considered iOS products from concept to App Store launch." },
