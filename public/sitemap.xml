@@ -2,26 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://capsorix.tech/</loc>
+    <loc>https://nexora-digital-empires.lovable.app/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://capsorix.tech/" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://capsorix.tech/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://capsorix.tech/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://capsorix.tech/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://nexora-digital-empires.lovable.app/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://nexora-digital-empires.lovable.app/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://nexora-digital-empires.lovable.app/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://nexora-digital-empires.lovable.app/" />
   </url>
   <url>
-    <loc>https://capsorix.tech/ios</loc>
+    <loc>https://nexora-digital-empires.lovable.app/ios</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://capsorix.tech/android</loc>
+    <loc>https://nexora-digital-empires.lovable.app/android</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://capsorix.tech/web</loc>
+    <loc>https://nexora-digital-empires.lovable.app/web</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
