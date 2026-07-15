@@ -143,6 +143,7 @@ const App = () => (
                 <Route path="/ios" element={<IOS />} />
                 <Route path="/android" element={<Android />} />
                 <Route path="/web" element={<Web />} />
+                <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
