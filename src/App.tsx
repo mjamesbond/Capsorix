@@ -20,6 +20,7 @@ import { ThemeProvider } from "./theme/ThemeProvider";
 const IOS = lazy(() => import("./pages/IOS.tsx"));
 const Android = lazy(() => import("./pages/Android.tsx"));
 const Web = lazy(() => import("./pages/Web.tsx"));
+const ChoosingSoftwarePartner = lazy(() => import("./pages/ChoosingSoftwarePartner.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
 // it never delays first paint or blocks initial interaction.
