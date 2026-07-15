@@ -20,6 +20,7 @@ import { ThemeProvider } from "./theme/ThemeProvider";
 const IOS = lazy(() => import("./pages/IOS.tsx"));
 const Android = lazy(() => import("./pages/Android.tsx"));
 const Web = lazy(() => import("./pages/Web.tsx"));
+const ChoosingSoftwarePartner = lazy(() => import("./pages/ChoosingSoftwarePartner.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
 // it never delays first paint or blocks initial interaction.
@@ -142,6 +143,7 @@ const App = () => (
                 <Route path="/ios" element={<IOS />} />
                 <Route path="/android" element={<Android />} />
                 <Route path="/web" element={<Web />} />
+                <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
