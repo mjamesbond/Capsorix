@@ -92,7 +92,7 @@ const de: Dict = {
     ],
     caseStudies: {
       kicker: "— Leitprojekte",
-      titleA: "Fünf Leitplattformen,",
+      titleA: "Sechs Leitplattformen,",
       titleB: " durchgängig konstruiert.",
       lead:
         "Ein genauer Blick auf jüngste Arbeiten aus unserem Studio — eine zivilgesellschaftliche Infrastruktur in nationalem Maßstab, eine maßgefertigte intellektuelle Plattform mit globaler Reichweite und ein vollständiges Enterprise-Betriebssystem für Unternehmen.",
@@ -206,6 +206,28 @@ const de: Dict = {
           duration: "Corporate-Experience",
           status: "Abgeschlossen — Premium-Manufacturing-Plattform in zwei Sprachen erfolgreich ausgeliefert, um eine seit drei Jahrzehnten bestehende Industriemarke durch verfeinertes Storytelling, strukturierte Produktpräsentation und Corporate-Experience auf Enterprise-Niveau zu modernisieren.",
           logo: "elhelaly",
+        },
+        {
+          tag: "Öffentliche Bildung · Staatliche Schule · Digitale Transformation",
+          client: "New Al-Nasiriyah Primary School",
+          title: "New Al-Nasiriyah Primary School — Eine moderne institutionelle Plattform.",
+          summary:
+            "Eine zweisprachige Premium-Digitalplattform für eine öffentliche Grundschule — sie vereint institutionelle Identität, Bildungsressourcen, administrative Inhaltsverwaltung und ein modernes Erlebnis für Schüler, Eltern, Lehrkräfte und Schulleitung.",
+          challenge:
+            "Entwickelt, um die digitale Präsenz der Schule zu modernisieren und zugleich ihre pädagogische Identität zu bewahren. Die Plattform bündelt Ankündigungen, Stundenpläne, Ehrentafel, Auszeichnungen, Aktivitäten, Mediengalerien, Kontaktwege und institutionelle Informationen in einem einheitlichen, auf allen Geräten zugänglichen Erlebnis.",
+          approach:
+            "Als skalierbare Bildungsplattform konzipiert — mit sicherem Admin-CMS, mehrsprachig vorbereiteter Architektur, responsivem UI, SEO-Optimierung, strukturierter Inhaltsverwaltung, Bildergalerien, akademischen Ressourcen und Wartbarkeit auf Enterprise-Niveau. Jeder öffentliche Bereich lässt sich über ein internes Admin-Panel verwalten, ohne das Nutzererlebnis zu beeinträchtigen.",
+          stack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "CMS", "Bildungsplattform", "Responsive Design", "SEO", "Rollenbasierte Verwaltung", "Content Management", "Bildergalerien", "Akademisches Portal"],
+          metrics: [
+            { value: "Staatlich", label: "Öffentliche Bildung" },
+            { value: "CMS", label: "Admin-gesteuert" },
+            { value: "Responsiv", label: "Alle Geräte" },
+          ],
+          duration: "Institutionelle Plattform",
+          status: "Abgeschlossen — Offizielle digitale Plattform für die New Al-Nasiriyah Primary School erfolgreich ausgeliefert: eine sichere, moderne und skalierbare institutionelle Website mit zentraler Inhaltsverwaltung für Administratoren und einem optimierten öffentlichen Erlebnis für Schüler und Eltern.",
+          href: "https://www.newnasiriya.com",
+          visitLabel: "newnasiriya.com besuchen",
+          logo: "nasiriya",
         },
       ],
     },
