@@ -7,6 +7,7 @@ import elbakreyLogo from "@/assets/elbakrey-logo.webp";
 import flowpilotLogo from "@/assets/flowpilot-logo.webp";
 import veloriaLogo from "@/assets/veloria-logo.webp";
 import elhelalyLogo from "@/assets/elhelaly-logo.webp";
+import nasiriyaLogo from "@/assets/nasiriya-logo.webp";
 
 /**
  * CaseStudies — flagship, expandable showcases.
@@ -22,6 +23,7 @@ const LOGOS: Record<string, string> = {
   flowpilot: flowpilotLogo,
   veloria: veloriaLogo,
   elhelaly: elhelalyLogo,
+  nasiriya: nasiriyaLogo,
 };
 
 const CaseStudies = () => {
