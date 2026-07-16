@@ -92,7 +92,7 @@ const en: Dict = {
     ],
     caseStudies: {
       kicker: "— Flagship work",
-      titleA: "Five flagship platforms,",
+      titleA: "Six flagship platforms,",
       titleB: " engineered end-to-end.",
       lead:
         "A closer look at recent work shipped from our studio — national-scale civic infrastructure, a bespoke intellectual platform with global reach, and a full enterprise business operating system.",
@@ -206,6 +206,28 @@ const en: Dict = {
           duration: "Corporate Experience",
           status: "Completed — Premium bilingual manufacturing platform successfully delivered to modernize a three-decade industrial brand through refined storytelling, structured product presentation, and enterprise-grade corporate experience.",
           logo: "elhelaly",
+        },
+        {
+          tag: "Public Education · Government School · Digital Transformation",
+          client: "New Al-Nasiriyah Primary School",
+          title: "New Al-Nasiriyah Primary School — A Modern Institutional Platform.",
+          summary:
+            "A premium bilingual digital platform developed for a public primary school, combining institutional identity, educational resources, administrative content management, and a modern experience for students, parents, teachers, and school administration.",
+          challenge:
+            "Designed to modernize the school's digital presence while preserving its educational identity. The platform centralizes announcements, academic schedules, honor board, achievements, activities, media galleries, contact channels, and institutional information into one unified experience accessible across all devices.",
+          approach:
+            "Engineered as a scalable education platform featuring a secure administrative CMS, multilingual-ready architecture, responsive UI, SEO optimization, structured content management, image galleries, academic resources, and enterprise-level maintainability. Every public section is manageable through an internal administration panel without affecting the user experience.",
+          stack: ["React", "TypeScript", "Supabase", "Tailwind CSS", "CMS", "Educational Platform", "Responsive Design", "SEO", "Role-Based Admin", "Content Management", "Image Galleries", "Academic Portal"],
+          metrics: [
+            { value: "Government", label: "Public Education" },
+            { value: "CMS", label: "Admin Managed" },
+            { value: "Responsive", label: "All Devices" },
+          ],
+          duration: "Institutional Platform",
+          status: "Completed — Official digital platform successfully delivered for New Al-Nasiriyah Primary School, providing a secure, modern, scalable institutional website with centralized content management for administrators and an optimized public experience for students and parents.",
+          href: "https://www.newnasiriya.com",
+          visitLabel: "Visit newnasiriya.com",
+          logo: "nasiriya",
         },
       ],
     },
