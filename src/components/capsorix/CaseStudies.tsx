@@ -26,9 +26,15 @@ const LOGOS: Record<string, string> = {
   nasiriya: nasiriyaLogo,
 };
 
+// Temporarily hidden project logo keys. Data remains intact in the dictionary
+// so the entries can be restored instantly by clearing this set.
+const HIDDEN_LOGOS = new Set<string>(["haqak"]);
+
 const CaseStudies = () => {
   const { t, lang } = useI18n();
-  const items = t.caseStudies.items;
+  const items = t.caseStudies.items.filter(
+    (item) => !item.logo || !HIDDEN_LOGOS.has(item.logo)
+  );
   const [open, setOpen] = useState(0);
 
   return (
