@@ -2,31 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nexora-digital-empires.lovable.app/</loc>
+    <loc>https://capsorix.tech/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nexora-digital-empires.lovable.app/" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://nexora-digital-empires.lovable.app/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://nexora-digital-empires.lovable.app/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://nexora-digital-empires.lovable.app/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://capsorix.tech/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://capsorix.tech/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://capsorix.tech/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://capsorix.tech/" />
   </url>
   <url>
-    <loc>https://nexora-digital-empires.lovable.app/ios</loc>
+    <loc>https://capsorix.tech/ios</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nexora-digital-empires.lovable.app/android</loc>
+    <loc>https://capsorix.tech/android</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nexora-digital-empires.lovable.app/web</loc>
+    <loc>https://capsorix.tech/web</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nexora-digital-empires.lovable.app/guides/how-to-choose-a-software-development-company</loc>
+    <loc>https://capsorix.tech/workplace-culture</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://capsorix.tech/careers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://capsorix.tech/company-values</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://capsorix.tech/guides/how-to-choose-a-software-development-company</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

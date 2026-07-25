@@ -9,6 +9,9 @@ const en: Dict = {
       ios: "iOS",
       android: "Android",
       web: "Web",
+      workplace: "Workplace",
+      careers: "Careers",
+      values: "Values",
       cta: "Start a project",
     },
     hero: {

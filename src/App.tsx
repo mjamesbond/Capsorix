@@ -20,6 +20,9 @@ import { ThemeProvider } from "./theme/ThemeProvider";
 const IOS = lazy(() => import("./pages/IOS.tsx"));
 const Android = lazy(() => import("./pages/Android.tsx"));
 const Web = lazy(() => import("./pages/Web.tsx"));
+const WorkplaceCulture = lazy(() => import("./pages/WorkplaceCulture.tsx"));
+const Careers = lazy(() => import("./pages/Careers.tsx"));
+const CompanyValues = lazy(() => import("./pages/CompanyValues.tsx"));
 const ChoosingSoftwarePartner = lazy(() => import("./pages/ChoosingSoftwarePartner.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
@@ -49,7 +52,7 @@ const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; d
 
 const queryClient = new QueryClient();
 
-type RouteKey = "home" | "ios" | "android" | "web" | "notfound";
+type RouteKey = "home" | "ios" | "android" | "web" | "workplace" | "careers" | "values" | "notfound";
 
 const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: string }>> = {
   home: {
@@ -76,6 +79,24 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     de: { title: "Webplattform-Engineering — Capsorix", description: "Produktionsreife Websites, Dashboards und Web-Plattformen. Capsorix entwickelt schnelle, ästhetische und conversion-starke Web-Erlebnisse." },
     ar: { title: "هندسة منصات الويب — كابسوريكس", description: "مواقع ولوحات تحكم ومنصات ويب جاهزة للإنتاج. تهندس كابسوريكس تجارب ويب سريعة وأنيقة تركّز على التحويل." },
   },
+  workplace: {
+    en: { title: "Workplace & Culture — Capsorix", description: "Inside Capsorix: our remote-first culture, workplace policies, growth model, values, and the standards behind every product we build." },
+    fr: { title: "Culture d'entreprise — Capsorix", description: "Découvrez la culture Capsorix: travail remote-first, politique d'équipe, croissance professionnelle et standards d'exécution." },
+    de: { title: "Arbeitskultur — Capsorix", description: "Einblick in Capsorix: Remote-First-Kultur, Arbeitsplatzprinzipien, Wachstum und Werte für exzellente Produktarbeit." },
+    ar: { title: "بيئة وثقافة العمل — كابسوريكس", description: "تعرّف على ثقافة كابسوريكس: بيئة عمل عن بُعد، معايير تنفيذ عالية، تطوير مهني، وقيم واضحة." },
+  },
+  careers: {
+    en: { title: "Careers — Capsorix", description: "Join Capsorix. Explore open roles, our hiring process, and how we build high-trust teams for premium digital products." },
+    fr: { title: "Carrières — Capsorix", description: "Rejoignez Capsorix. Consultez nos opportunités, notre processus de recrutement et notre culture d'excellence." },
+    de: { title: "Karriere — Capsorix", description: "Arbeiten bei Capsorix: offene Rollen, Hiring-Prozess und ein Team mit hoher Verantwortung und klaren Standards." },
+    ar: { title: "الوظائف — كابسوريكس", description: "انضم إلى كابسوريكس. اطّلع على الفرص المتاحة وآلية التوظيف وثقافة العمل المبنية على الثقة والمسؤولية." },
+  },
+  values: {
+    en: { title: "Company Values — Capsorix", description: "The Capsorix values framework: principles, behaviors, and accountability standards that guide how we design, build, and lead." },
+    fr: { title: "Valeurs d'entreprise — Capsorix", description: "Le cadre de valeurs Capsorix: principes concrets, comportements attendus et culture de responsabilité." },
+    de: { title: "Unternehmenswerte — Capsorix", description: "Das Werte-Framework von Capsorix: Prinzipien, Verhaltensweisen und Verantwortungsstandards." },
+    ar: { title: "قيم الشركة — كابسوريكس", description: "إطار قيم كابسوريكس: مبادئ واضحة وسلوكيات عملية ومعايير للمسؤولية وجودة التنفيذ." },
+  },
   notfound: {
     en: { title: "Page Not Found — Capsorix", description: "The page you requested could not be found. Return to Capsorix to explore our premium iOS, Android, and web engagements." },
     fr: { title: "Page introuvable — Capsorix", description: "La page demandée est introuvable. Retournez à Capsorix pour découvrir nos prestations iOS, Android et web haut de gamme." },
@@ -90,7 +111,75 @@ const routeKeyFromPath = (pathname: string): RouteKey => {
   if (clean === "/ios") return "ios";
   if (clean === "/android") return "android";
   if (clean === "/web") return "web";
+  if (clean === "/workplace-culture") return "workplace";
+  if (clean === "/careers") return "careers";
+  if (clean === "/company-values") return "values";
   return "notfound";
+};
+
+const ROUTE_OG_IMAGES: Record<RouteKey, string> = {
+  home: "https://capsorix.tech/og.webp",
+  ios: "https://capsorix.tech/og.webp",
+  android: "https://capsorix.tech/og.webp",
+  web: "https://capsorix.tech/og.webp",
+  workplace: "https://capsorix.tech/og.webp",
+  careers: "https://capsorix.tech/og.webp",
+  values: "https://capsorix.tech/og.webp",
+  notfound: "https://capsorix.tech/og.webp",
+};
+
+const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang) => {
+  const existing = document.getElementById("route-jsonld");
+  const inLanguage = lang === "ar" ? "ar" : lang === "fr" ? "fr" : lang === "de" ? "de" : "en";
+  const baseGraph = [
+    {
+      "@type": "Organization",
+      "@id": "https://capsorix.tech/#organization",
+      name: "Capsorix",
+      url: "https://capsorix.tech/",
+      logo: "https://capsorix.tech/favicon.png",
+      sameAs: ["https://www.linkedin.com/company/capsorix", "https://x.com/capsorix"],
+    },
+  ];
+
+  const pageNode = {
+    "@type": "WebPage",
+    "@id": `https://capsorix.tech${path}#webpage`,
+    url: `https://capsorix.tech${path}`,
+    name: ROUTE_META[key][lang].title,
+    description: ROUTE_META[key][lang].description,
+    inLanguage,
+    isPartOf: { "@id": "https://capsorix.tech/#website" },
+    about: { "@id": "https://capsorix.tech/#organization" },
+  };
+
+  const graph = [...baseGraph, pageNode];
+  if (key === "careers") {
+    graph.push({
+      "@type": "JobPosting",
+      title: "Senior Product Engineer (Open Application)",
+      description:
+        "Build premium web and product systems at Capsorix with full-cycle ownership, remote-first collaboration, and high-quality engineering standards.",
+      datePosted: "2026-01-01",
+      validThrough: "2027-01-01T23:59",
+      employmentType: "FULL_TIME",
+      hiringOrganization: { "@id": "https://capsorix.tech/#organization" },
+      jobLocationType: "TELECOMMUTE",
+      applicantLocationRequirements: { "@type": "Country", name: "Worldwide" },
+      directApply: true,
+    });
+  }
+
+  const schema = { "@context": "https://schema.org", "@graph": graph };
+  if (existing) {
+    existing.textContent = JSON.stringify(schema);
+    return;
+  }
+  const script = document.createElement("script");
+  script.id = "route-jsonld";
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
 };
 
 const setMeta = (selector: string, attr: "content" | "href", value: string) => {
@@ -114,8 +203,11 @@ const RouteSeo = () => {
     setMeta('meta[property="og:description"]', "content", description);
     setMeta('meta[name="twitter:title"]', "content", title);
     setMeta('meta[name="twitter:description"]', "content", description);
+    setMeta('meta[property="og:image"]', "content", ROUTE_OG_IMAGES[key]);
+    setMeta('meta[name="twitter:image"]', "content", ROUTE_OG_IMAGES[key]);
     setMeta('link[rel="canonical"]', "href", canonicalUrl);
     setMeta('meta[property="og:url"]', "content", canonicalUrl);
+    upsertRouteJsonLd(path, key, lang);
   }, [pathname, lang]);
 
   return null;
@@ -143,6 +235,9 @@ const App = () => (
                 <Route path="/ios" element={<IOS />} />
                 <Route path="/android" element={<Android />} />
                 <Route path="/web" element={<Web />} />
+                <Route path="/workplace-culture" element={<WorkplaceCulture />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/company-values" element={<CompanyValues />} />
                 <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
