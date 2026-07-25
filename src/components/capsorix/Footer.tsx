@@ -1,4 +1,5 @@
 import { Linkedin } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { useI18n } from "@/i18n/I18nProvider";
 import capsorixLogo from "@/assets/capsorix-logo.webp";
 
@@ -15,11 +16,18 @@ const socials = [
 
 const Footer = () => {
   const { t } = useI18n();
-  const links = [
+  const { pathname } = useLocation();
+  const onHome = pathname === "/";
+  const sectionLinks = [
     { id: "services", label: t.nav.services },
     { id: "process", label: t.nav.process },
     { id: "industries", label: t.nav.industries },
     { id: "contact", label: t.nav.contact },
+  ];
+  const pageLinks = [
+    { to: "/workplace-culture", label: t.nav.workplace },
+    { to: "/careers", label: t.nav.careers },
+    { to: "/company-values", label: t.nav.values },
   ];
   return (
     <footer className="relative border-t border-border/40 mt-10">
@@ -42,10 +50,15 @@ const Footer = () => {
           </div>
 
           <nav aria-label="Footer" className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-            {links.map((l) => (
-              <a key={l.id} href={`#${l.id}`} className="text-muted-foreground hover:text-primary-glow transition-colors">
+            {sectionLinks.map((l) => (
+              <a key={l.id} href={onHome ? `#${l.id}` : `/#${l.id}`} className="text-muted-foreground hover:text-primary-glow transition-colors">
                 {l.label}
               </a>
+            ))}
+            {pageLinks.map((l) => (
+              <Link key={l.to} to={l.to} className="text-muted-foreground hover:text-primary-glow transition-colors">
+                {l.label}
+              </Link>
             ))}
           </nav>
         </div>

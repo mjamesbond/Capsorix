@@ -16,7 +16,19 @@ type Step = { title: string; desc: string };
 type Stat = { value: string; label: string };
 
 export interface Dict {
-  nav: { services: string; process: string; industries: string; contact: string; ios: string; android: string; web: string; cta: string };
+  nav: {
+    services: string;
+    process: string;
+    industries: string;
+    contact: string;
+    ios: string;
+    android: string;
+    web: string;
+    workplace: string;
+    careers: string;
+    values: string;
+    cta: string;
+  };
   hero: {
     badge: string; titleA: string; titleApps: string; titleB: string; titleSystems: string; titleC: string;
     sub: string; subStrong: string; ctaPrimary: string; ctaSecondary: string; foot: string; scroll: string;
@@ -197,5 +209,4 @@ export const loadDict = async (lang: Lang): Promise<Dict> => {
 
 /** Synchronous read of an already-loaded locale (returns undefined if not yet loaded). */
 export const peekDict = (lang: Lang): Dict | undefined => cache.get(lang);
-
 

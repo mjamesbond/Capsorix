@@ -44,7 +44,7 @@ Tagline: **“Code without limits — Your next digital move.”**
   - i18n provider
   - theme provider
   - router + lazy routes
-- Landing and service routes (`/`, `/ios`, `/android`, `/web`) are component-driven.
+- Landing and service routes (`/`, `/ios`, `/android`, `/web`, `/workplace-culture`, `/careers`, `/company-values`) are component-driven.
 - Heavy/secondary sections are lazy-loaded to keep first paint lean.
 - Contact flow integrates Supabase client via Vite env vars.
 
@@ -147,7 +147,7 @@ Manual verification:
 ### SEO essentials (static)
 - `public/robots.txt` allows crawling and points search engines to `https://capsorix.tech/sitemap.xml`.
 - `public/sitemap.xml` is a static sitemap served at `/sitemap.xml`.
-- Keep sitemap URLs aligned with route definitions in `src/App.tsx` (currently: `/`, `/ios`, `/android`, `/web`).
+- Keep sitemap URLs aligned with route definitions in `src/App.tsx` (currently: `/`, `/ios`, `/android`, `/web`, `/workplace-culture`, `/careers`, `/company-values`).
 - When adding/removing first-class routes, update `public/sitemap.xml` in the same PR.
 
 ### Roadmap
@@ -197,7 +197,7 @@ Manual verification:
   - مزوّد الترجمة i18n
   - مزوّد الثيم
   - الراوتر والمسارات المؤجلة التحميل
-- المسارات الأساسية: `/` و`/ios` و`/android` و`/web`.
+- المسارات الأساسية: `/` و`/ios` و`/android` و`/web` و`/workplace-culture` و`/careers` و`/company-values`.
 - الأقسام الثقيلة تُحمّل عند الحاجة للحفاظ على سرعة أول ظهور.
 - نموذج التواصل متكامل مع Supabase عبر متغيرات بيئة Vite.
 
@@ -304,7 +304,7 @@ Signature : **« Code without limits — Your next digital move. »**
   - i18n
   - thème
   - routeur + routes lazy
-- Routes principales : `/`, `/ios`, `/android`, `/web`.
+- Routes principales : `/`, `/ios`, `/android`, `/web`, `/workplace-culture`, `/careers`, `/company-values`.
 - Les sections lourdes sont chargées à la demande pour préserver le first paint.
 - Le flux contact s’appuie sur Supabase via variables d’environnement Vite.
 

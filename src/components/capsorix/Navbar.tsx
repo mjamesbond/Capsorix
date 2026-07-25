@@ -24,6 +24,9 @@ const Navbar = () => {
     { to: "/ios", label: t.nav.ios },
     { to: "/android", label: t.nav.android },
     { to: "/web", label: t.nav.web },
+    { to: "/workplace-culture", label: t.nav.workplace },
+    { to: "/careers", label: t.nav.careers },
+    { to: "/company-values", label: t.nav.values },
   ];
 
   useEffect(() => {
