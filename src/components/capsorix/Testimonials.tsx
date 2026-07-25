@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
@@ -15,14 +15,27 @@ const Testimonials = () => {
   const items = t.testimonials.items;
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(true);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (paused || items.length < 2) return;
+    if (paused || items.length < 2 || !inView) return;
     const id = window.setInterval(() => {
       setIdx((n) => (n + 1) % items.length);
     }, 9000);
     return () => window.clearInterval(id);
-  }, [paused, items.length]);
+  }, [paused, items.length, inView]);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "20% 0px 20% 0px", threshold: 0 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
 
   const go = (delta: number) => {
     setPaused(true);
@@ -38,7 +51,7 @@ const Testimonials = () => {
   const isRtl = lang === "ar";
 
   return (
-    <section className="relative section section-fade" data-lang={lang}>
+    <section ref={sectionRef} className="relative section section-fade" data-lang={lang}>
       <div className="container">
         <Reveal className="max-w-3xl mb-14 md:mb-16">
           <p className="text-xs font-medium tracking-[0.35em] uppercase text-primary mb-5">
