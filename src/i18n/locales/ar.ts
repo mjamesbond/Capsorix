@@ -9,6 +9,7 @@ const ar: Dict = {
       ios: "iOS",
       android: "Android",
       web: "الويب",
+      about: "من نحن",
       workplace: "بيئة العمل",
       careers: "الوظائف",
       values: "قيمنا",

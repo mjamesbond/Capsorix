@@ -9,6 +9,7 @@ const fr: Dict = {
       ios: "iOS",
       android: "Android",
       web: "Web",
+      about: "À propos",
       workplace: "Culture",
       careers: "Carrières",
       values: "Valeurs",
