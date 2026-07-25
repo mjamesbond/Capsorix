@@ -25,6 +25,7 @@ const Footer = () => {
     { id: "contact", label: t.nav.contact },
   ];
   const pageLinks = [
+    { to: "/about", label: t.nav.about },
     { to: "/workplace-culture", label: t.nav.workplace },
     { to: "/careers", label: t.nav.careers },
     { to: "/company-values", label: t.nav.values },

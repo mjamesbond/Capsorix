@@ -24,6 +24,7 @@ export interface Dict {
     ios: string;
     android: string;
     web: string;
+    about: string;
     workplace: string;
     careers: string;
     values: string;
@@ -209,4 +210,3 @@ export const loadDict = async (lang: Lang): Promise<Dict> => {
 
 /** Synchronous read of an already-loaded locale (returns undefined if not yet loaded). */
 export const peekDict = (lang: Lang): Dict | undefined => cache.get(lang);
-

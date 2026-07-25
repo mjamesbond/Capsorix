@@ -20,6 +20,7 @@ import { ThemeProvider } from "./theme/ThemeProvider";
 const IOS = lazy(() => import("./pages/IOS.tsx"));
 const Android = lazy(() => import("./pages/Android.tsx"));
 const Web = lazy(() => import("./pages/Web.tsx"));
+const AboutPage = lazy(() => import("./pages/About.tsx"));
 const WorkplaceCulture = lazy(() => import("./pages/WorkplaceCulture.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const CompanyValues = lazy(() => import("./pages/CompanyValues.tsx"));
@@ -52,7 +53,7 @@ const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; d
 
 const queryClient = new QueryClient();
 
-type RouteKey = "home" | "ios" | "android" | "web" | "workplace" | "careers" | "values" | "notfound";
+type RouteKey = "home" | "ios" | "android" | "web" | "about" | "workplace" | "careers" | "values" | "notfound";
 
 const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: string }>> = {
   home: {
@@ -78,6 +79,12 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     fr: { title: "Ingénierie de plateformes web — Capsorix", description: "Sites, dashboards et plateformes web de niveau production. Capsorix conçoit des expériences web rapides, élégantes et orientées conversion." },
     de: { title: "Webplattform-Engineering — Capsorix", description: "Produktionsreife Websites, Dashboards und Web-Plattformen. Capsorix entwickelt schnelle, ästhetische und conversion-starke Web-Erlebnisse." },
     ar: { title: "هندسة منصات الويب — كابسوريكس", description: "مواقع ولوحات تحكم ومنصات ويب جاهزة للإنتاج. تهندس كابسوريكس تجارب ويب سريعة وأنيقة تركّز على التحويل." },
+  },
+  about: {
+    en: { title: "About Capsorix — Product Engineering Philosophy", description: "A cinematic manifesto of how Capsorix thinks, what we build, what we refuse, and why ambitious companies trust our AI-driven product engineering studio." },
+    fr: { title: "À propos de Capsorix — Philosophie d'ingénierie produit", description: "Un manifeste interactif sur la façon dont Capsorix pense, construit et prend des décisions produit durables." },
+    de: { title: "Über Capsorix — Produkt-Engineering-Philosophie", description: "Ein interaktives Manifest darüber, wie Capsorix denkt, baut und warum anspruchsvolle Unternehmen auf unsere Produktarbeit setzen." },
+    ar: { title: "عن كابسوريكس — فلسفة هندسة المنتجات", description: "تجربة تفاعلية توضّح كيف نفكّر في كابسوريكس، وما الذي نبنيه، وما الذي نرفض بناءه، ولماذا تثق بنا الشركات الطموحة." },
   },
   workplace: {
     en: { title: "Workplace & Culture — Capsorix", description: "Inside Capsorix: our remote-first culture, workplace policies, growth model, values, and the standards behind every product we build." },
@@ -111,6 +118,7 @@ const routeKeyFromPath = (pathname: string): RouteKey => {
   if (clean === "/ios") return "ios";
   if (clean === "/android") return "android";
   if (clean === "/web") return "web";
+  if (clean === "/about") return "about";
   if (clean === "/workplace-culture") return "workplace";
   if (clean === "/careers") return "careers";
   if (clean === "/company-values") return "values";
@@ -122,6 +130,7 @@ const ROUTE_OG_IMAGES: Record<RouteKey, string> = {
   ios: "https://capsorix.tech/og.webp",
   android: "https://capsorix.tech/og.webp",
   web: "https://capsorix.tech/og.webp",
+  about: "https://capsorix.tech/og.webp",
   workplace: "https://capsorix.tech/og.webp",
   careers: "https://capsorix.tech/og.webp",
   values: "https://capsorix.tech/og.webp",
@@ -235,6 +244,7 @@ const App = () => (
                 <Route path="/ios" element={<IOS />} />
                 <Route path="/android" element={<Android />} />
                 <Route path="/web" element={<Web />} />
+                <Route path="/about" element={<AboutPage />} />
                 <Route path="/workplace-culture" element={<WorkplaceCulture />} />
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/company-values" element={<CompanyValues />} />

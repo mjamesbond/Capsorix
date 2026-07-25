@@ -21,11 +21,10 @@ const Navbar = () => {
   ];
 
   const pageLinks = [
+    { to: "/about", label: t.nav.about, featured: true },
     { to: "/ios", label: t.nav.ios },
     { to: "/android", label: t.nav.android },
     { to: "/web", label: t.nav.web },
-    { to: "/workplace-culture", label: t.nav.workplace },
-    { to: "/careers", label: t.nav.careers },
     { to: "/company-values", label: t.nav.values },
   ];
 
@@ -80,10 +79,18 @@ const Navbar = () => {
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className={`text-sm font-medium transition-colors relative after:absolute after:left-0 after:-bottom-1 after:h-px after:bg-gradient-gold after:transition-all after:duration-300 ${
-                      active
-                        ? "text-primary-glow after:w-full"
-                        : "text-muted-foreground hover:text-primary-glow after:w-0 hover:after:w-full"
+                    className={`text-sm font-medium transition-colors relative ${
+                      l.featured
+                        ? `rounded-full px-3 py-1.5 border transition-all duration-500 ${
+                            active
+                              ? "text-primary-glow border-primary/45 bg-primary/10 shadow-gold"
+                              : "text-foreground/90 border-primary/25 hover:border-primary/45 hover:text-primary-glow"
+                          }`
+                        : `after:absolute after:left-0 after:-bottom-1 after:h-px after:bg-gradient-gold after:transition-all after:duration-300 ${
+                            active
+                              ? "text-primary-glow after:w-full"
+                              : "text-muted-foreground hover:text-primary-glow after:w-0 hover:after:w-full"
+                          }`
                     }`}
                   >
                     {l.label}
