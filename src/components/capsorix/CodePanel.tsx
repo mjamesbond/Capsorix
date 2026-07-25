@@ -297,6 +297,8 @@ const CodePanel = ({ className = "", speed = 55 }: CodePanelProps) => {
   const [lineIdx, setLineIdx] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [committed, setCommitted] = useState<number[]>([]);
+  const [inView, setInView] = useState(true);
+  const panelRef = useRef<HTMLDivElement | null>(null);
   const tickRef = useRef<number | null>(null);
 
   // Reset the typewriter when the language flips so we restart cleanly.
@@ -307,6 +309,18 @@ const CodePanel = ({ className = "", speed = 55 }: CodePanelProps) => {
   }, [lang]);
 
   useEffect(() => {
+    const node = panelRef.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "20% 0px 20% 0px", threshold: 0 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
     const current = LINES[lineIdx];
     const max = totalChars(current);
 
@@ -326,10 +340,10 @@ const CodePanel = ({ className = "", speed = 55 }: CodePanelProps) => {
     return () => {
       if (tickRef.current) window.clearTimeout(tickRef.current);
     };
-  }, [charCount, lineIdx, speed, LINES]);
+  }, [charCount, lineIdx, speed, LINES, inView]);
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl glass-strong gold-border-glow ${className}`}>
+    <div ref={panelRef} className={`relative overflow-hidden rounded-2xl glass-strong gold-border-glow ${className}`}>
       {/* Editor chrome — stays LTR even in Arabic; it's a code window */}
       <div className="flex items-center gap-2 px-5 py-3 border-b border-border/40" dir="ltr">
         <span className="w-2.5 h-2.5 rounded-full bg-[hsl(0_60%_55%)]/70" />

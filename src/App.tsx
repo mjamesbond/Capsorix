@@ -1,15 +1,13 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import ScrollProgress from "./components/capsorix/ScrollProgress";
 import CookieConsent from "./components/capsorix/CookieConsent";
 import SkipLink from "./components/capsorix/SkipLink";
 import SubpageSkeleton from "./components/capsorix/SubpageSkeleton";
-import PerfHud from "./components/capsorix/PerfHud";
+import PerfHudGate from "./components/capsorix/PerfHudGate";
 import BackToTop from "./components/capsorix/BackToTop";
 import { I18nProvider, useI18n } from "./i18n/I18nProvider";
 import type { Lang } from "./i18n/dictionary";
@@ -50,8 +48,6 @@ const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; d
   if (!ready) return null;
   return <>{children}</>;
 };
-
-const queryClient = new QueryClient();
 
 type RouteKey = "home" | "ios" | "android" | "web" | "about" | "workplace" | "careers" | "values" | "notfound";
 
@@ -223,44 +219,40 @@ const RouteSeo = () => {
 };
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <I18nProvider>
-      <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <RouteSeo />
-            <SkipLink />
-            <DeferredMount>
-              <Suspense fallback={null}>
-                <NeuralLayer />
-              </Suspense>
-            </DeferredMount>
-            <ScrollProgress />
-            <Suspense fallback={<RouteFallback />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/ios" element={<IOS />} />
-                <Route path="/android" element={<Android />} />
-                <Route path="/web" element={<Web />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/workplace-culture" element={<WorkplaceCulture />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/company-values" element={<CompanyValues />} />
-                <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-            <CookieConsent />
-            <BackToTop />
-            <PerfHud />
-          </BrowserRouter>
-        </TooltipProvider>
-      </ThemeProvider>
-    </I18nProvider>
-  </QueryClientProvider>
+  <I18nProvider>
+    <ThemeProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <RouteSeo />
+        <SkipLink />
+        <DeferredMount>
+          <Suspense fallback={null}>
+            <NeuralLayer />
+          </Suspense>
+        </DeferredMount>
+        <ScrollProgress />
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/ios" element={<IOS />} />
+            <Route path="/android" element={<Android />} />
+            <Route path="/web" element={<Web />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/workplace-culture" element={<WorkplaceCulture />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/company-values" element={<CompanyValues />} />
+            <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <CookieConsent />
+        <BackToTop />
+        <PerfHudGate />
+      </BrowserRouter>
+    </ThemeProvider>
+  </I18nProvider>
 );
 
 export default App;

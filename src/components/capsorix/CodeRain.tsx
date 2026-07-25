@@ -147,6 +147,7 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
   const { lang } = useI18n();
   const ref = useParallax<HTMLDivElement>(parallaxSpeed);
   const [mounted, setMounted] = useState(false);
+  const [active, setActive] = useState(true);
   const pool =
     lang === "ar" ? SNIPPETS_AR :
     lang === "fr" ? SNIPPETS_FR :
@@ -156,6 +157,19 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
   const columns = useMemo(() => buildColumns(density, pool), [density, pool]);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const node = ref.current;
+    if (!node) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: "20% 0px 20% 0px", threshold: 0 },
+    );
+    io.observe(node);
+    return () => io.disconnect();
+  }, [mounted, ref]);
+
   if (!mounted) return null;
 
   return (
@@ -175,6 +189,7 @@ const CodeRain = ({ className = "", density = 4, parallaxSpeed = 0.08 }: CodeRai
             left: col.left,
             top: col.top,
             animation: `code-fall ${col.speed * 1.6}s linear ${col.delay}s infinite`,
+            animationPlayState: active ? "running" : "paused",
           }}
         >
           {col.lines.map((line, j) => (
