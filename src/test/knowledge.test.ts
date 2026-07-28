@@ -23,10 +23,10 @@ describe("knowledge content validation",()=>{
  it("preserves Unicode superscripts",()=>expect(renderMarkdown("Evidence¹ and finding²").html).toContain("Evidence¹"));
  it("escapes unsafe raw HTML",()=>expect(renderMarkdown('<script>alert("x")</script>').html).not.toContain("<script>"));
  it("preserves the pilot body SHA-256",()=>{const raw=readFileSync("content/knowledge/en/canon/05-the-decisions-a-system-makes-before-anyone-agrees-to-them.md","utf8");const {body}=parseFrontMatter(raw);expect(createHash("sha256").update(body).digest("hex")).toBe(PILOT_BODY_SHA256)});
- it("retains canonical position 5 of 10",()=>{const k=loadKnowledge();expect(k.articles[0].order).toBe(5);expect(k.collection.totalSize).toBe(10)});
- it("does not invent previous or next articles",()=>expect(loadKnowledge().articles).toHaveLength(1));
+ it("loads every available canonical position in order",()=>{const k=loadKnowledge();expect(k.articles.map(a=>a.order)).toEqual([1,2,3,4,5,6,7,8,10]);expect(k.collection.totalSize).toBe(10)});
+ it("keeps canonical position 9 reserved and unavailable",()=>expect(loadKnowledge().collection.reserved).toEqual([{order:9,title:"Designing Products That Don’t Exist Yet",slug:"designing-products-that-dont-exist-yet",status:"unavailable"}]));
  it("generates complete static article HTML",()=>{const p="dist/knowledge/canon/the-decisions-a-system-makes-before-anyone-agrees-to-them/index.html";if(existsSync(p))expect(readFileSync(p,"utf8")).toContain("Technology as a settled claim about the world")});
- it("marks ready content noindex",()=>expect(loadKnowledge().articles[0].status).toBe("ready"));
- it("excludes ready content from sitemap and RSS eligibility",()=>expect(loadKnowledge().articles.filter(a=>a.status==="published")).toHaveLength(0));
+ it("retains the pilot as ready",()=>expect(loadKnowledge().articles.find(a=>a.order===5)?.status).toBe("ready"));
+ it("exposes every imported published article to RSS generation",()=>expect(loadKnowledge().articles.filter(a=>a.status==="published").map(a=>a.order)).toEqual([1,2,3,4,6,7,10]));
  it("keeps existing production routes declared",()=>{const app=readFileSync("src/App.tsx","utf8");for(const route of ["/ios","/android","/web","/about","/careers"])expect(app).toContain(`path="${route}"`) });
 });
