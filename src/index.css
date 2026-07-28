@@ -769,3 +769,24 @@
   .bg-gold-animated,
   .text-gradient-gold { animation: none !important; }
 }
+
+@layer components {
+  .knowledge-prose { @apply max-w-3xl text-base leading-8 text-foreground/90; }
+  .knowledge-prose h1 { @apply mb-8 font-display text-4xl leading-tight md:text-6xl; }
+  .knowledge-prose h2 { @apply mb-5 mt-14 scroll-mt-28 font-display text-3xl; }
+  .knowledge-prose h3 { @apply mb-4 mt-10 scroll-mt-28 font-display text-2xl; }
+  .knowledge-prose p { @apply my-6; }
+  .knowledge-prose ul { @apply my-6 list-disc space-y-2 pl-6; }
+  .knowledge-prose ol { @apply my-6 list-decimal space-y-2 pl-6; }
+  .knowledge-prose blockquote { @apply my-8 border-l-2 border-primary bg-muted/40 px-6 py-2 text-foreground; }
+  .knowledge-prose hr { @apply my-12 border-border; }
+  .knowledge-prose a { @apply text-primary underline underline-offset-4; }
+  .knowledge-prose code { @apply rounded bg-muted px-1.5 py-0.5 text-sm; }
+  .knowledge-table-wrap { @apply my-8 overflow-x-auto; }
+  .knowledge-prose table { @apply w-full min-w-[36rem] border-collapse text-left text-sm; }
+  .knowledge-prose th, .knowledge-prose td { @apply border border-border p-3 align-top; }
+  .knowledge-prose th { @apply bg-muted font-semibold; }
+  .knowledge-toc { @apply sticky top-28 border-l border-border pl-6 text-sm; }
+  .knowledge-toc ol { @apply mt-4 space-y-3 text-muted-foreground; }
+  .knowledge-toc a { @apply hover:text-primary; }
+}

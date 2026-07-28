@@ -2,6 +2,7 @@ import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import { knowledgeBuildPlugin } from "./src/knowledge/build";
 
 // Inject <link rel="preload"> for the hashed hero-bg.webp so the LCP image
 // starts downloading in parallel with the CSS request instead of being
@@ -38,6 +39,7 @@ export default defineConfig(({ mode }) => ({
     react(),
     mode === "development" && componentTagger(),
     lcpPreload(),
+    knowledgeBuildPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {

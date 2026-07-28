@@ -1,0 +1,3 @@
+import { Link } from "react-router-dom";
+import type { KnowledgeArticle } from "@/knowledge/schema";
+export default function ArticleNavigation({article,articles}:{article:KnowledgeArticle;articles:KnowledgeArticle[]}) { const published=articles.filter(x=>x.status!=="draft"&&x.status!=="archived");const i=published.findIndex(x=>x.slug===article.slug),prev=published[i-1],next=published[i+1];return <nav aria-label="Article navigation" className="mt-16 flex justify-between border-t border-border pt-8">{prev?<Link to={prev.canonicalPath}>← Article {prev.order}</Link>:<span/>}{next?<Link to={next.canonicalPath}>Article {next.order} →</Link>:<span/>}</nav>; }
