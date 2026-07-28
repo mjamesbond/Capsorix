@@ -1,0 +1,9 @@
+id: foundational-canon
+basePath: /knowledge/canon
+language: en
+totalSize: 10
+reserved:
+  - order: 9
+    title: "Designing Products That Don’t Exist Yet"
+    slug: designing-products-that-dont-exist-yet
+    status: unavailable

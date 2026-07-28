@@ -23,6 +23,9 @@ const WorkplaceCulture = lazy(() => import("./pages/WorkplaceCulture.tsx"));
 const Careers = lazy(() => import("./pages/Careers.tsx"));
 const CompanyValues = lazy(() => import("./pages/CompanyValues.tsx"));
 const ChoosingSoftwarePartner = lazy(() => import("./pages/ChoosingSoftwarePartner.tsx"));
+const KnowledgeLanding = lazy(() => import("./pages/knowledge/KnowledgeLanding.tsx"));
+const CanonIndex = lazy(() => import("./pages/knowledge/CanonIndex.tsx"));
+const CanonArticle = lazy(() => import("./pages/knowledge/CanonArticle.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 // NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
 // it never delays first paint or blocks initial interaction.
@@ -49,7 +52,7 @@ const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; d
   return <>{children}</>;
 };
 
-type RouteKey = "home" | "ios" | "android" | "web" | "about" | "workplace" | "careers" | "values" | "notfound";
+type RouteKey = "home" | "ios" | "android" | "web" | "about" | "workplace" | "careers" | "values" | "knowledge" | "canon" | "article" | "notfound";
 
 const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: string }>> = {
   home: {
@@ -100,6 +103,18 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     de: { title: "Unternehmenswerte — Capsorix", description: "Das Werte-Framework von Capsorix: Prinzipien, Verhaltensweisen und Verantwortungsstandards." },
     ar: { title: "قيم الشركة — كابسوريكس", description: "إطار قيم كابسوريكس: مبادئ واضحة وسلوكيات عملية ومعايير للمسؤولية وجودة التنفيذ." },
   },
+  knowledge: {
+    en: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system for Canon, Concepts, Methods, Research, Projects, and Cases." },
+    fr: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." }, de: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." }, ar: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." },
+  },
+  canon: {
+    en: { title: "Foundational Canon | Capsorix", description: "The ordered foundational Canon of the Capsorix Knowledge Platform." },
+    fr: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, de: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, ar: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
+  },
+  article: {
+    en: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims about authority, identity, records, exceptions, accountability, and measurement before those claims are examined. This essay identifies the decisions that become costly when implementation makes them durable." },
+    fr: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." }, de: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." }, ar: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." },
+  },
   notfound: {
     en: { title: "Page Not Found — Capsorix", description: "The page you requested could not be found. Return to Capsorix to explore our premium iOS, Android, and web engagements." },
     fr: { title: "Page introuvable — Capsorix", description: "La page demandée est introuvable. Retournez à Capsorix pour découvrir nos prestations iOS, Android et web haut de gamme." },
@@ -118,6 +133,9 @@ const routeKeyFromPath = (pathname: string): RouteKey => {
   if (clean === "/workplace-culture") return "workplace";
   if (clean === "/careers") return "careers";
   if (clean === "/company-values") return "values";
+  if (clean === "/knowledge") return "knowledge";
+  if (clean === "/knowledge/canon") return "canon";
+  if (clean.startsWith("/knowledge/canon/")) return "article";
   return "notfound";
 };
 
@@ -130,6 +148,7 @@ const ROUTE_OG_IMAGES: Record<RouteKey, string> = {
   workplace: "https://capsorix.tech/og.webp",
   careers: "https://capsorix.tech/og.webp",
   values: "https://capsorix.tech/og.webp",
+  knowledge: "https://capsorix.tech/og.webp", canon: "https://capsorix.tech/og.webp", article: "https://capsorix.tech/og.webp",
   notfound: "https://capsorix.tech/og.webp",
 };
 
@@ -212,6 +231,7 @@ const RouteSeo = () => {
     setMeta('meta[name="twitter:image"]', "content", ROUTE_OG_IMAGES[key]);
     setMeta('link[rel="canonical"]', "href", canonicalUrl);
     setMeta('meta[property="og:url"]', "content", canonicalUrl);
+    setMeta('meta[name="robots"]', "content", key === "article" ? "noindex,follow" : "index,follow");
     upsertRouteJsonLd(path, key, lang);
   }, [pathname, lang]);
 
@@ -243,6 +263,9 @@ const App = () => (
             <Route path="/careers" element={<Careers />} />
             <Route path="/company-values" element={<CompanyValues />} />
             <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
+            <Route path="/knowledge" element={<KnowledgeLanding />} />
+            <Route path="/knowledge/canon" element={<CanonIndex />} />
+            <Route path="/knowledge/canon/:slug" element={<CanonArticle />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

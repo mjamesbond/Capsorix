@@ -1,3 +1,33 @@
+---
+title: "The Decisions a System Makes Before Anyone Agrees to Them"
+subtitle: null
+slug: "the-decisions-a-system-makes-before-anyone-agrees-to-them"
+description: "Software encodes institutional claims about authority, identity, records, exceptions, accountability, and measurement before those claims are examined. This essay identifies the decisions that become costly when implementation makes them durable."
+section: "canon"
+language: "en"
+status: "ready"
+order: 5
+publishedAt: null
+updatedAt: "2026-07-28"
+authors:
+  - "capsorix-editorial"
+concepts:
+  - "institutional-assumptions"
+  - "encoding"
+  - "reversibility"
+  - "requirements-compression"
+  - "authority-models"
+  - "work-as-done"
+methods:
+  - "requirement-decompression"
+  - "six-load-bearing-decisions"
+  - "encoding-threshold"
+  - "disposability-test"
+related: []
+image: null
+imageAlt: null
+canonicalPath: "/knowledge/canon/the-decisions-a-system-makes-before-anyone-agrees-to-them"
+---
 # The Decisions a System Makes Before Anyone Agrees to Them
 
 *Software rarely fails because a team built too early. It fails because a handful of technical decisions quietly committed an organisation to a version of itself that no one examined.*
