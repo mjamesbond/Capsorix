@@ -12,6 +12,10 @@ import BackToTop from "./components/capsorix/BackToTop";
 import { I18nProvider, useI18n } from "./i18n/I18nProvider";
 import type { Lang } from "./i18n/dictionary";
 import { ThemeProvider } from "./theme/ThemeProvider";
+import { articles } from "virtual:knowledge-manifest";
+import type { KnowledgeArticle } from "./knowledge/schema";
+
+const CANONICAL_ORIGIN = "https://capsorix.tech";
 
 // Subpages and the 404 are deferred — the landing page stays the only
 // thing in the initial bundle, keeping first paint lean.
@@ -112,8 +116,8 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     fr: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, de: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, ar: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
   },
   article: {
-    en: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims about authority, identity, records, exceptions, accountability, and measurement before those claims are examined. This essay identifies the decisions that become costly when implementation makes them durable." },
-    fr: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." }, de: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." }, ar: { title: "The Decisions a System Makes Before Anyone Agrees to Them | Capsorix", description: "Software encodes institutional claims before they are examined." },
+    en: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
+    fr: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." }, de: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." }, ar: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
   },
   notfound: {
     en: { title: "Page Not Found — Capsorix", description: "The page you requested could not be found. Return to Capsorix to explore our premium iOS, Android, and web engagements." },
@@ -152,7 +156,7 @@ const ROUTE_OG_IMAGES: Record<RouteKey, string> = {
   notfound: "https://capsorix.tech/og.webp",
 };
 
-const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang) => {
+const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang, article?: KnowledgeArticle) => {
   const existing = document.getElementById("route-jsonld");
   const inLanguage = lang === "ar" ? "ar" : lang === "fr" ? "fr" : lang === "de" ? "de" : "en";
   const baseGraph = [
@@ -164,7 +168,35 @@ const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang) => {
       logo: "https://capsorix.tech/favicon.png",
       sameAs: ["https://www.linkedin.com/company/capsorix", "https://x.com/capsorix"],
     },
+    {
+      "@type": "WebSite",
+      "@id": `${CANONICAL_ORIGIN}/#website`,
+      name: "Capsorix",
+      url: `${CANONICAL_ORIGIN}/`,
+      publisher: { "@id": `${CANONICAL_ORIGIN}/#organization` },
+    },
   ];
+
+  const breadcrumb = article ? {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Knowledge", item: `${CANONICAL_ORIGIN}/knowledge` },
+      { "@type": "ListItem", position: 2, name: "Canon", item: `${CANONICAL_ORIGIN}/knowledge/canon` },
+      { "@type": "ListItem", position: 3, name: article.title, item: `${CANONICAL_ORIGIN}${article.canonicalPath}` },
+    ],
+  } : null;
+  const articleNode = article ? {
+    "@type": "Article",
+    headline: article.title,
+    description: article.description,
+    url: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
+    mainEntityOfPage: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
+    ...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
+    dateModified: article.updatedAt,
+    author: article.authors.map((name) => ({ "@type": "Organization", name })),
+    publisher: { "@id": `${CANONICAL_ORIGIN}/#organization` },
+    inLanguage: article.language,
+  } : null;
 
   const pageNode = {
     "@type": "WebPage",
@@ -177,7 +209,7 @@ const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang) => {
     about: { "@id": "https://capsorix.tech/#organization" },
   };
 
-  const graph = [...baseGraph, pageNode];
+  const graph = [...baseGraph, ...(articleNode ? [articleNode, breadcrumb!] : [pageNode])];
   if (key === "careers") {
     graph.push({
       "@type": "JobPosting",
@@ -217,9 +249,14 @@ const RouteSeo = () => {
 
   useEffect(() => {
     const path = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
-    const canonicalUrl = `${window.location.origin}${path}`;
     const key = routeKeyFromPath(pathname);
-    const { title, description } = ROUTE_META[key][lang];
+    const article = key === "article" ? articles.find((item) => item.canonicalPath === path) : undefined;
+    const routeMeta = article
+      ? { title: `${article.title} | Capsorix`, description: article.description }
+      : ROUTE_META[key][lang];
+    const { title, description } = routeMeta;
+    const canonicalPath = article?.canonicalPath ?? path;
+    const canonicalUrl = `${CANONICAL_ORIGIN}${canonicalPath}`;
 
     document.title = title;
     setMeta('meta[name="description"]', "content", description);
@@ -227,12 +264,13 @@ const RouteSeo = () => {
     setMeta('meta[property="og:description"]', "content", description);
     setMeta('meta[name="twitter:title"]', "content", title);
     setMeta('meta[name="twitter:description"]', "content", description);
+    setMeta('meta[property="og:type"]', "content", article ? "article" : "website");
     setMeta('meta[property="og:image"]', "content", ROUTE_OG_IMAGES[key]);
     setMeta('meta[name="twitter:image"]', "content", ROUTE_OG_IMAGES[key]);
     setMeta('link[rel="canonical"]', "href", canonicalUrl);
     setMeta('meta[property="og:url"]', "content", canonicalUrl);
-    setMeta('meta[name="robots"]', "content", key === "article" ? "noindex,follow" : "index,follow");
-    upsertRouteJsonLd(path, key, lang);
+    setMeta('meta[name="robots"]', "content", article?.status === "ready" ? "noindex,follow" : "index,follow");
+    upsertRouteJsonLd(canonicalPath, key, lang, article);
   }, [pathname, lang]);
 
   return null;
