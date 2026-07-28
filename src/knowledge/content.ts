@@ -1,9 +1,20 @@
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { articleSchema, type ArticleMetadata, type CanonCollection, type KnowledgeArticle, type TocEntry } from "./schema";
 
 export const PILOT_BODY_SHA256 = "337e137cd3380508008849f24028dddc3d23b64ca8fb9122783f31ce352c7101";
+const canonCatalog = [
+  [1,"Capsorix Final Canon/the-person-who-is-secretly-the-software.md","the-person-who-is-secretly-the-software","published","2026-07-27"],
+  [2,"Capsorix Final Canon/digital-transformation-is-not-a-software-project.md","digital-transformation-is-not-a-software-project","published","2026-07-27"],
+  [3,"Capsorix Final Canon/from-impossible-idea-to-real-product.md","from-impossible-idea-to-real-product","published","2026-07-27"],
+  [4,"Capsorix Final Canon/anatomy-of-an-ambitious-idea-final.md","anatomy-of-an-ambitious-idea","published","2026-07-27"],
+  [5,"content/knowledge/en/canon/05-the-decisions-a-system-makes-before-anyone-agrees-to-them.md","the-decisions-a-system-makes-before-anyone-agrees-to-them","ready",null],
+  [6,"Capsorix Final Canon/before-technology-what-must-be-understood-before-a-product-can-be-engineered.md","before-technology-what-must-be-understood-before-a-product-can-be-engineered","published","2026-07-28"],
+  [7,"Capsorix Final Canon/the-product-is-only-as-mature-as-the-organisation-that-owns-it.md","the-product-is-only-as-mature-as-the-organisation-that-owns-it","published","2026-07-28"],
+  [8,"Capsorix Final Canon/capsorix-article-08-ARTICLE-ONLY.md","innovation-is-not-an-engineering-discipline","ready",null],
+  [10,"Capsorix Final Canon/ai-is-cheap-to-try-and-expensive-to-depend-on.md","ai-is-cheap-to-try-and-expensive-to-depend-on","published","2026-07-28"],
+] as const;
 const esc = (s: string) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const plain = (s: string) => s.replace(/[*_`[\]]/g, "").replace(/\([^)]*\)/g, "");
 export const headingId = (s: string) => plain(s).normalize("NFKD").toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-");
@@ -46,4 +57,13 @@ export function renderMarkdown(body: string) {
 }
 export function validateArticles(items: KnowledgeArticle[]) { const seen=(key:"slug"|"order"|"canonicalPath")=>{const s=new Set<string|number>();for(const x of items){if(s.has(x[key]))throw new Error(`Duplicate ${key}: ${x[key]}`);s.add(x[key]);}}; seen("slug");seen("order");seen("canonicalPath");const slugs=new Set(items.map(x=>x.slug));for(const x of items)for(const r of x.related)if(!slugs.has(r))throw new Error(`Unresolved related reference: ${r}`);return [...items].sort((a,b)=>a.order-b.order); }
 export function processArticle(source:string): KnowledgeArticle { const {data,body}=parseFrontMatter(source);const metadata=articleSchema.parse(data) as ArticleMetadata;const headings=[...body.matchAll(/^#\s+(.+)$/gm)].map(x=>plain(x[1]));if(headings.length>1)throw new Error("Multiple body H1 headings");if(headings[0]&&headings[0]!==metadata.title)throw new Error("Body H1 must match metadata title");const rendered=renderMarkdown(body);return {...metadata,...rendered,readingMinutes:Math.max(1,Math.ceil(body.trim().split(/\s+/).length/220)),bodyHash:createHash("sha256").update(body).digest("hex"),hasBodyH1:headings.length===1}; }
-export function loadKnowledge(root=process.cwd()){const dir=path.join(root,"content/knowledge/en/canon");const articles=validateArticles(readdirSync(dir).filter(f=>f.endsWith(".md")&&!f.startsWith("_")).map(f=>processArticle(readFileSync(path.join(dir,f),"utf8"))));const collection:CanonCollection={id:"foundational-canon",basePath:"/knowledge/canon",language:"en",totalSize:10,reserved:[{order:9,title:"Designing Products That Don’t Exist Yet",slug:"designing-products-that-dont-exist-yet",status:"unavailable"}]};return {collection,articles};}
+function catalogArticle(root:string, entry:typeof canonCatalog[number]) {
+  const [order,file,slug,status,publishedAt]=entry;
+  const source=readFileSync(path.join(root,file),"utf8");
+  const parsed=source.startsWith("---\n")?parseFrontMatter(source):{data:{},body:source};
+  const title=String(parsed.data.title??parsed.body.match(/^#\s+(.+)$/m)?.[1]??"");
+  const description=String(parsed.data.description??parsed.body.match(/^\*(.+)\*$/m)?.[1]??parsed.body.split(/\n\s*\n/).find(x=>!x.startsWith("#"))??title).replace(/\s+/g," ");
+  const metadata:ArticleMetadata={title,subtitle:null,slug,description,section:"canon",language:"en",status,order,publishedAt,updatedAt:String(parsed.data.updated??publishedAt??"2026-07-28"),authors:["capsorix-editorial"],concepts:[],methods:[],related:[],image:null,imageAlt:null,canonicalPath:`/knowledge/canon/${slug}`};
+  return processArticle(`---\n${Object.entries(metadata).map(([key,value])=>Array.isArray(value)?(value.length?`${key}:\n${value.map(x=>`  - "${x}"`).join("\n")}`:`${key}: []`):value===null?`${key}: null`:typeof value==="number"?`${key}: ${value}`:`${key}: "${value}"`).join("\n")}\n---\n${parsed.body}`);
+}
+export function loadKnowledge(root=process.cwd()){const articles=validateArticles(canonCatalog.map(entry=>catalogArticle(root,entry)));const collection:CanonCollection={id:"foundational-canon",basePath:"/knowledge/canon",language:"en",totalSize:10,reserved:[{order:9,title:"Designing Products That Don’t Exist Yet",slug:"designing-products-that-dont-exist-yet",status:"unavailable"}]};return {collection,articles};}
