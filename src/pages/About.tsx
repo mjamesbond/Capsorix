@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import SubpageShell from "@/components/capsorix/SubpageShell";
 import Reveal from "@/components/capsorix/Reveal";
+import FounderBust from "@/components/capsorix/FounderBust";
 import { useI18n } from "@/i18n/I18nProvider";
 
 const FAILURE_PATTERNS = [
@@ -217,18 +218,23 @@ const About = () => {
       </section>
 
       <section className="pb-24">
-        <div className="container max-w-4xl">
-          <Reveal className="glass rounded-3xl p-8 md:p-12 gold-border-glow">
-            <p className="text-xs tracking-[0.35em] uppercase text-primary mb-4">Meet the Founder</p>
-            <h2 className="font-display text-4xl md:text-5xl font-medium">Mohamed B. Elbakrey</h2>
-            {lang === "ar" && (
-              <p className="mt-2 text-lg text-muted-foreground">محمد بدوى البكرى</p>
-            )}
-            <p className="mt-3 text-sm uppercase tracking-[0.2em] text-primary-glow">Founder</p>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              The founder's role is simple: keep product thinking honest, keep engineering standards high, and keep every decision aligned with long-term value for the companies we build with.
-            </p>
-          </Reveal>
+        <div className="container max-w-5xl">
+          <div className="grid items-center gap-8 lg:grid-cols-[12.5rem_minmax(0,1fr)] lg:gap-12">
+            <Reveal className="relative">
+              <FounderBust />
+            </Reveal>
+            <Reveal delay={100} className="glass rounded-3xl p-8 md:p-10 lg:p-12 gold-border-glow">
+              <p className="text-xs tracking-[0.35em] uppercase text-primary mb-4">Meet the Founder</p>
+              <h2 className="font-display text-4xl md:text-5xl font-medium">Mohamed B. Elbakrey</h2>
+              {lang === "ar" && (
+                <p className="mt-2 text-lg text-muted-foreground">محمد بدوى البكرى</p>
+              )}
+              <p className="mt-3 text-sm uppercase tracking-[0.2em] text-primary-glow">Founder</p>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                The founder's role is simple: keep product thinking honest, keep engineering standards high, and keep every decision aligned with long-term value for the companies we build with.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
