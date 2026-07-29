@@ -61,6 +61,19 @@ const safeJson = async (response: Response): Promise<Record<string, unknown>> =>
   }
 };
 
+const requestHeaders = (key: string): Record<string, string> => {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    apikey: key,
+  };
+
+  // Modern sb_publishable_* keys are not JWTs and must not be sent as Bearer
+  // tokens. Keep Authorization only for the legacy JWT-based anon key so old
+  // deployments remain compatible during migration.
+  if (!key.startsWith("sb_publishable_")) headers.Authorization = `Bearer ${key}`;
+  return headers;
+};
+
 export async function submitContact(
   payload: ContactPayload,
   submissionId: string,
@@ -81,7 +94,7 @@ export async function submitContact(
   try {
     response = await (options.fetchImpl ?? fetch)(`${url.replace(/\/$/, "")}/functions/v1/contact-email`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", apikey: key, Authorization: `Bearer ${key}` },
+      headers: requestHeaders(key),
       body: JSON.stringify({ ...payload, submission_id: submissionId }),
       signal: controller.signal,
     });
