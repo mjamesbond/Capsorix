@@ -11,10 +11,14 @@ const DEFAULT_ALLOWED_ORIGINS = [
 const RESEND_MAX_ATTEMPTS = 2;
 
 type Env = { get(key: string): string | undefined };
-const runtime = (globalThis as { Deno?: { env: Env; serve(handler: (request: Request) => Promise<Response>): void } }).Deno;
+const runtime = (globalThis as {
+  Deno?: { env: Env; serve(handler: (request: Request) => Promise<Response>): void };
+}).Deno;
+
+const readSecret = (env: Env, key: string) => env.get(key)?.trim() || undefined;
 
 const allowedOrigins = (env: Env) =>
-  (env.get("CONTACT_ALLOWED_ORIGINS") || DEFAULT_ALLOWED_ORIGINS.join(","))
+  (readSecret(env, "CONTACT_ALLOWED_ORIGINS") || DEFAULT_ALLOWED_ORIGINS.join(","))
     .split(",")
     .map((value) => value.trim().toLowerCase())
     .filter(Boolean);
@@ -23,16 +27,21 @@ export const isAllowedOrigin = (origin: string | null, env: Env) =>
   Boolean(origin && allowedOrigins(env).includes(origin.trim().toLowerCase()));
 
 export const getSupabaseAdminKey = (env: Env) => {
-  const legacyKey = env.get("SUPABASE_SERVICE_ROLE_KEY")?.trim();
-  if (legacyKey) return legacyKey;
+  const directKey = readSecret(env, "SUPABASE_SECRET_KEY") || readSecret(env, "SUPABASE_SERVICE_ROLE_KEY");
+  if (directKey) return directKey;
 
-  const secretKeysJson = env.get("SUPABASE_SECRET_KEYS");
+  const secretKeysJson = readSecret(env, "SUPABASE_SECRET_KEYS");
   if (!secretKeysJson) return undefined;
 
   try {
     const secretKeys = JSON.parse(secretKeysJson) as Record<string, unknown>;
     const defaultKey = secretKeys.default;
-    return typeof defaultKey === "string" && defaultKey.trim() ? defaultKey.trim() : undefined;
+    if (typeof defaultKey === "string" && defaultKey.trim()) return defaultKey.trim();
+
+    const firstNamedKey = Object.values(secretKeys).find(
+      (value): value is string => typeof value === "string" && value.trim().length > 0,
+    );
+    return firstNamedKey?.trim();
   } catch {
     return undefined;
   }
@@ -60,7 +69,9 @@ const escapeHtml = (value: string) =>
 const createReference = () => {
   const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
   const bytes = crypto.getRandomValues(new Uint8Array(6));
-  return `CPX-${date}-${Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("").toUpperCase()}`;
+  return `CPX-${date}-${Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase()}`;
 };
 
 const ipKey = async (req: Request, salt: string) => {
@@ -96,6 +107,7 @@ export const sendNotification = async (
     "",
     data.description,
   ].join("\n");
+
   const html = `<main style="font-family:Arial,sans-serif;line-height:1.6;color:#181818"><h1>New Capsorix enquiry</h1><p><strong>Reference:</strong> ${escapeHtml(reference)}</p><p><strong>Name:</strong> ${escapeHtml(data.full_name)}</p><p><strong>Email:</strong> ${escapeHtml(data.email)}</p><p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p><p><strong>Project:</strong> ${escapeHtml(data.project_type)}</p><p><strong>Budget:</strong> ${escapeHtml(data.budget_range)}</p><p><strong>Timeline:</strong> ${escapeHtml(data.timeline)}</p><h2>Message</h2><p style="white-space:pre-wrap">${escapeHtml(data.description)}</p></main>`;
   const idempotencyKey = `contact-notification/${reference}`;
 
@@ -122,7 +134,7 @@ export const sendNotification = async (
       try {
         body = await response.json();
       } catch {
-        // The provider may return a non-JSON error response.
+        // Resend can return non-JSON error responses.
       }
 
       if (
@@ -183,30 +195,43 @@ export const createHandler = (env: Env, fetcher = fetch) => async (req: Request)
     return json(origin, 202, { accepted: false, code: "REQUEST_FILTERED" });
   }
 
-  const url = env.get("SUPABASE_URL");
+  const url = readSecret(env, "SUPABASE_URL");
   const role = getSupabaseAdminKey(env);
-  const resend = env.get("RESEND_API_KEY");
-  const from = env.get("CONTACT_FROM_EMAIL");
-  const salt = env.get("CONTACT_RATE_LIMIT_SALT");
-  if (!url || !role || !resend || !from || !salt || salt.length < 32) {
+  const resend = readSecret(env, "RESEND_API_KEY");
+  const from = readSecret(env, "CONTACT_FROM_EMAIL");
+  const salt = readSecret(env, "CONTACT_RATE_LIMIT_SALT");
+
+  const configurationComponent =
+    !url || !role ? "database" : !resend || !from ? "email" : !salt || salt.length < 32 ? "rate_limit" : null;
+
+  if (configurationComponent) {
+    console.error("contact configuration unavailable", {
+      component: configurationComponent,
+      hasUrl: Boolean(url),
+      hasAdminKey: Boolean(role),
+      hasResendKey: Boolean(resend),
+      hasFromAddress: Boolean(from),
+      hasRateLimitSalt: Boolean(salt),
+      saltLengthValid: Boolean(salt && salt.length >= 32),
+    });
     return json(origin, 503, {
       accepted: false,
       code: "SERVICE_MISCONFIGURED",
       message: "Contact service is unavailable.",
+      component: configurationComponent,
     });
   }
 
   const db = createClient(url, role, { auth: { persistSession: false, autoRefreshToken: false } });
   const submissionId = parsed.data.submission_id || crypto.randomUUID();
 
-  // Idempotent retries are resolved before throttling so an ambiguous network
-  // failure can be retried safely without consuming another rate-limit slot.
   const { data: existing, error: existingError } = await db
     .from("project_requests")
     .select("public_reference,delivery_status")
     .eq("submission_id", submissionId)
     .maybeSingle();
   if (existingError) {
+    console.error("contact replay lookup failed", { code: existingError.code });
     return json(origin, 503, {
       accepted: false,
       code: "PERSISTENCE_UNAVAILABLE",
@@ -227,6 +252,7 @@ export const createHandler = (env: Env, fetcher = fetch) => async (req: Request)
     p_limit: 5,
   });
   if (throttleError) {
+    console.error("contact throttle failed", { code: throttleError.code });
     return json(origin, 503, {
       accepted: false,
       code: "THROTTLE_UNAVAILABLE",
