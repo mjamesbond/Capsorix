@@ -12,6 +12,7 @@ import BackToTop from "./components/capsorix/BackToTop";
 import { I18nProvider, useI18n } from "./i18n/I18nProvider";
 import type { Lang } from "./i18n/dictionary";
 import { ThemeProvider } from "./theme/ThemeProvider";
+import { usePerformanceProfile } from "./hooks/use-performance-profile";
 import { articles } from "virtual:knowledge-manifest";
 import type { KnowledgeArticle } from "./knowledge/schema";
 
@@ -31,28 +32,47 @@ const KnowledgeLanding = lazy(() => import("./pages/knowledge/KnowledgeLanding.t
 const CanonIndex = lazy(() => import("./pages/knowledge/CanonIndex.tsx"));
 const CanonArticle = lazy(() => import("./pages/knowledge/CanonArticle.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
-// NeuralLayer is heavy (canvas + rAF). Defer until the browser is idle so
-// it never delays first paint or blocks initial interaction.
+// NeuralLayer is heavy (canvas + rAF). It is loaded only on capable desktop
+// devices and still waits until the browser is idle.
 const NeuralLayer = lazy(() => import("./components/capsorix/NeuralLayer"));
 
 const RouteFallback = () => <SubpageSkeleton />;
 
-/** Mount a child only after the browser is idle / first paint is done. */
-const DeferredMount = ({ children, delay = 600 }: { children: React.ReactNode; delay?: number }) => {
+/** Mount a child only after first paint, and only when the profile allows it. */
+const DeferredMount = ({
+  children,
+  delay = 900,
+  enabled = true,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  enabled?: boolean;
+}) => {
   const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number };
+    if (!enabled) {
+      setReady(false);
+      return;
+    }
+
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+
     if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(() => setReady(true), { timeout: 1500 });
+      const id = w.requestIdleCallback(() => setReady(true), { timeout: 1800 });
       return () => {
         const cancel = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback;
         if (cancel) cancel(id);
       };
     }
-    const t = window.setTimeout(() => setReady(true), delay);
-    return () => window.clearTimeout(t);
-  }, [delay]);
-  if (!ready) return null;
+
+    const timer = window.setTimeout(() => setReady(true), delay);
+    return () => window.clearTimeout(timer);
+  }, [delay, enabled]);
+
+  if (!enabled || !ready) return null;
   return <>{children}</>;
 };
 
@@ -276,44 +296,48 @@ const RouteSeo = () => {
   return null;
 };
 
-const App = () => (
-  <I18nProvider>
-    <ThemeProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <RouteSeo />
-        <SkipLink />
-        <DeferredMount>
-          <Suspense fallback={null}>
-            <NeuralLayer />
+const App = () => {
+  const { allowAmbientCanvas } = usePerformanceProfile();
+
+  return (
+    <I18nProvider>
+      <ThemeProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <RouteSeo />
+          <SkipLink />
+          <DeferredMount enabled={allowAmbientCanvas} delay={1000}>
+            <Suspense fallback={null}>
+              <NeuralLayer />
+            </Suspense>
+          </DeferredMount>
+          <ScrollProgress />
+          <Suspense fallback={<RouteFallback />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/ios" element={<IOS />} />
+              <Route path="/android" element={<Android />} />
+              <Route path="/web" element={<Web />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/workplace-culture" element={<WorkplaceCulture />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/company-values" element={<CompanyValues />} />
+              <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
+              <Route path="/knowledge" element={<KnowledgeLanding />} />
+              <Route path="/knowledge/canon" element={<CanonIndex />} />
+              <Route path="/knowledge/canon/:slug" element={<CanonArticle />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </Suspense>
-        </DeferredMount>
-        <ScrollProgress />
-        <Suspense fallback={<RouteFallback />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/ios" element={<IOS />} />
-            <Route path="/android" element={<Android />} />
-            <Route path="/web" element={<Web />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/workplace-culture" element={<WorkplaceCulture />} />
-            <Route path="/careers" element={<Careers />} />
-            <Route path="/company-values" element={<CompanyValues />} />
-            <Route path="/guides/how-to-choose-a-software-development-company" element={<ChoosingSoftwarePartner />} />
-            <Route path="/knowledge" element={<KnowledgeLanding />} />
-            <Route path="/knowledge/canon" element={<CanonIndex />} />
-            <Route path="/knowledge/canon/:slug" element={<CanonArticle />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-        <CookieConsent />
-        <BackToTop />
-        <PerfHudGate />
-      </BrowserRouter>
-    </ThemeProvider>
-  </I18nProvider>
-);
+          <CookieConsent />
+          <BackToTop />
+          <PerfHudGate />
+        </BrowserRouter>
+      </ThemeProvider>
+    </I18nProvider>
+  );
+};
 
 export default App;
