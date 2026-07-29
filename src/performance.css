@@ -1,0 +1,185 @@
+/*
+ * Adaptive performance and visual refinement layer.
+ * Loaded after index.css so the existing Capsorix design system remains the
+ * source of truth while expensive effects scale down on constrained devices.
+ */
+
+:root {
+  --capsorix-glass-blur: 16px;
+  --capsorix-glass-strong-blur: 20px;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+.glass {
+  backdrop-filter: blur(var(--capsorix-glass-blur));
+  -webkit-backdrop-filter: blur(var(--capsorix-glass-blur));
+}
+
+.glass-strong {
+  backdrop-filter: blur(var(--capsorix-glass-strong-blur));
+  -webkit-backdrop-filter: blur(var(--capsorix-glass-strong-blur));
+}
+
+.site-header {
+  contain: layout style;
+}
+
+.site-nav {
+  border: 1px solid transparent;
+  box-shadow: 0 1px 0 hsl(var(--foreground) / 0.02);
+}
+
+.site-header[data-scrolled="true"] .site-nav {
+  border-color: hsl(var(--primary) / 0.12);
+  box-shadow:
+    0 1px 0 hsl(var(--foreground) / 0.04),
+    0 22px 70px -40px hsl(var(--primary) / 0.45);
+}
+
+.hero-stage {
+  isolation: isolate;
+}
+
+.hero-media {
+  contain: layout paint style;
+}
+
+.hero-copy {
+  position: relative;
+}
+
+.hero-code-shell {
+  transform: translateZ(0);
+}
+
+.hero-code-placeholder {
+  min-height: 316px;
+  border: 1px solid hsl(var(--primary) / 0.12);
+  background:
+    linear-gradient(145deg, hsl(var(--surface-glass-strong)), hsl(var(--background) / 0.3));
+}
+
+.hero-orb {
+  contain: layout style;
+  transform: translateZ(0);
+}
+
+.deferred-section {
+  overflow-anchor: none;
+}
+
+html[data-performance="balanced"] {
+  --capsorix-glass-blur: 12px;
+  --capsorix-glass-strong-blur: 16px;
+}
+
+html[data-performance="balanced"] .text-gradient-gold {
+  animation-duration: 28s;
+}
+
+html[data-performance="balanced"] .bg-gold-animated {
+  animation-duration: 16s;
+}
+
+html[data-performance="minimal"] {
+  --capsorix-glass-blur: 0px;
+  --capsorix-glass-strong-blur: 0px;
+}
+
+html[data-performance="minimal"] body {
+  background-attachment: scroll;
+}
+
+html[data-performance="minimal"] .glass,
+html[data-performance="minimal"] .glass-strong,
+html[data-performance="minimal"] .lang-switch__shell,
+html[data-performance="minimal"] .skip-link {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html[data-performance="minimal"] .text-gradient-gold,
+html[data-performance="minimal"] .bg-gold-animated,
+html[data-performance="minimal"] .gold-ring::before,
+html[data-performance="minimal"] .lang-switch__thumb-inner {
+  animation: none !important;
+}
+
+html[data-performance="minimal"] .page-enter {
+  animation-duration: 320ms;
+  filter: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-copy::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.5rem;
+    inset-inline-start: -1.5rem;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      hsl(var(--primary) / 0.62) 28%,
+      hsl(var(--primary-glow) / 0.34) 72%,
+      transparent
+    );
+    box-shadow: 0 0 24px hsl(var(--primary) / 0.18);
+  }
+}
+
+@media (max-width: 1023px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .hero-orb {
+    filter: blur(110px) !important;
+    opacity: 0.72;
+  }
+
+  .site-nav {
+    background: hsl(var(--background) / 0.58);
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --section-pad-y: 6.5rem;
+  }
+
+  .hero-stage {
+    min-height: 100svh;
+  }
+
+  .hero-orb {
+    display: none;
+  }
+
+  .section-fade::before,
+  .section-fade::after {
+    height: 56px;
+  }
+}
+
+@media (hover: none) {
+  .lift:hover,
+  .group:hover .icon-tile,
+  .btn-shimmer:hover,
+  .gold-ring:hover::before {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong,
+  .lang-switch__shell,
+  .skip-link {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
