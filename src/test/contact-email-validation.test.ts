@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { isHoneypotTriggered, sanitizeContactPayload } from "../../supabase/functions/contact-email/_shared/contact-validation";
 
 describe("contact-email validation", () => {
+  const submission_id = "123e4567-e89b-42d3-a456-426614174000";
   it("accepts valid payloads and sanitizes text fields", () => {
     const result = sanitizeContactPayload({
       full_name: "  Mary James  ",
@@ -13,6 +14,7 @@ describe("contact-email validation", () => {
       description: "  We need a premium landing page and client portal.  ",
       subject: "  New project ",
       honeypot: "  ",
+      submission_id,
     });
 
     expect(result.ok).toBe(true);
@@ -31,6 +33,7 @@ describe("contact-email validation", () => {
       budget_range: "$25k-$50k",
       timeline: "4-8 weeks",
       description: "Long enough message content.",
+      submission_id,
     });
 
     expect(result.ok).toBe(false);
@@ -40,6 +43,16 @@ describe("contact-email validation", () => {
     expect(isHoneypotTriggered("")).toBe(false);
     expect(isHoneypotTriggered("   ")).toBe(false);
     expect(isHoneypotTriggered("https://spam.example")).toBe(true);
+  });
+
+  it("accepts a legacy payload without a submission id for staggered deployment", () => {
+    const result = sanitizeContactPayload({
+      full_name: "Mary James", email: "mary@example.com", phone: "+1 555 333 2222",
+      project_type: "Website", budget_range: "$25k-$50k", timeline: "4-8 weeks",
+      description: "Long enough message content.",
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data.submission_id).toBe("");
   });
 
   it("supports boundary-valid values and trims oversized input", () => {
@@ -52,6 +65,7 @@ describe("contact-email validation", () => {
       timeline: "Soon",
       description: "1234567890",
       subject: "S".repeat(300),
+      submission_id,
     });
 
     expect(result.ok).toBe(true);

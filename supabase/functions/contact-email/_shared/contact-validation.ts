@@ -8,11 +8,12 @@ export type ContactSubmission = {
   description: string;
   subject?: string;
   honeypot?: string;
+  submission_id: string;
 };
 
 export type ContactValidationResult =
   | { ok: true; data: ContactSubmission }
-  | { ok: false; message: string };
+  | { ok: false; code: string; message: string };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[+()\d\s\-./]{5,40}$/;
@@ -35,17 +36,21 @@ export const sanitizeContactPayload = (payload: unknown): ContactValidationResul
     description: cleanText(body.description, 2000),
     subject: cleanText(body.subject, 120),
     honeypot: cleanText(body.honeypot, 255),
+    submission_id: cleanText(body.submission_id, 36),
   };
   const phoneDigits = data.phone.replace(/\D/g, "").length;
 
-  if (data.full_name.length < 2) return { ok: false, message: "Please provide your full name." };
-  if (!EMAIL_REGEX.test(data.email)) return { ok: false, message: "Please provide a valid email address." };
-  if (!PHONE_REGEX.test(data.phone)) return { ok: false, message: "Please provide a valid phone number." };
-  if (phoneDigits < 5) return { ok: false, message: "Please provide a valid phone number." };
-  if (!data.project_type) return { ok: false, message: "Please select a project type." };
-  if (!data.budget_range) return { ok: false, message: "Please select a budget range." };
-  if (!data.timeline) return { ok: false, message: "Please select a timeline." };
-  if (data.description.length < 10) return { ok: false, message: "Please add more details to your message." };
+  const invalid = (code: string, message: string): ContactValidationResult => ({ ok: false, code, message });
+  // Legacy clients deployed before idempotency did not send this field. The
+  // handler generates one for those requests so Edge-first rollouts remain safe.
+  if (data.submission_id && !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(data.submission_id)) return invalid("SUBMISSION_ID_INVALID", "Submission identifier is invalid.");
+  if (data.full_name.length < 2) return invalid("FULL_NAME_INVALID", "Please provide your full name.");
+  if (!EMAIL_REGEX.test(data.email)) return invalid("EMAIL_INVALID", "Please provide a valid email address.");
+  if (!PHONE_REGEX.test(data.phone) || phoneDigits < 5) return invalid("PHONE_INVALID", "Please provide a valid phone number.");
+  if (!data.project_type) return invalid("PROJECT_TYPE_REQUIRED", "Please select a project type.");
+  if (!data.budget_range) return invalid("BUDGET_REQUIRED", "Please select a budget range.");
+  if (!data.timeline) return invalid("TIMELINE_REQUIRED", "Please select a timeline.");
+  if (data.description.length < 10) return invalid("DESCRIPTION_INVALID", "Please add more details to your message.");
 
   return { ok: true, data };
 };

@@ -1,50 +1,67 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { isHoneypotTriggered, sanitizeContactPayload, type ContactSubmission } from "./_shared/contact-validation.ts";
+import {
+  isHoneypotTriggered,
+  sanitizeContactPayload,
+  type ContactSubmission,
+} from "./_shared/contact-validation.ts";
 
-const RECIPIENT_EMAIL = "team@capsorix.tech";
+const RECIPIENT = "team@capsorix.tech";
 const DEFAULT_ALLOWED_ORIGINS = [
   "https://capsorix.tech",
   "https://www.capsorix.tech",
   "http://localhost:5173",
   "http://127.0.0.1:5173",
 ];
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const MAX_REQUESTS_PER_WINDOW = 5;
-const MAX_EMAIL_SEND_ATTEMPTS = 2;
+const RESEND_MAX_ATTEMPTS = 2;
+const RESEND_USER_AGENT = "Capsorix-Contact/1.0";
 
-type DenoRuntimeLike = {
-  env: { get: (key: string) => string | undefined };
-  serve: (handler: (request: Request) => Promise<Response> | Response) => void;
+type Env = { get(key: string): string | undefined };
+const runtime = (globalThis as {
+  Deno?: { env: Env; serve(handler: (request: Request) => Promise<Response>): void };
+}).Deno;
+
+const readSecret = (env: Env, key: string) => env.get(key)?.trim() || undefined;
+
+const allowedOrigins = (env: Env) =>
+  (readSecret(env, "CONTACT_ALLOWED_ORIGINS") || DEFAULT_ALLOWED_ORIGINS.join(","))
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+
+export const isAllowedOrigin = (origin: string | null, env: Env) =>
+  Boolean(origin && allowedOrigins(env).includes(origin.trim().toLowerCase()));
+
+export const getSupabaseAdminKey = (env: Env) => {
+  const directKey = readSecret(env, "SUPABASE_SECRET_KEY") || readSecret(env, "SUPABASE_SERVICE_ROLE_KEY");
+  if (directKey) return directKey;
+
+  const secretKeysJson = readSecret(env, "SUPABASE_SECRET_KEYS");
+  if (!secretKeysJson) return undefined;
+
+  try {
+    const secretKeys = JSON.parse(secretKeysJson) as Record<string, unknown>;
+    const defaultKey = secretKeys.default;
+    if (typeof defaultKey === "string" && defaultKey.trim()) return defaultKey.trim();
+
+    const firstNamedKey = Object.values(secretKeys).find(
+      (value): value is string => typeof value === "string" && value.trim().length > 0,
+    );
+    return firstNamedKey?.trim();
+  } catch {
+    return undefined;
+  }
 };
 
-const denoRuntime = (globalThis as { Deno?: DenoRuntimeLike }).Deno;
-const env = denoRuntime?.env;
-const throttleCache = new Map<string, number[]>();
+const corsHeaders = (origin: string) => ({
+  "Content-Type": "application/json; charset=utf-8",
+  "Access-Control-Allow-Origin": origin,
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  Vary: "Origin",
+});
 
-const getAllowedOrigins = () => {
-  const raw = env?.get("CONTACT_ALLOWED_ORIGINS") ?? "";
-  if (!raw.trim()) return DEFAULT_ALLOWED_ORIGINS;
-  return raw.split(",").map((value) => value.trim()).filter(Boolean);
-};
-
-const normalizeOrigin = (origin: string | null) => (origin ? origin.trim().toLowerCase() : "");
-
-const isAllowedOrigin = (origin: string | null) => {
-  const normalized = normalizeOrigin(origin);
-  if (!normalized) return false;
-  return getAllowedOrigins().some((value) => value.toLowerCase() === normalized);
-};
-
-const corsHeaders = (origin: string | null) => {
-  const allowed = isAllowedOrigin(origin);
-  return {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": allowed ? origin ?? DEFAULT_ALLOWED_ORIGINS[0] : DEFAULT_ALLOWED_ORIGINS[0],
-    "Access-Control-Allow-Headers": "authorization, apikey, content-type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    Vary: "Origin",
-  };
-};
+const json = (origin: string, status: number, body: Record<string, unknown>) =>
+  new Response(JSON.stringify(body), { status, headers: corsHeaders(origin) });
 
 const escapeHtml = (value: string) =>
   value
@@ -53,155 +70,289 @@ const escapeHtml = (value: string) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-const sanitizeHeaderValue = (value: string) => value.replace(/[\r\n]+/g, " ").trim();
 
-const getClientIp = (headers: Headers) => {
-  const forwarded = headers.get("x-forwarded-for");
-  const connectingIp = headers.get("cf-connecting-ip") ?? headers.get("x-real-ip");
-  const source = forwarded?.split(",")[0]?.trim() || connectingIp?.trim();
-  if (!source) return "unknown";
-  return source.slice(0, 64);
+const createReference = () => {
+  const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+  const bytes = crypto.getRandomValues(new Uint8Array(6));
+  return `CPX-${date}-${Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase()}`;
 };
 
-const isRateLimited = (ip: string) => {
-  const now = Date.now();
-  const timestamps = throttleCache.get(ip) ?? [];
-  const recent = timestamps.filter((ts) => now - ts < RATE_LIMIT_WINDOW_MS);
-  if (recent.length >= MAX_REQUESTS_PER_WINDOW) {
-    throttleCache.set(ip, recent);
-    return true;
-  }
-  recent.push(now);
-  throttleCache.set(ip, recent);
-  return false;
+const ipKey = async (req: Request, salt: string) => {
+  const ip = (
+    req.headers.get("cf-connecting-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0] ||
+    req.headers.get("x-real-ip") ||
+    "unknown"
+  ).trim();
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${salt}:${ip}`));
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 };
 
-const sendViaResend = async (apiKey: string, from: string, submission: ContactSubmission, requestId: string) => {
-  const subject = sanitizeHeaderValue(submission.subject || `New contact request from ${submission.full_name}`).slice(0, 140);
-  const messageText = [
-    `Reference: ${requestId}`,
-    `Name: ${submission.full_name}`,
-    `Email: ${submission.email}`,
-    `Phone: ${submission.phone}`,
-    `Project type: ${submission.project_type}`,
-    `Budget range: ${submission.budget_range}`,
-    `Timeline: ${submission.timeline}`,
+const sleep = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+type ProviderResult = { ok: true; id: string } | { ok: false; code: string };
+
+export const sendNotification = async (
+  apiKey: string,
+  from: string,
+  data: ContactSubmission,
+  reference: string,
+  fetcher = fetch,
+): Promise<ProviderResult> => {
+  const text = [
+    `Reference: ${reference}`,
+    `Name: ${data.full_name}`,
+    `Email: ${data.email}`,
+    `Phone: ${data.phone}`,
+    `Project type: ${data.project_type}`,
+    `Budget: ${data.budget_range}`,
+    `Timeline: ${data.timeline}`,
     "",
-    "Message:",
-    submission.description,
+    data.description,
   ].join("\n");
 
-  const html = `
-    <div style="font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65;color:#0f172a;">
-      <h2 style="margin:0 0 16px;">New contact request</h2>
-      <p style="margin:0 0 12px;"><strong>Reference:</strong> ${escapeHtml(requestId)}</p>
-      <p style="margin:0 0 12px;"><strong>Name:</strong> ${escapeHtml(submission.full_name)}</p>
-      <p style="margin:0 0 12px;"><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
-      <p style="margin:0 0 12px;"><strong>Phone:</strong> ${escapeHtml(submission.phone)}</p>
-      <p style="margin:0 0 12px;"><strong>Project type:</strong> ${escapeHtml(submission.project_type)}</p>
-      <p style="margin:0 0 12px;"><strong>Budget range:</strong> ${escapeHtml(submission.budget_range)}</p>
-      <p style="margin:0 0 12px;"><strong>Timeline:</strong> ${escapeHtml(submission.timeline)}</p>
-      <p style="margin:0 0 8px;"><strong>Message:</strong></p>
-      <pre style="white-space:pre-wrap;background:#f8fafc;padding:12px;border-radius:8px;margin:0;">${escapeHtml(submission.description)}</pre>
-    </div>
-  `;
+  const html = `<main style="font-family:Arial,sans-serif;line-height:1.6;color:#181818"><h1>New Capsorix enquiry</h1><p><strong>Reference:</strong> ${escapeHtml(reference)}</p><p><strong>Name:</strong> ${escapeHtml(data.full_name)}</p><p><strong>Email:</strong> ${escapeHtml(data.email)}</p><p><strong>Phone:</strong> ${escapeHtml(data.phone)}</p><p><strong>Project:</strong> ${escapeHtml(data.project_type)}</p><p><strong>Budget:</strong> ${escapeHtml(data.budget_range)}</p><p><strong>Timeline:</strong> ${escapeHtml(data.timeline)}</p><h2>Message</h2><p style="white-space:pre-wrap">${escapeHtml(data.description)}</p></main>`;
+  const idempotencyKey = `contact-notification/${reference}`;
 
-  for (let attempt = 1; attempt <= MAX_EMAIL_SEND_ATTEMPTS; attempt += 1) {
-    const emailResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        from,
-        to: [RECIPIENT_EMAIL],
-        reply_to: submission.email,
-        subject,
-        text: messageText,
-        html,
-      }),
-    });
+  for (let attempt = 1; attempt <= RESEND_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetcher("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+          "Idempotency-Key": idempotencyKey,
+          "User-Agent": RESEND_USER_AGENT,
+        },
+        body: JSON.stringify({
+          from,
+          to: [RECIPIENT],
+          reply_to: data.email,
+          subject: `[${reference}] New Capsorix enquiry`,
+          text,
+          html,
+        }),
+      });
 
-    if (emailResponse.ok) return true;
-    if (attempt === MAX_EMAIL_SEND_ATTEMPTS) {
-      const providerError = await emailResponse.text();
-      console.error("contact-email provider error", { requestId, status: emailResponse.status, providerError });
-      return false;
+      let body: unknown = {};
+      try {
+        body = await response.json();
+      } catch {
+        // Resend can return non-JSON error responses.
+      }
+
+      if (
+        response.ok &&
+        body &&
+        typeof body === "object" &&
+        typeof (body as { id?: unknown }).id === "string"
+      ) {
+        return { ok: true, id: (body as { id: string }).id };
+      }
+
+      const providerName =
+        body && typeof body === "object" && typeof (body as { name?: unknown }).name === "string"
+          ? (body as { name: string }).name
+          : "unknown";
+
+      console.error("contact provider rejected request", {
+        reference,
+        status: response.status,
+        provider: providerName,
+      });
+
+      const retryable =
+        response.status === 408 ||
+        response.status === 429 ||
+        response.status >= 500 ||
+        providerName === "concurrent_idempotent_requests";
+
+      if (!retryable || attempt === RESEND_MAX_ATTEMPTS) {
+        return { ok: false, code: `RESEND_${response.status}` };
+      }
+    } catch {
+      if (attempt === RESEND_MAX_ATTEMPTS) return { ok: false, code: "RESEND_NETWORK" };
     }
-    console.warn("contact-email retrying provider request", { requestId, attempt });
-    await new Promise((resolve) => setTimeout(resolve, 200 * attempt));
+
+    await sleep(250 * attempt);
   }
-  return false;
+
+  return { ok: false, code: "RESEND_UNKNOWN" };
 };
 
-const json = (status: number, body: Record<string, unknown>, origin: string | null) =>
-  new Response(JSON.stringify(body), { status, headers: corsHeaders(origin) });
-
-if (!denoRuntime) throw new Error("Deno runtime is required for this function.");
-
-denoRuntime.serve(async (req) => {
-  const origin = req.headers.get("origin");
-
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders(origin) });
-  if (req.method !== "POST") return json(405, { error: "Method not allowed." }, origin);
-  if (!isAllowedOrigin(origin)) return json(403, { error: "Invalid origin." }, origin);
-
-  const requestId = crypto.randomUUID();
-  const ip = getClientIp(req.headers);
-
-  if (isRateLimited(ip)) {
-    console.warn("contact-email rate limited", { requestId, ip });
-    return json(429, { error: "Too many requests." }, origin);
+export const createHandler = (env: Env, fetcher = fetch) => async (req: Request): Promise<Response> => {
+  const origin = req.headers.get("origin")?.trim() || "";
+  if (!isAllowedOrigin(origin, env)) {
+    return new Response(
+      JSON.stringify({ accepted: false, code: "ORIGIN_NOT_ALLOWED", message: "Origin is not allowed." }),
+      { status: 403, headers: { "Content-Type": "application/json; charset=utf-8" } },
+    );
+  }
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(origin) });
+  if (req.method !== "POST") {
+    return json(origin, 405, { accepted: false, code: "METHOD_NOT_ALLOWED", message: "Method not allowed." });
   }
 
-  let payload: unknown;
+  let raw: unknown;
   try {
-    payload = await req.json();
+    raw = await req.json();
   } catch {
-    return json(400, { error: "Invalid request body." }, origin);
+    return json(origin, 400, { accepted: false, code: "INVALID_JSON", message: "Request body must be JSON." });
   }
 
-  const validated = sanitizeContactPayload(payload);
-  if (!validated.ok) return json(400, { error: validated.message }, origin);
-
-  if (isHoneypotTriggered(validated.data.honeypot)) {
-    console.warn("contact-email honeypot triggered", { requestId, ip });
-    return json(200, { success: true, requestId }, origin);
+  const parsed = sanitizeContactPayload(raw);
+  if (!parsed.ok) return json(origin, 422, { accepted: false, code: parsed.code, message: parsed.message });
+  if (isHoneypotTriggered(parsed.data.honeypot)) {
+    return json(origin, 202, { accepted: false, code: "REQUEST_FILTERED" });
   }
 
-  const supabaseUrl = env?.get("SUPABASE_URL");
-  const serviceRoleKey = env?.get("SUPABASE_SERVICE_ROLE_KEY");
-  const resendKey = env?.get("RESEND_API_KEY");
-  const fromEmail = env?.get("CONTACT_FROM_EMAIL");
+  const url = readSecret(env, "SUPABASE_URL");
+  const role = getSupabaseAdminKey(env);
+  const resend = readSecret(env, "RESEND_API_KEY");
+  const from = readSecret(env, "CONTACT_FROM_EMAIL");
+  const salt = readSecret(env, "CONTACT_RATE_LIMIT_SALT");
 
-  if (!supabaseUrl || !serviceRoleKey || !resendKey || !fromEmail) {
-    console.error("contact-email missing env configuration", { requestId });
-    return json(500, { error: "Server configuration error." }, origin);
+  const configurationComponent =
+    !url || !role ? "database" : !resend || !from ? "email" : !salt || salt.length < 32 ? "rate_limit" : null;
+
+  if (configurationComponent) {
+    console.error("contact configuration unavailable", {
+      component: configurationComponent,
+      hasUrl: Boolean(url),
+      hasAdminKey: Boolean(role),
+      hasResendKey: Boolean(resend),
+      hasFromAddress: Boolean(from),
+      hasRateLimitSalt: Boolean(salt),
+      saltLengthValid: Boolean(salt && salt.length >= 32),
+    });
+    return json(origin, 503, {
+      accepted: false,
+      code: "SERVICE_MISCONFIGURED",
+      message: "Contact service is unavailable.",
+      component: configurationComponent,
+    });
   }
 
-  const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
+  const db = createClient(url, role, { auth: { persistSession: false, autoRefreshToken: false } });
+  const submissionId = parsed.data.submission_id || crypto.randomUUID();
+
+  const { data: existing, error: existingError } = await db
+    .from("project_requests")
+    .select("public_reference,delivery_status")
+    .eq("submission_id", submissionId)
+    .maybeSingle();
+  if (existingError) {
+    console.error("contact replay lookup failed", { code: existingError.code });
+    return json(origin, 503, {
+      accepted: false,
+      code: "PERSISTENCE_UNAVAILABLE",
+      message: "Contact service is unavailable.",
+    });
+  }
+  if (existing) {
+    return json(origin, 200, {
+      accepted: true,
+      reference: existing.public_reference,
+      delivery: existing.delivery_status === "sent" ? "sent" : "delayed",
+      duplicate: true,
+    });
+  }
+
+  const { data: allowed, error: throttleError } = await db.rpc("consume_contact_rate_limit", {
+    p_key_hash: await ipKey(req, salt),
+    p_limit: 5,
   });
+  if (throttleError) {
+    console.error("contact throttle failed", { code: throttleError.code });
+    return json(origin, 503, {
+      accepted: false,
+      code: "THROTTLE_UNAVAILABLE",
+      message: "Contact service is unavailable.",
+    });
+  }
+  if (!allowed) {
+    return json(origin, 429, {
+      accepted: false,
+      code: "RATE_LIMITED",
+      message: "Please wait before trying again.",
+    });
+  }
 
-  const { error: insertError } = await supabaseAdmin.from("project_requests").insert({
-    full_name: validated.data.full_name,
-    email: validated.data.email,
-    phone: validated.data.phone,
-    project_type: validated.data.project_type,
-    budget_range: validated.data.budget_range,
-    timeline: validated.data.timeline,
-    description: validated.data.description,
-  });
-
+  const reference = createReference();
+  const row = {
+    full_name: parsed.data.full_name,
+    email: parsed.data.email,
+    phone: parsed.data.phone,
+    project_type: parsed.data.project_type,
+    budget_range: parsed.data.budget_range,
+    timeline: parsed.data.timeline,
+    description: parsed.data.description,
+    submission_id: submissionId,
+    public_reference: reference,
+    delivery_status: "pending",
+  };
+  const { error: insertError } = await db.from("project_requests").insert(row);
   if (insertError) {
-    console.error("contact-email db insert failed", { requestId, code: insertError.code, details: insertError.message });
-    return json(500, { error: "Could not store your request." }, origin);
+    if (insertError.code === "23505") {
+      const { data: duplicate } = await db
+        .from("project_requests")
+        .select("public_reference,delivery_status")
+        .eq("submission_id", submissionId)
+        .maybeSingle();
+      if (duplicate) {
+        return json(origin, 200, {
+          accepted: true,
+          reference: duplicate.public_reference,
+          delivery: duplicate.delivery_status === "sent" ? "sent" : "delayed",
+          duplicate: true,
+        });
+      }
+    }
+    console.error("contact stored failed", { reference, code: insertError.code });
+    return json(origin, 503, {
+      accepted: false,
+      code: "PERSISTENCE_FAILED",
+      message: "Contact service is unavailable.",
+    });
   }
 
-  const sent = await sendViaResend(resendKey, fromEmail, validated.data, requestId);
-  if (!sent) return json(502, { error: "Unable to send email right now." }, origin);
+  console.info("contact stored", { reference });
+  const sent = await sendNotification(resend, from, parsed.data, reference, fetcher);
+  const updatedAt = new Date().toISOString();
+  const update = sent.ok
+    ? {
+        delivery_status: "sent",
+        provider_message_id: sent.id,
+        email_sent_at: updatedAt,
+        delivery_error_code: null,
+        updated_at: updatedAt,
+      }
+    : {
+        delivery_status: "failed",
+        delivery_error_code: sent.code,
+        updated_at: updatedAt,
+      };
+  const { error: updateError } = await db
+    .from("project_requests")
+    .update(update)
+    .eq("submission_id", submissionId);
+  if (updateError) console.error("contact status update failed", { reference, code: updateError.code });
 
-  console.info("contact-email sent", { requestId, domain: validated.data.email.split("@")[1] ?? "unknown" });
-  return json(200, { success: true, requestId }, origin);
-});
+  if (!sent.ok) {
+    console.error("contact notification delayed", { reference, code: sent.code });
+    return json(origin, 202, {
+      accepted: true,
+      reference,
+      delivery: "delayed",
+      duplicate: false,
+      code: "NOTIFICATION_DELAYED",
+    });
+  }
+
+  console.info("contact notification sent", { reference });
+  return json(origin, 200, { accepted: true, reference, delivery: "sent", duplicate: false });
+};
+
+if (runtime) runtime.serve(createHandler(runtime.env));
