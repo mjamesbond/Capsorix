@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import "./performance.css";
 
 // Keep the browser from auto-jumping on bfcache restore — React Router
 // owns scroll. Also no-op the dev server's hot-reload polling banner
