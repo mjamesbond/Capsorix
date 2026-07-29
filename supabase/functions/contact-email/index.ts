@@ -1,5 +1,9 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { isHoneypotTriggered, sanitizeContactPayload, type ContactSubmission } from "./_shared/contact-validation.ts";
+import {
+  isHoneypotTriggered,
+  sanitizeContactPayload,
+  type ContactSubmission,
+} from "./_shared/contact-validation.ts";
 
 const RECIPIENT = "team@capsorix.tech";
 const DEFAULT_ALLOWED_ORIGINS = [
@@ -9,6 +13,7 @@ const DEFAULT_ALLOWED_ORIGINS = [
   "http://127.0.0.1:5173",
 ];
 const RESEND_MAX_ATTEMPTS = 2;
+const RESEND_USER_AGENT = "Capsorix-Contact/1.0";
 
 type Env = { get(key: string): string | undefined };
 const runtime = (globalThis as {
@@ -119,6 +124,7 @@ export const sendNotification = async (
           "Content-Type": "application/json",
           Authorization: `Bearer ${apiKey}`,
           "Idempotency-Key": idempotencyKey,
+          "User-Agent": RESEND_USER_AGENT,
         },
         body: JSON.stringify({
           from,
@@ -149,7 +155,14 @@ export const sendNotification = async (
       const providerName =
         body && typeof body === "object" && typeof (body as { name?: unknown }).name === "string"
           ? (body as { name: string }).name
-          : "";
+          : "unknown";
+
+      console.error("contact provider rejected request", {
+        reference,
+        status: response.status,
+        provider: providerName,
+      });
+
       const retryable =
         response.status === 408 ||
         response.status === 429 ||
