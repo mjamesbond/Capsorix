@@ -63,7 +63,7 @@ body {
 }
 
 .hero-orb {
-  contain: strict;
+  contain: layout style;
   transform: translateZ(0);
 }
 
@@ -142,7 +142,7 @@ html[data-performance="minimal"] .page-enter {
   }
 
   .site-nav {
-    background: hsl(var(--surface-glass) / 0.3);
+    background: hsl(var(--background) / 0.58);
   }
 }
 
