@@ -22,6 +22,22 @@ const allowedOrigins = (env: Env) =>
 export const isAllowedOrigin = (origin: string | null, env: Env) =>
   Boolean(origin && allowedOrigins(env).includes(origin.trim().toLowerCase()));
 
+export const getSupabaseAdminKey = (env: Env) => {
+  const legacyKey = env.get("SUPABASE_SERVICE_ROLE_KEY")?.trim();
+  if (legacyKey) return legacyKey;
+
+  const secretKeysJson = env.get("SUPABASE_SECRET_KEYS");
+  if (!secretKeysJson) return undefined;
+
+  try {
+    const secretKeys = JSON.parse(secretKeysJson) as Record<string, unknown>;
+    const defaultKey = secretKeys.default;
+    return typeof defaultKey === "string" && defaultKey.trim() ? defaultKey.trim() : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 const corsHeaders = (origin: string) => ({
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Allow-Origin": origin,
@@ -168,7 +184,7 @@ export const createHandler = (env: Env, fetcher = fetch) => async (req: Request)
   }
 
   const url = env.get("SUPABASE_URL");
-  const role = env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const role = getSupabaseAdminKey(env);
   const resend = env.get("RESEND_API_KEY");
   const from = env.get("CONTACT_FROM_EMAIL");
   const salt = env.get("CONTACT_RATE_LIMIT_SALT");
