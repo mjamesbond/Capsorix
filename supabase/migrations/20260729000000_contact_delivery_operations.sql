@@ -19,8 +19,13 @@ create unique index if not exists project_requests_submission_id_uidx
 create index if not exists project_requests_delivery_status_idx
   on public.project_requests(delivery_status, created_at desc);
 
--- The Edge Function uses service_role. Remove the redundant browser-write path.
+-- All contact persistence now goes through the service-role Edge Function.
+-- Remove legacy browser policies and make database privileges explicit so this
+-- remains safe when "Automatically expose new tables and functions" is off.
 drop policy if exists "Anyone can submit a project request" on public.project_requests;
+drop policy if exists "Authenticated users can view project requests" on public.project_requests;
+revoke all on table public.project_requests from anon, authenticated;
+grant select, insert, update on table public.project_requests to service_role;
 
 create table if not exists public.contact_rate_limits (
   key_hash text primary key,
@@ -28,6 +33,7 @@ create table if not exists public.contact_rate_limits (
   request_count integer not null default 1 check (request_count > 0)
 );
 alter table public.contact_rate_limits enable row level security;
+revoke all on table public.contact_rate_limits from public, anon, authenticated;
 
 create or replace function public.consume_contact_rate_limit(p_key_hash text, p_limit integer default 5)
 returns boolean language plpgsql security definer set search_path = public as $$
