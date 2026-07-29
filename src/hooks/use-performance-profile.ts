@@ -32,7 +32,7 @@ const detectProfile = (): PerformanceProfile => {
     return {
       level: "balanced",
       allowAmbientCanvas: false,
-      allowDecorativeMotion: true,
+      allowDecorativeMotion: false,
       allowHeroCodePanel: false,
     };
   }
@@ -60,7 +60,7 @@ const detectProfile = (): PerformanceProfile => {
     return {
       level: "balanced",
       allowAmbientCanvas: false,
-      allowDecorativeMotion: true,
+      allowDecorativeMotion: false,
       allowHeroCodePanel: false,
     };
   }
