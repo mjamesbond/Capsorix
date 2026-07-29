@@ -6,6 +6,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import Reveal from "./Reveal";
 import { useI18n } from "@/i18n/I18nProvider";
+import { ContactApiError, submitContact } from "@/lib/contact-api";
 
 type FormState = {
   full_name: string;
@@ -53,12 +54,14 @@ const Contact = () => {
   const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [serviceError, setServiceError] = useState<{ message: string; fallback: boolean } | null>(null);
+  const submissionIdRef = useRef<string | null>(null);
   const [form, setForm] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   // Captured at the moment of submission so the confirmation screen can
   // greet the client by name and display a stable reference even after
   // the form state is reset.
-  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date; data: FormState } | null>(null);
+  const [submittedMeta, setSubmittedMeta] = useState<{ name: string; ref: string; at: Date; data: FormState; delivery: "sent" | "delayed" } | null>(null);
   const [copied, setCopied] = useState(false);
   // Autosave state — `restored` shows a quiet pill above the form for a
   // few seconds after a draft is brought back, and `savedAt` powers the
@@ -154,88 +157,52 @@ const Contact = () => {
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
       const fieldErrors: Partial<Record<keyof FormState, string>> = {};
-      parsed.error.issues.forEach((i) => {
-        const k = i.path[0] as keyof FormState;
-        if (!fieldErrors[k]) fieldErrors[k] = i.message;
+      parsed.error.issues.forEach((issue) => {
+        const key = issue.path[0] as keyof FormState;
+        if (!fieldErrors[key]) fieldErrors[key] = issue.message;
       });
       setErrors(fieldErrors);
-      toast({ title: t.contact.toastErrTitle, description: parsed.error.issues[0].message, variant: "destructive" });
+      setServiceError({ message: parsed.error.issues[0].message, fallback: false });
       return;
     }
 
     setSubmitting(true);
+    setServiceError(null);
+    const submissionId = submissionIdRef.current ?? crypto.randomUUID();
+    submissionIdRef.current = submissionId;
     try {
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/contact-email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({
-          ...parsed.data,
-          honeypot: form.company_url,
-        }),
-      });
-      if (!response.ok) {
-        if (response.status === 429) {
-          toast({
-            title: t.contact.toastSendErr,
-            description: "Too many attempts. Please wait a minute and try again.",
-            variant: "destructive",
-          });
-        } else {
-          toast({ title: t.contact.toastSendErr, description: t.contact.toastSendErrDesc, variant: "destructive" });
-        }
-        return;
-      }
-    } catch {
-      toast({
-        title: t.contact.toastSendErr,
-        description: "Network issue detected. Please check your connection and try again.",
-        variant: "destructive",
-      });
-      return;
+      const receipt = await submitContact({ ...parsed.data, honeypot: form.company_url }, submissionId);
+      const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
+      setSubmittedMeta({ name: firstName, ref: receipt.reference, at: new Date(), data: { ...form, company_url: "" }, delivery: receipt.delivery });
+      setSubmitted(true);
+      setForm(EMPTY);
+      setErrors({});
+      submissionIdRef.current = null;
+      try { window.localStorage.removeItem(DRAFT_KEY); } catch { /* noop */ }
+      setSavedAt(null);
+      setRestored(false);
+    } catch (error) {
+      const apiError = error instanceof ContactApiError ? error : new ContactApiError("unavailable", "UNKNOWN", t.contact.toastSendErrDesc, true);
+      const messages: Record<string, string> = {
+        configuration: "The secure contact service is not configured on this site.",
+        validation: apiError.message,
+        rate_limit: "Too many attempts. Please wait a minute, then retry.",
+        unavailable: "Your draft is safe. The contact service is temporarily unavailable.",
+        network: "We could not reach the contact service. Check your connection and retry.",
+        timeout: "The request timed out. Retry safely; the same submission key will prevent a duplicate.",
+      };
+      setServiceError({ message: messages[apiError.kind], fallback: ["configuration", "unavailable", "network", "timeout"].includes(apiError.kind) });
     } finally {
       setSubmitting(false);
     }
-
-    // Build a short, human-readable reference (e.g. CPX-7F3K-2A91) so the
-    // confirmation screen feels like a real receipt rather than a toast.
-    const ref =
-      "CPX-" +
-      Math.random().toString(36).slice(2, 6).toUpperCase() +
-      "-" +
-      Math.random().toString(36).slice(2, 6).toUpperCase();
-    const firstName = parsed.data.full_name.trim().split(/\s+/)[0] ?? parsed.data.full_name.trim();
-    setSubmittedMeta({
-      name: firstName,
-      ref,
-      at: new Date(),
-      data: {
-        full_name: parsed.data.full_name,
-        email: parsed.data.email,
-        phone: parsed.data.phone,
-        project_type: parsed.data.project_type,
-        budget_range: parsed.data.budget_range,
-        timeline: parsed.data.timeline,
-        description: parsed.data.description,
-        company_url: "",
-      },
-    });
-    setSubmitted(true);
-    setForm(EMPTY);
-    setErrors({});
-    // Successful submission supersedes any saved draft.
-    try { window.localStorage.removeItem(DRAFT_KEY); } catch { /* noop */ }
-    setSavedAt(null);
-    setRestored(false);
   };
 
   const resetForm = () => {
     setSubmitted(false);
     setSubmittedMeta(null);
     setCopied(false);
+    setServiceError(null);
+    submissionIdRef.current = null;
   };
 
   const copyReference = async () => {
@@ -283,9 +250,9 @@ const Contact = () => {
                   <div className="w-10 h-10 rounded-xl glass flex items-center justify-center icon-tile">
                     <c.icon className="w-4 h-4 text-primary-glow" />
                   </div>
-                  <span className="text-sm text-foreground/90 group-hover:text-primary-glow transition-colors" dir="ltr">
+                  <a href={`mailto:${c.label}`} className="text-sm text-foreground/90 group-hover:text-primary-glow transition-colors underline-offset-4 hover:underline" dir="ltr">
                     {c.label}
-                  </span>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -331,6 +298,11 @@ const Contact = () => {
                         <span className="text-foreground font-medium">{t.contact.success.bodyStrong}</span>
                         {t.contact.success.bodyTail}
                       </p>
+                      {submittedMeta?.delivery === "delayed" && (
+                        <p role="alert" className="mt-5 rounded-xl border border-primary/35 bg-primary/5 px-4 py-3 text-sm text-foreground/90">
+                          Your request is securely stored. Email notification is delayed; quote the reference below if you contact us directly.
+                        </p>
+                      )}
                     </div>
 
                     {/* Reference receipt */}
@@ -612,6 +584,16 @@ const Contact = () => {
                       </p>
                     </Field>
                   </div>
+
+                  {serviceError && (
+                    <div role="alert" aria-live="assertive" className="mt-7 rounded-2xl border border-destructive/40 bg-destructive/5 p-4 text-sm text-foreground">
+                      <p>{serviceError.message}</p>
+                      <div className="mt-3 flex flex-wrap gap-4">
+                        <button type="submit" className="font-medium text-primary underline underline-offset-4">Retry safely</button>
+                        {serviceError.fallback && <a href="mailto:team@capsorix.tech?subject=Capsorix%20project%20enquiry" className="font-medium text-primary underline underline-offset-4">Email team@capsorix.tech</a>}
+                      </div>
+                    </div>
+                  )}
 
                   <button
                     type="submit"

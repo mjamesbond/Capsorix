@@ -24,9 +24,9 @@ jobs:
     env:
       # Vite reads these at build time. Safe to expose: they are the public
       # anon/publishable keys, protected server-side by RLS policies.
-      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL || 'https://ncayrvgdxdfboimrrkmz.supabase.co' }}
-      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jYXlydmdkeGRmYm9pbXJya216Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1NzUxNDMsImV4cCI6MjA5MzE1MTE0M30.AQbXRvpubJ9EmKHjjaSJilX_RMtI9i1Zd4qRrpysm6c' }}
-      VITE_SUPABASE_PROJECT_ID: ${{ vars.VITE_SUPABASE_PROJECT_ID || 'ncayrvgdxdfboimrrkmz' }}
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
+      VITE_SUPABASE_PROJECT_ID: ${{ vars.VITE_SUPABASE_PROJECT_ID }}
 
     steps:
       - name: Checkout
