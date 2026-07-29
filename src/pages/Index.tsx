@@ -13,8 +13,9 @@ import Footer from "@/components/capsorix/Footer";
 import FaqJsonLd from "@/components/capsorix/FaqJsonLd";
 
 // Below-the-fold sections are split into independent chunks. They are mounted
-// only when the visitor approaches them, instead of requesting every section
-// during the first render.
+// when the visitor approaches them, then progressively hydrated after the
+// initial interaction window so content remains available without a startup
+// network burst.
 const TrustBar = lazy(() => import("@/components/capsorix/TrustBar"));
 const About = lazy(() => import("@/components/capsorix/About"));
 const Services = lazy(() => import("@/components/capsorix/Services"));
@@ -38,6 +39,7 @@ type DeferredSectionProps = {
   className?: string;
   placeholder?: string;
   rootMargin?: string;
+  fallbackDelay?: number;
 };
 
 const DeferredSection = ({
@@ -45,6 +47,7 @@ const DeferredSection = ({
   className = "section-fade cv-auto",
   placeholder = "min-h-[40vh]",
   rootMargin = "900px 0px",
+  fallbackDelay = 5000,
 }: DeferredSectionProps) => {
   const hostRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -53,23 +56,48 @@ const DeferredSection = ({
     const node = hostRef.current;
     if (!node) return;
 
-    if (!("IntersectionObserver" in window)) {
+    let observer: IntersectionObserver | null = null;
+    let timer = 0;
+    let completed = false;
+
+    const mount = () => {
+      if (completed) return;
+      completed = true;
+      observer?.disconnect();
+      window.clearTimeout(timer);
       setMounted(true);
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      mount();
       return;
     }
 
-    const observer = new IntersectionObserver(
+    observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return;
-        setMounted(true);
-        observer.disconnect();
+        if (entry.isIntersecting) mount();
       },
       { rootMargin, threshold: 0.01 },
     );
-
     observer.observe(node);
-    return () => observer.disconnect();
-  }, [rootMargin]);
+
+    const connection = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    const constrained =
+      Boolean(connection?.saveData) ||
+      ["slow-2g", "2g"].includes(connection?.effectiveType ?? "");
+
+    if (!constrained) {
+      timer = window.setTimeout(mount, fallbackDelay);
+    }
+
+    return () => {
+      completed = true;
+      observer?.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [fallbackDelay, rootMargin]);
 
   return (
     <div ref={hostRef} className={`deferred-section ${className}`}>
@@ -97,24 +125,24 @@ const Index = () => {
       <main id="main" tabIndex={-1}>
         <FaqJsonLd />
         <Hero />
-        <DeferredSection component={TrustBar} placeholder="min-h-[20vh]" />
+        <DeferredSection component={TrustBar} placeholder="min-h-[20vh]" fallbackDelay={2200} />
         <SectionDivider />
-        <DeferredSection component={About} placeholder="min-h-[55vh]" />
+        <DeferredSection component={About} placeholder="min-h-[55vh]" fallbackDelay={3000} />
         <SectionDivider />
-        <DeferredSection component={Services} className="cv-auto" placeholder="min-h-[70vh]" />
+        <DeferredSection component={Services} className="cv-auto" placeholder="min-h-[70vh]" fallbackDelay={3800} />
         <SectionDivider />
-        <DeferredSection component={Process} placeholder="min-h-[65vh]" />
+        <DeferredSection component={Process} placeholder="min-h-[65vh]" fallbackDelay={4700} />
         <SectionDivider />
-        <DeferredSection component={Industries} placeholder="min-h-[60vh]" />
+        <DeferredSection component={Industries} placeholder="min-h-[60vh]" fallbackDelay={5600} />
         <SectionDivider />
-        <DeferredSection component={CaseStudies} placeholder="min-h-[70vh]" />
-        <DeferredSection component={Stats} placeholder="min-h-[35vh]" />
+        <DeferredSection component={CaseStudies} placeholder="min-h-[70vh]" fallbackDelay={6500} />
+        <DeferredSection component={Stats} placeholder="min-h-[35vh]" fallbackDelay={7300} />
         <SectionDivider />
-        <DeferredSection component={Testimonials} placeholder="min-h-[55vh]" />
+        <DeferredSection component={Testimonials} placeholder="min-h-[55vh]" fallbackDelay={8200} />
         <SectionDivider />
-        <DeferredSection component={Faq} placeholder="min-h-[55vh]" />
-        <DeferredSection component={Contact} placeholder="min-h-[70vh]" />
-        <DeferredSection component={FinalCTA} placeholder="min-h-[45vh]" />
+        <DeferredSection component={Faq} placeholder="min-h-[55vh]" fallbackDelay={9000} />
+        <DeferredSection component={Contact} placeholder="min-h-[70vh]" fallbackDelay={9800} />
+        <DeferredSection component={FinalCTA} placeholder="min-h-[45vh]" fallbackDelay={10600} />
       </main>
       <Footer />
     </div>
