@@ -37,31 +37,33 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "py-3" : "py-6"
+      data-scrolled={scrolled}
+      className={`site-header fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        scrolled ? "py-2.5 sm:py-3" : "py-4 sm:py-6"
       }`}
     >
       <div className={`container transition-all duration-500 ${scrolled ? "max-w-6xl" : "max-w-7xl"}`}>
         <nav
           aria-label="Primary"
-          className={`flex items-center justify-between rounded-full px-6 py-3 transition-all duration-500 ${
+          className={`site-nav flex items-center justify-between rounded-full px-3 sm:px-5 lg:px-6 py-2.5 sm:py-3 transition-all duration-500 ${
             scrolled ? "glass-strong shadow-elegant" : "bg-transparent"
           }`}
         >
-          <Link to="/" className="flex items-center group" dir="ltr" aria-label="Capsorix — Premium Software Systems, home">
+          <Link to="/" className="flex items-center group shrink-0" dir="ltr" aria-label="Capsorix — Premium Software Systems, home">
             <img
               src={capsorixLogo}
               alt="Capsorix — Premium Software Systems"
               width={620}
               height={160}
               fetchPriority="high"
+              loading="eager"
               decoding="async"
-              className="h-9 md:h-10 w-auto select-none transition-opacity duration-300 group-hover:opacity-90"
+              className="h-8 sm:h-9 md:h-10 w-auto select-none transition-opacity duration-300 group-hover:opacity-90"
               draggable={false}
             />
           </Link>
 
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden xl:flex items-center gap-5 2xl:gap-7">
             {sectionLinks.map((l) => (
               <li key={l.href}>
                 <a
@@ -79,6 +81,7 @@ const Navbar = () => {
                 <li key={l.to}>
                   <Link
                     to={l.to}
+                    aria-current={active ? "page" : undefined}
                     className={`text-sm font-medium transition-colors relative ${
                       l.featured
                         ? `rounded-full px-3 py-1.5 border transition-all duration-500 ${
@@ -100,12 +103,12 @@ const Navbar = () => {
             })}
           </ul>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <ThemeToggle />
             <LanguageToggle />
             <a
               href={sectionHref("contact")}
-              className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
+              className="btn-shimmer hidden sm:inline-flex items-center gap-2 rounded-full bg-gold-animated px-4 lg:px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-gold hover:shadow-glow transition-all duration-500 hover:scale-[1.03]"
             >
               <span className="relative z-10 lang-morph">{t.nav.cta}</span>
             </a>
