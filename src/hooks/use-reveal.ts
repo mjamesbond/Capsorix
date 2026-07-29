@@ -29,10 +29,10 @@ export const useReveal = <T extends HTMLElement = HTMLElement>(options?: Interse
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px", ...options }
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px", ...options },
     );
 
-    targets.forEach((t) => observer.observe(t));
+    targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, [options]);
 
@@ -50,49 +50,54 @@ export const useParallax = <T extends HTMLElement = HTMLElement>(speed = 0.2) =>
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const nav = navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    };
+    const connection = nav.connection;
+    const constrained =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.innerWidth < 1024 ||
+      Boolean(connection?.saveData) ||
+      ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
+
+    if (constrained) return;
 
     // Cache layout-dependent values. Reading getBoundingClientRect() on
-    // every scroll frame forces a synchronous layout (reflow) per element
-    // — the biggest source of scroll jank. We measure once and refresh
-    // only on resize / when the element's size or position changes.
+    // every scroll frame forces a synchronous layout (reflow) per element.
     let elementCenter = 0;
     let viewportH = window.innerHeight;
     let lastY = Number.NaN;
     let visible = true;
 
     const measure = () => {
-      // Temporarily clear our transform so we read the *natural* position,
-      // not the previously-translated one.
-      const prev = node.style.transform;
+      const previousTransform = node.style.transform;
       node.style.transform = "";
       const rect = node.getBoundingClientRect();
       elementCenter = rect.top + window.scrollY + rect.height / 2;
-      node.style.transform = prev;
+      node.style.transform = previousTransform;
       viewportH = window.innerHeight;
     };
 
     measure();
 
-    // Re-measure if the element itself or the viewport changes.
-    const ro = new ResizeObserver(measure);
-    ro.observe(node);
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(node);
     window.addEventListener("resize", measure);
 
-    // Visibility gate — skip transform writes when off-screen.
-    const io = new IntersectionObserver(
+    const intersectionObserver = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) visible = e.isIntersecting;
+        for (const entry of entries) visible = entry.isIntersecting;
       },
       { rootMargin: "20% 0px 20% 0px" },
     );
-    io.observe(node);
+    intersectionObserver.observe(node);
 
     const unsubscribe = subscribeScroll(({ eased }) => {
       if (!visible) return;
       const viewportCenter = eased + viewportH / 2;
       const offset = (elementCenter - viewportCenter) * speed;
-      // Sub-pixel changes aren't worth a style write.
       if (Math.abs(offset - lastY) < 0.25) return;
       lastY = offset;
       node.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
@@ -100,8 +105,8 @@ export const useParallax = <T extends HTMLElement = HTMLElement>(speed = 0.2) =>
 
     return () => {
       unsubscribe();
-      ro.disconnect();
-      io.disconnect();
+      resizeObserver.disconnect();
+      intersectionObserver.disconnect();
       window.removeEventListener("resize", measure);
     };
   }, [speed]);
