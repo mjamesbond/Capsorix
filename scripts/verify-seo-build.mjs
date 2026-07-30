@@ -18,6 +18,13 @@ const routes = [
 const fail = (message) => {
   throw new Error(`SEO build verification failed: ${message}`);
 };
+const escapeHtml = (value) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 const canonical = (route) => (route === "/" ? `${ORIGIN}/` : `${ORIGIN}${route}`);
 const routeFile = (route) =>
   route === "/" ? path.join(DIST, "index.html") : path.join(DIST, route.replace(/^\//, ""), "index.html");
@@ -28,7 +35,7 @@ for (const [route, title] of routes) {
   const html = readFileSync(file, "utf8");
   const expectedCanonical = canonical(route);
   for (const required of [
-    `<title>${title}</title>`,
+    `<title>${escapeHtml(title)}</title>`,
     `<link rel="canonical" href="${expectedCanonical}">`,
     `<meta property="og:url" content="${expectedCanonical}">`,
     `data-seo-snapshot="${route}"`,
