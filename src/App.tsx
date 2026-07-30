@@ -76,26 +76,57 @@ const DeferredMount = ({
   return <>{children}</>;
 };
 
-type RouteKey = "home" | "ios" | "android" | "web" | "about" | "workplace" | "careers" | "values" | "knowledge" | "canon" | "article" | "notfound";
+type RouteKey =
+  | "home"
+  | "ios"
+  | "android"
+  | "web"
+  | "about"
+  | "workplace"
+  | "careers"
+  | "values"
+  | "guide"
+  | "knowledge"
+  | "canon"
+  | "article"
+  | "notfound";
 
-const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: string }>> = {
+type RouteMeta = { title: string; description: string };
+
+const ROUTE_META: Record<RouteKey, Record<Lang, RouteMeta>> = {
   home: {
-    en: { title: "Capsorix — Premium Software Studio for iOS, Android & Web", description: "Capsorix builds elite iOS, Android, and web platforms end-to-end. Senior-led product engineering, designed and shipped with care." },
-    fr: { title: "Capsorix — Studio logiciel premium iOS, Android & Web", description: "Capsorix conçoit des applications iOS, Android et plateformes web haut de gamme, de bout en bout. Ingénierie produit par une équipe senior." },
-    de: { title: "Capsorix — Premium-Softwarestudio für iOS, Android & Web", description: "Capsorix entwickelt erstklassige iOS-, Android- und Web-Plattformen end-to-end. Produkt-Engineering aus einer Hand von Senior-Ingenieuren." },
-    ar: { title: "كابسوريكس — استوديو برمجيات iOS وأندرويد والويب", description: "تبني كابسوريكس تطبيقات iOS وأندرويد ومنصات ويب من الطراز الرفيع، بقيادة مهندسين كبار من الفكرة إلى الإطلاق." },
+    en: {
+      title: "Capsorix — Strategy, Design & Engineering for Ambitious Digital Products",
+      description:
+        "Capsorix is a technology and innovation engineering studio helping ambitious businesses determine what should be built, why it matters, and how it should work before design or development begins.",
+    },
+    fr: {
+      title: "Capsorix — Stratégie, design et ingénierie de produits numériques",
+      description:
+        "Capsorix est un studio de technologie et d’ingénierie de l’innovation qui aide les entreprises ambitieuses à décider quoi construire, pourquoi et comment.",
+    },
+    de: {
+      title: "Capsorix — Strategie, Design und Engineering digitaler Produkte",
+      description:
+        "Capsorix ist ein Studio für Technologie und Innovationsengineering, das ambitionierten Unternehmen hilft zu entscheiden, was gebaut werden soll, warum und wie.",
+    },
+    ar: {
+      title: "كابسوريكس — الاستراتيجية والتصميم وهندسة المنتجات الرقمية",
+      description:
+        "كابسوريكس استوديو للتكنولوجيا وهندسة الابتكار يساعد الشركات الطموحة على تحديد ما ينبغي بناؤه، ولماذا، وكيف يجب أن يعمل قبل بدء التصميم أو التطوير.",
+    },
   },
   ios: {
     en: { title: "iOS App Development — Capsorix", description: "Native Swift and SwiftUI apps engineered to Apple's bar. Capsorix ships considered iOS products from concept to App Store launch." },
     fr: { title: "Développement d'applications iOS — Capsorix", description: "Applications iOS natives en Swift et SwiftUI, conçues au niveau d'Apple. Capsorix livre des produits iOS soignés, du concept à l'App Store." },
     de: { title: "iOS-App-Entwicklung — Capsorix", description: "Native iOS-Apps mit Swift und SwiftUI, gebaut nach Apples Standard. Capsorix liefert durchdachte iOS-Produkte bis zum App-Store-Launch." },
-    ar: { title: "تطوير تطبيقات iOS — كابسوريكس", description: "تطبيقات iOS أصلية بـ Swift و SwiftUI مهندسة على معايير آبل. تصمّم كابسوريكس وتطلق منتجات iOS متقنة حتى متجر التطبيقات." },
+    ar: { title: "تطوير تطبيقات iOS — كابسوريكس", description: "تطبيقات iOS أصلية بـ Swift وSwiftUI مهندسة على معايير آبل. تصمّم كابسوريكس وتطلق منتجات iOS متقنة حتى متجر التطبيقات." },
   },
   android: {
     en: { title: "Android App Development — Capsorix", description: "Kotlin and Jetpack Compose apps with clean architecture and Material 3 polish. Capsorix delivers Android products built to last." },
     fr: { title: "Développement d'applications Android — Capsorix", description: "Applications Kotlin et Jetpack Compose à l'architecture propre et au design Material 3. Capsorix livre des produits Android durables." },
     de: { title: "Android-App-Entwicklung — Capsorix", description: "Android-Apps mit Kotlin und Jetpack Compose, sauberer Architektur und Material-3-Finish. Capsorix liefert langlebige Android-Produkte." },
-    ar: { title: "تطوير تطبيقات أندرويد — كابسوريكس", description: "تطبيقات أندرويد بـ Kotlin و Jetpack Compose بمعمارية نظيفة وتشطيب Material 3. تقدّم كابسوريكس منتجات أندرويد مصممة لتدوم." },
+    ar: { title: "تطوير تطبيقات أندرويد — كابسوريكس", description: "تطبيقات أندرويد بـ Kotlin وJetpack Compose بمعمارية نظيفة وتشطيب Material 3. تقدّم كابسوريكس منتجات أندرويد مصممة لتدوم." },
   },
   web: {
     en: { title: "Web Platform Engineering — Capsorix", description: "Production-grade websites, dashboards, and web platforms. Capsorix engineers fast, beautiful, conversion-focused web experiences." },
@@ -127,17 +158,45 @@ const ROUTE_META: Record<RouteKey, Record<Lang, { title: string; description: st
     de: { title: "Unternehmenswerte — Capsorix", description: "Das Werte-Framework von Capsorix: Prinzipien, Verhaltensweisen und Verantwortungsstandards." },
     ar: { title: "قيم الشركة — كابسوريكس", description: "إطار قيم كابسوريكس: مبادئ واضحة وسلوكيات عملية ومعايير للمسؤولية وجودة التنفيذ." },
   },
+  guide: {
+    en: {
+      title: "How to Choose a Software Development Company — Capsorix",
+      description:
+        "A practical guide to choosing a software development company by evaluating process clarity, senior execution, ownership, design maturity, performance and long-term support.",
+    },
+    fr: {
+      title: "Comment choisir une société de développement logiciel — Capsorix",
+      description:
+        "Un guide pratique pour évaluer le processus, l’équipe senior, la propriété, la qualité du design, les performances et le support à long terme.",
+    },
+    de: {
+      title: "So wählen Sie ein Softwareentwicklungsunternehmen — Capsorix",
+      description:
+        "Ein praktischer Leitfaden zur Bewertung von Prozessklarheit, Seniorität, Eigentum, Designreife, Leistung und langfristigem Support.",
+    },
+    ar: {
+      title: "كيف تختار شركة تطوير برمجيات — كابسوريكس",
+      description:
+        "دليل عملي لاختيار شركة تطوير برمجيات من خلال تقييم وضوح العملية، وخبرة المنفذين، والملكية، ونضج التصميم، والأداء، والدعم طويل الأجل.",
+    },
+  },
   knowledge: {
     en: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system for Canon, Concepts, Methods, Research, Projects, and Cases." },
-    fr: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." }, de: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." }, ar: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." },
+    fr: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." },
+    de: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." },
+    ar: { title: "Knowledge | Capsorix", description: "The Capsorix institutional knowledge system." },
   },
   canon: {
     en: { title: "Foundational Canon | Capsorix", description: "The ordered foundational Canon of the Capsorix Knowledge Platform." },
-    fr: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, de: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." }, ar: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
+    fr: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
+    de: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
+    ar: { title: "Foundational Canon | Capsorix", description: "The ordered Capsorix Canon." },
   },
   article: {
     en: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
-    fr: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." }, de: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." }, ar: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
+    fr: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
+    de: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
+    ar: { title: "Canon Article | Capsorix", description: "A foundational Capsorix Canon article." },
   },
   notfound: {
     en: { title: "Page Not Found — Capsorix", description: "The page you requested could not be found. Return to Capsorix to explore our premium iOS, Android, and web engagements." },
@@ -157,6 +216,7 @@ const routeKeyFromPath = (pathname: string): RouteKey => {
   if (clean === "/workplace-culture") return "workplace";
   if (clean === "/careers") return "careers";
   if (clean === "/company-values") return "values";
+  if (clean === "/guides/how-to-choose-a-software-development-company") return "guide";
   if (clean === "/knowledge") return "knowledge";
   if (clean === "/knowledge/canon") return "canon";
   if (clean.startsWith("/knowledge/canon/")) return "article";
@@ -164,16 +224,19 @@ const routeKeyFromPath = (pathname: string): RouteKey => {
 };
 
 const ROUTE_OG_IMAGES: Record<RouteKey, string> = {
-  home: "https://capsorix.tech/og.webp",
-  ios: "https://capsorix.tech/og.webp",
-  android: "https://capsorix.tech/og.webp",
-  web: "https://capsorix.tech/og.webp",
-  about: "https://capsorix.tech/og.webp",
-  workplace: "https://capsorix.tech/og.webp",
-  careers: "https://capsorix.tech/og.webp",
-  values: "https://capsorix.tech/og.webp",
-  knowledge: "https://capsorix.tech/og.webp", canon: "https://capsorix.tech/og.webp", article: "https://capsorix.tech/og.webp",
-  notfound: "https://capsorix.tech/og.webp",
+  home: `${CANONICAL_ORIGIN}/og.webp`,
+  ios: `${CANONICAL_ORIGIN}/og.webp`,
+  android: `${CANONICAL_ORIGIN}/og.webp`,
+  web: `${CANONICAL_ORIGIN}/og.webp`,
+  about: `${CANONICAL_ORIGIN}/og.webp`,
+  workplace: `${CANONICAL_ORIGIN}/og.webp`,
+  careers: `${CANONICAL_ORIGIN}/og.webp`,
+  values: `${CANONICAL_ORIGIN}/og.webp`,
+  guide: `${CANONICAL_ORIGIN}/og.webp`,
+  knowledge: `${CANONICAL_ORIGIN}/og.webp`,
+  canon: `${CANONICAL_ORIGIN}/og.webp`,
+  article: `${CANONICAL_ORIGIN}/og.webp`,
+  notfound: `${CANONICAL_ORIGIN}/og.webp`,
 };
 
 const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang, article?: KnowledgeArticle) => {
@@ -182,10 +245,10 @@ const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang, article?: Kn
   const baseGraph = [
     {
       "@type": "Organization",
-      "@id": "https://capsorix.tech/#organization",
+      "@id": `${CANONICAL_ORIGIN}/#organization`,
       name: "Capsorix",
-      url: "https://capsorix.tech/",
-      logo: "https://capsorix.tech/favicon.png",
+      url: `${CANONICAL_ORIGIN}/`,
+      logo: `${CANONICAL_ORIGIN}/favicon.png`,
       sameAs: ["https://www.linkedin.com/company/capsorix", "https://x.com/capsorix"],
     },
     {
@@ -197,36 +260,40 @@ const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang, article?: Kn
     },
   ];
 
-  const breadcrumb = article ? {
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Knowledge", item: `${CANONICAL_ORIGIN}/knowledge` },
-      { "@type": "ListItem", position: 2, name: "Canon", item: `${CANONICAL_ORIGIN}/knowledge/canon` },
-      { "@type": "ListItem", position: 3, name: article.title, item: `${CANONICAL_ORIGIN}${article.canonicalPath}` },
-    ],
-  } : null;
-  const articleNode = article ? {
-    "@type": "Article",
-    headline: article.title,
-    description: article.description,
-    url: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
-    mainEntityOfPage: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
-    ...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
-    dateModified: article.updatedAt,
-    author: article.authors.map((name) => ({ "@type": "Organization", name })),
-    publisher: { "@id": `${CANONICAL_ORIGIN}/#organization` },
-    inLanguage: article.language,
-  } : null;
+  const breadcrumb = article
+    ? {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Knowledge", item: `${CANONICAL_ORIGIN}/knowledge` },
+          { "@type": "ListItem", position: 2, name: "Canon", item: `${CANONICAL_ORIGIN}/knowledge/canon` },
+          { "@type": "ListItem", position: 3, name: article.title, item: `${CANONICAL_ORIGIN}${article.canonicalPath}` },
+        ],
+      }
+    : null;
+  const articleNode = article
+    ? {
+        "@type": "Article",
+        headline: article.title,
+        description: article.description,
+        url: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
+        mainEntityOfPage: `${CANONICAL_ORIGIN}${article.canonicalPath}`,
+        ...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
+        dateModified: article.updatedAt,
+        author: article.authors.map((name) => ({ "@type": "Organization", name })),
+        publisher: { "@id": `${CANONICAL_ORIGIN}/#organization` },
+        inLanguage: article.language,
+      }
+    : null;
 
   const pageNode = {
     "@type": "WebPage",
-    "@id": `https://capsorix.tech${path}#webpage`,
-    url: `https://capsorix.tech${path}`,
+    "@id": `${CANONICAL_ORIGIN}${path}#webpage`,
+    url: `${CANONICAL_ORIGIN}${path}`,
     name: ROUTE_META[key][lang].title,
     description: ROUTE_META[key][lang].description,
     inLanguage,
-    isPartOf: { "@id": "https://capsorix.tech/#website" },
-    about: { "@id": "https://capsorix.tech/#organization" },
+    isPartOf: { "@id": `${CANONICAL_ORIGIN}/#website` },
+    about: { "@id": `${CANONICAL_ORIGIN}/#organization` },
   };
 
   const graph = [...baseGraph, ...(articleNode ? [articleNode, breadcrumb!] : [pageNode])];
@@ -239,7 +306,7 @@ const upsertRouteJsonLd = (path: string, key: RouteKey, lang: Lang, article?: Kn
       datePosted: "2026-01-01",
       validThrough: "2027-01-01T23:59",
       employmentType: "FULL_TIME",
-      hiringOrganization: { "@id": "https://capsorix.tech/#organization" },
+      hiringOrganization: { "@id": `${CANONICAL_ORIGIN}/#organization` },
       jobLocationType: "TELECOMMUTE",
       applicantLocationRequirements: { "@type": "Country", name: "Worldwide" },
       directApply: true,
